@@ -1,0 +1,14 @@
+# robots.txt — O.N.E Agency
+# https://one-agency.es/
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://one-agency.es/sitemap.xml
+
+# Crawl-delay (optional, for polite bots)
+Crawl-delay: 1
