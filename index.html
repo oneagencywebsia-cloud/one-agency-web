@@ -245,8 +245,8 @@
   --bg4: #27272a;
   --text: #FFFFFF;
   --text2: #E4E4E7;
-  --text3: #A1A1AA;
-  --text4: #71717A;
+  --text3: #b0b0b8;
+  --text4: #8a8a94;
   --radius: 16px;
   --radius-lg: 24px;
   --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -858,34 +858,34 @@ ul {
   width: 290px;
   height: 290px;
   border-style: dashed;
-  animation: spin 20s linear infinite;
+  animation: spin 14s linear infinite;
 }
 
 .orbit-ring-3 {
   width: 370px;
   height: 370px;
   border-color: rgba(249, 115, 22, 0.1);
-  animation: spin 35s linear infinite reverse;
+  animation: spin 22s linear infinite reverse;
 }
 
 .orbit {
   position: absolute;
   width: 100%;
   height: 100%;
-  animation: spin 12s linear infinite;
+  animation: spin 8s linear infinite;
 }
 
 .orbit-2 {
-  animation-duration: 18s;
+  animation-duration: 12s;
   animation-direction: reverse;
 }
 
 .orbit-3 {
-  animation-duration: 25s;
+  animation-duration: 16s;
 }
 
 .orbit-4 {
-  animation-duration: 15s;
+  animation-duration: 10s;
   animation-direction: reverse;
 }
 
@@ -2764,7 +2764,7 @@ ul {
 /* ── ACCESIBILIDAD: Reducir movimiento ──────────── */
 @media (prefers-reduced-motion: reduce) {
   .particle { display: none; }
-  .orbit-ring { animation-duration: 60s !important; }
+  .orbit-ring { animation-duration: 30s !important; }
   .marquee-track { animation-duration: 60s !important; }
 }
 
@@ -2830,8 +2830,6 @@ ul {
   .cta-glow { width: 100vw; height: 250px; opacity: 0.7; }
 
   /* Simplify orbit on mobile */
-  .orbit-ring-2 { animation-duration: 20s; }
-  .orbit-ring-3 { animation-duration: 35s; }
   .orbit-core { filter: drop-shadow(0 0 15px rgba(59,130,246,0.3)); }
   .floating-cards { display: none; }
 
