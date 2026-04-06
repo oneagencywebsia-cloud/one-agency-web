@@ -2830,10 +2830,9 @@ ul {
   .cta-glow { width: 100vw; height: 250px; opacity: 0.7; }
 
   /* Simplify orbit on mobile */
-  .orbit-ring-2,
-  .orbit-ring-3 { animation: none; }
+  .orbit-ring-2 { animation-duration: 40s; }
+  .orbit-ring-3 { animation-duration: 60s; }
   .orbit-core { filter: drop-shadow(0 0 15px rgba(59,130,246,0.3)); }
-  .orbit-node { box-shadow: none; }
   .floating-cards { display: none; }
 
   /* Reduce box-shadows */
@@ -2848,16 +2847,15 @@ ul {
   .orbit-ring { will-change: auto; }
 
   /* Simpler reveal animations */
-  .reveal { transition-duration: 0.3s; }
+  .reveal { transition-duration: 0.4s; }
 
   /* Reduce filter complexity */
-  .founder-avatar { filter: none; }
+  .founder-avatar { filter: drop-shadow(0 0 15px rgba(59,130,246,0.2)); }
   .orbit-logo-img { filter: drop-shadow(0 0 10px rgba(59,130,246,0.3)); }
-  .service-visual { filter: none; }
 
-  /* Simplify gradients on buttons */
-  .btn-primary { animation: none; background-size: 100% 100%; }
-  .btn-glow { animation: none; }
+  /* Slower gradient shift on buttons (saves GPU) */
+  .btn-primary { animation-duration: 8s; }
+  .btn-glow { animation: gradient-shift 8s ease infinite; }
 }
 
 /* ── OVERFLOW PREVENTION ─────────── */
@@ -2871,16 +2869,11 @@ ul {
   .float-card { display: none; }
 }
 
-/* ── REDUCE MOTION (accessibility + battery) ── */
+/* ── REDUCE MOTION (accessibility) ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
   .particle { display: none; }
-  .orbit-ring, .orbit { animation: none; }
-  .orbit-system { animation: none; }
+  .orbit-ring, .orbit { animation-duration: 60s !important; }
+  .orbit-system { animation-duration: 12s !important; }
 }
 
 
