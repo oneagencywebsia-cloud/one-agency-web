@@ -741,9 +741,9 @@ ul {
 
 .hero-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   margin-bottom: 24px;
 }
@@ -772,7 +772,7 @@ ul {
   display: flex;
   align-items: center;
   gap: 24px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .hero-stat {
@@ -818,10 +818,11 @@ ul {
 /* ORBIT SYSTEM */
 .hero-visual {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
   min-height: 500px;
+  padding-top: 40px;
 }
 
 .orbit-system {
@@ -2226,6 +2227,8 @@ ul {
     order: 0;
     min-height: 220px;
     margin-top: 30px;
+    padding-top: 0;
+    align-items: center;
   }
   .orbit-system {
     width: 240px;
@@ -2331,14 +2334,14 @@ ul {
   .orbit-system { width: 200px; height: 200px; }
   .hero-visual { min-height: 220px; }
   .hero-stats {
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-wrap: nowrap;
+    gap: 10px;
     justify-content: center;
   }
   .stat-divider { display: none; }
-  .hero-stat { min-width: 80px; }
-  .stat-num, .stat-unit { font-size: 1.6rem; }
-  .stat-label { font-size: 0.75rem; max-width: 90px; }
+  .hero-stat { min-width: 0; flex: 1; }
+  .stat-num, .stat-unit { font-size: 1.4rem; }
+  .stat-label { font-size: 0.7rem; max-width: none; }
   .hero-ctas {
     flex-direction: column;
     align-items: stretch;
@@ -2798,18 +2801,63 @@ ul {
 }
 
 /* ── MOBILE PERFORMANCE ──────────── */
-@media (max-width: 600px) {
-  /* Reduce particles further */
-  .particle:nth-child(n+12) { display: none; }
-  /* Disable heavy blur on low-end */
-  .glass-card { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  /* Simpler hover transforms */
-  .glass-card:hover { transform: none; }
-  .tech-item:hover { transform: none; }
-  .founder-value:hover { transform: none; }
+@media (max-width: 768px) {
+  /* Kill particles on mobile */
+  .particle:nth-child(n+6) { display: none; }
+  .particle { animation-duration: 25s !important; }
+
+  /* Remove expensive backdrop-filter on mobile */
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(24, 24, 27, 0.95);
+  }
+  .navbar.scrolled {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Disable hover transforms (no hover on touch) */
+  .glass-card:hover,
+  .tech-item:hover,
+  .founder-value:hover,
+  .service-card-front:hover,
+  .btn-primary:hover,
+  .btn-outline:hover { transform: none; }
+
   /* Reduce glow effects */
-  .hero-bg-glow { width: 100vw; height: 300px; }
-  .cta-glow { width: 100vw; height: 300px; }
+  .hero-bg-glow { width: 100vw; height: 250px; opacity: 0.7; }
+  .cta-glow { width: 100vw; height: 250px; opacity: 0.7; }
+
+  /* Simplify orbit on mobile */
+  .orbit-ring-2,
+  .orbit-ring-3 { animation: none; }
+  .orbit-core { filter: drop-shadow(0 0 15px rgba(59,130,246,0.3)); }
+  .orbit-node { box-shadow: none; }
+  .floating-cards { display: none; }
+
+  /* Reduce box-shadows */
+  .glass-card { box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+  .glass-card:hover { box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+  /* Disable will-change on mobile (saves GPU memory) */
+  .glass-card,
+  .navbar,
+  .btn-primary,
+  .btn-outline,
+  .orbit-ring { will-change: auto; }
+
+  /* Simpler reveal animations */
+  .reveal { transition-duration: 0.3s; }
+
+  /* Reduce filter complexity */
+  .founder-avatar { filter: none; }
+  .orbit-logo-img { filter: drop-shadow(0 0 10px rgba(59,130,246,0.3)); }
+  .service-visual { filter: none; }
+
+  /* Simplify gradients on buttons */
+  .btn-primary { animation: none; background-size: 100% 100%; }
+  .btn-glow { animation: none; }
 }
 
 /* ── OVERFLOW PREVENTION ─────────── */
@@ -2819,9 +2867,20 @@ ul {
   .footer-container {
     overflow-x: hidden;
   }
-  /* Prevent wide content from creating horizontal scroll */
   .marquee-strip { max-width: 100vw; }
   .float-card { display: none; }
+}
+
+/* ── REDUCE MOTION (accessibility + battery) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .particle { display: none; }
+  .orbit-ring, .orbit { animation: none; }
+  .orbit-system { animation: none; }
 }
 
 
@@ -3196,7 +3255,7 @@ ul {
     <a href="#nosotros" class="mobile-link">Nosotros</a>
     <a href="#faq" class="mobile-link">FAQ</a>
     <a href="#contacto" class="mobile-link">Contacto</a>
-    <a href="#contacto" class="btn-primary btn-glow" style="margin-top:24px;width:100%;text-align:center;justify-content:center;font-size:1rem;padding:16px 24px;">⚡ Diagnóstico gratuito</a>
+    <a href="#contacto" class="btn-primary btn-glow" style="margin-top:24px;width:100%;text-align:center;justify-content:center;font-size:1rem;padding:16px 24px;">Diagnóstico gratuito</a>
     <a href="#contacto" class="btn-primary" style="text-align:center;margin-top:1rem;">Hablar con un experto</a>
   </div>
 
@@ -3208,11 +3267,10 @@ ul {
       <div class="hero-content">
         <div class="hero-label reveal">
           <span class="label-dot"></span>
-          <span class="live-badge">🟢 DISPONIBLE</span> Aceptando nuevos proyectos
+          <span class="live-badge">DISPONIBLE</span> Aceptando nuevos proyectos
         </div>
         <h1 class="hero-title reveal reveal-delay-1">
-          Tu empresa trabaja.<br />
-          <span class="gradient-text">La IA trabaja más.</span>
+          Tu empresa trabaja. <span class="gradient-text">La IA trabaja más.</span>
         </h1>
         <p class="hero-subtitle reveal reveal-delay-2">
           En <strong>O.N.E Agency</strong> diseñamos flujos de automatización con Inteligencia Artificial que eliminan
@@ -3298,12 +3356,12 @@ ul {
     <div class="section-container">
       <p class="proof-label">¿TE SUENA ALGUNA DE ESTAS SITUACIONES?</p>
       <ul class="tech-grid" role="list">
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">😩</span><span>Copias datos a mano todos los días</span></li>
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">📧</span><span>Mandas los mismos emails una y otra vez</span></li>
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">🕐</span><span>Pierdes horas en tareas que no aportan valor</span></li>
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">😰</span><span>Tu equipo hace trabajo repetitivo que les quita tiempo</span></li>
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">📞</span><span>No puedes atender a todos tus clientes a tiempo</span></li>
-        <li class="tech-item"><span class="tech-icon" aria-hidden="true">💸</span><span>Pagas a personas para hacer cosas que podría hacer una máquina</span></li>
+        <li class="tech-item"><span>Copias datos a mano todos los días</span></li>
+        <li class="tech-item"><span>Mandas los mismos emails una y otra vez</span></li>
+        <li class="tech-item"><span>Pierdes horas en tareas que no aportan valor</span></li>
+        <li class="tech-item"><span>Tu equipo hace trabajo repetitivo que les quita tiempo</span></li>
+        <li class="tech-item"><span>No puedes atender a todos tus clientes a tiempo</span></li>
+        <li class="tech-item"><span>Pagas a personas para hacer cosas que podría hacer una máquina</span></li>
       </ul>
       <p class="proof-bottom">Si has dicho sí a alguna de estas, <strong>tenemos la solución.</strong></p>
     </div>
@@ -3312,31 +3370,31 @@ ul {
   <!-- MARQUEE STRIP -->
   <div class="marquee-strip" aria-hidden="true">
     <div class="marquee-track">
-      <span>⚡ Automatización</span>
-      <span>🤖 Inteligencia artificial</span>
-      <span>📊 Google Sheets</span>
-      <span>💬 WhatsApp API</span>
-      <span>📦 Shopify</span>
-      <span>📧 Gmail</span>
-      <span>🔗 Zapier</span>
-      <span>📋 Notion</span>
-      <span>🏪 WooCommerce</span>
-      <span>📱 Telegram</span>
-      <span>🗃️ Airtable</span>
-      <span>⚙️ Make (Integromat)</span>
+      <span>Automatización</span>
+      <span>Inteligencia artificial</span>
+      <span>Google Sheets</span>
+      <span>WhatsApp API</span>
+      <span>Shopify</span>
+      <span>Gmail</span>
+      <span>Zapier</span>
+      <span>Notion</span>
+      <span>WooCommerce</span>
+      <span>Telegram</span>
+      <span>Airtable</span>
+      <span>Make (Integromat)</span>
       <!-- duplicate for seamless loop -->
-      <span>⚡ Automatización</span>
-      <span>🤖 Inteligencia artificial</span>
-      <span>📊 Google Sheets</span>
-      <span>💬 WhatsApp API</span>
-      <span>📦 Shopify</span>
-      <span>📧 Gmail</span>
-      <span>🔗 Zapier</span>
-      <span>📋 Notion</span>
-      <span>🏪 WooCommerce</span>
-      <span>📱 Telegram</span>
-      <span>🗃️ Airtable</span>
-      <span>⚙️ Make (Integromat)</span>
+      <span>Automatización</span>
+      <span>Inteligencia artificial</span>
+      <span>Google Sheets</span>
+      <span>WhatsApp API</span>
+      <span>Shopify</span>
+      <span>Gmail</span>
+      <span>Zapier</span>
+      <span>Notion</span>
+      <span>WooCommerce</span>
+      <span>Telegram</span>
+      <span>Airtable</span>
+      <span>Make (Integromat)</span>
     </div>
   </div>
 
@@ -3378,7 +3436,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">⚙️</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Adiós a las tareas repetitivas</h3>
               <p>Todo lo que tu equipo hace una y otra vez — emails, formularios, actualizaciones — lo hacemos
                 automático. Tu equipo se enfoca en lo que de verdad importa.</p>
@@ -3419,7 +3477,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">🤖</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Atiende clientes aunque estés dormido</h3>
               <p>Un asistente virtual inteligente que responde dudas, agenda citas y resuelve consultas por WhatsApp o
                 tu web — las 24 horas, los 7 días de la semana.</p>
@@ -3457,7 +3515,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">📊</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Sabe qué funciona en tu negocio</h3>
               <p>Te mostramos en una pantalla simple qué está vendiendo, qué no y por qué. Sin necesidad de ser
                 matemático ni experto en datos.</p>
@@ -3501,7 +3559,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">📣</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Consigue clientes mientras trabajas</h3>
               <p>Enviamos emails de seguimiento, publicamos en redes sociales y contactamos a tus leads de forma
                 automática. Tú solo cierras la venta.</p>
@@ -3545,7 +3603,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">📄</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Olvídate de picar datos a mano</h3>
               <p>La IA lee tus facturas, contratos y formularios, extrae la información importante y la guarda donde
                 toca. Sin tocar un teclado.</p>
@@ -3590,7 +3648,7 @@ ul {
               </div>
             </div>
             <div class="service-card-back glass-card">
-              <div class="back-icon">🔗</div>
+              <div class="back-icon">&rarr;</div>
               <h3>Que tus herramientas hablen entre sí</h3>
               <p>Conectamos tu tienda online, tu email, tu contabilidad y tu atención al cliente para que funcionen
                 juntos de forma coordinada y automática — sin que tengas que mover un dedo.</p>
@@ -3617,7 +3675,7 @@ ul {
       </div>
       <div class="results-grid">
         <div class="result-card glass-card reveal">
-          <div class="result-icon" aria-hidden="true">⏱️</div>
+          <div class="result-icon" aria-hidden="true"></div>
           <div class="result-num"><span class="counter" data-target="80" aria-live="polite" aria-label="80 por ciento">0</span>%</div>
           <div class="result-label">reducción de tareas manuales</div>
           <div class="result-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="80%">
@@ -3625,7 +3683,7 @@ ul {
           </div>
         </div>
         <div class="result-card glass-card reveal reveal-delay-1">
-          <div class="result-icon" aria-hidden="true">💰</div>
+          <div class="result-icon" aria-hidden="true"></div>
           <div class="result-num"><span class="counter" data-target="40" aria-live="polite" aria-label="40 por ciento">0</span>%</div>
           <div class="result-label">ahorro en costes operativos</div>
           <div class="result-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="40%">
@@ -3633,7 +3691,7 @@ ul {
           </div>
         </div>
         <div class="result-card glass-card reveal reveal-delay-2">
-          <div class="result-icon" aria-hidden="true">🚀</div>
+          <div class="result-icon" aria-hidden="true"></div>
           <div class="result-num"><span class="counter" data-target="3" aria-live="polite" aria-label="3 veces más">0</span>x</div>
           <div class="result-label">más productividad del equipo</div>
           <div class="result-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75%">
@@ -3641,7 +3699,7 @@ ul {
           </div>
         </div>
         <div class="result-card glass-card reveal reveal-delay-3">
-          <div class="result-icon" aria-hidden="true">⚡</div>
+          <div class="result-icon" aria-hidden="true"></div>
           <div class="result-num"><span class="counter" data-target="72" aria-live="polite" aria-label="72 horas">0</span>h</div>
           <div class="result-label">implementación media</div>
           <div class="result-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="60%">
@@ -3662,17 +3720,17 @@ ul {
       </div>
       <div class="ia-grid reveal reveal-delay-1">
         <div class="ia-card">
-          <h3>🤖 Procesamiento de Lenguaje</h3>
+          <h3>Procesamiento de Lenguaje</h3>
           <p><strong>Qué hacemos:</strong> Generamos emails personalizados, respuestas automáticas, resúmenes de documentos, clasificación inteligente de datos.</p>
           <p class="ia-example"><strong>Ejemplo:</strong> Un cliente recibe 100 mails diarios. La IA los clasifica, responde los frecuentes y agrupa los urgentes.</p>
         </div>
         <div class="ia-card ia-card-orange">
-          <h3>👁️ Visión por Computadora</h3>
+          <h3>Visión por Computadora</h3>
           <p><strong>Qué hacemos:</strong> Extracción de datos de documentos (facturas, recibos), validación de imágenes, análisis de formularios.</p>
           <p class="ia-example"><strong>Ejemplo:</strong> Procesas 50 facturas/día. La IA extrae datos (monto, fecha, proveedor) automáticamente.</p>
         </div>
         <div class="ia-card">
-          <h3>📊 Análisis Predictivo</h3>
+          <h3>Análisis Predictivo</h3>
           <p><strong>Qué hacemos:</strong> Predicción de comportamiento de clientes, detección de anomalías, recomendaciones inteligentes.</p>
           <p class="ia-example"><strong>Ejemplo:</strong> Identifica qué clientes van a abandonar. Automáticamente les envía una oferta personalizada.</p>
         </div>
@@ -3694,7 +3752,7 @@ ul {
       <div class="comparison-grid">
         <!-- ANTES -->
         <div class="reveal">
-          <h3 class="comparison-col-title comparison-col-title-before">❌ ANTES</h3>
+          <h3 class="comparison-col-title comparison-col-title-before">ANTES</h3>
           <div class="comparison-list">
             <div class="comparison-item comparison-item-before">
               <p><strong>Entrada de datos manual</strong> — 3 horas/día en Excel</p>
@@ -3719,7 +3777,7 @@ ul {
 
         <!-- DESPUÉS -->
         <div class="reveal reveal-delay-1">
-          <h3 class="comparison-col-title comparison-col-title-after">✅ DESPUÉS</h3>
+          <h3 class="comparison-col-title comparison-col-title-after">DESPUÉS</h3>
           <div class="comparison-list">
             <div class="comparison-item comparison-item-after">
               <p><strong>Datos automáticos</strong> — Se sincroniza en tiempo real sin intervención</p>
@@ -3764,7 +3822,7 @@ ul {
         <div class="step-connector"></div>
         <div class="step-card glass-card reveal reveal-delay-1">
           <div class="step-num">02</div>
-          <div class="step-icon">🎯</div>
+          <div class="step-icon">01</div>
           <h3>Te proponemos soluciones</h3>
           <p>Te presentamos un plan claro y sencillo. Te explicamos qué se va a hacer, cómo funciona y qué resultados
             puedes esperar. Tú decides.</p>
@@ -3772,7 +3830,7 @@ ul {
         <div class="step-connector"></div>
         <div class="step-card glass-card reveal reveal-delay-2">
           <div class="step-num">03</div>
-          <div class="step-icon">🚀</div>
+          <div class="step-icon">02</div>
           <h3>Lo ponemos en marcha</h3>
           <p>Nosotros nos encargamos de todo. En menos de una semana ya tienes tu negocio funcionando en automático. Sin
             que tengas que hacer nada técnico.</p>
@@ -3780,7 +3838,7 @@ ul {
         <div class="step-connector"></div>
         <div class="step-card glass-card reveal reveal-delay-3">
           <div class="step-num">04</div>
-          <div class="step-icon">📈</div>
+          <div class="step-icon">03</div>
           <h3>Crecemos contigo</h3>
           <p>Te acompañamos, respondemos tus dudas y mejoramos lo que ya tienes. Somos tu equipo de tecnología sin tener
             que contratar a nadie más.</p>
@@ -3841,7 +3899,7 @@ ul {
           </p>
           <div class="founder-values">
             <div class="founder-value">
-              <span class="fv-icon">🎯</span>
+              <span class="fv-icon">&#x2014;</span>
               <div>
                 <strong>Resultados reales</strong>
                 <small>No vendemos humo. Solo lo hacemos si puede funcionar.</small>
@@ -3855,7 +3913,7 @@ ul {
               </div>
             </div>
             <div class="founder-value">
-              <span class="fv-icon">⚡</span>
+              <span class="fv-icon">&#x2014;</span>
               <div>
                 <strong>Rápido y sin dramas</strong>
                 <small>En días, no en meses. Y sin que tengas que hacer nada.</small>
@@ -3911,7 +3969,7 @@ ul {
         </div>
       </div>
       <div class="casos-cta reveal reveal-delay-2">
-        <p class="casos-note">📍 Basados en Santaella, Córdoba. Trabajamos con empresas de toda España de forma remota.</p>
+        <p class="casos-note">Basados en Santaella, Córdoba. Trabajamos con empresas de toda España de forma remota.</p>
         <a href="#contacto" class="btn-primary btn-glow">Quiero ser cliente pionero</a>
       </div>
     </div>
@@ -3922,7 +3980,7 @@ ul {
     <div class="cta-glow" aria-hidden="true"></div>
     <div class="section-container">
       <div class="cta-content reveal">
-        <span class="section-tag">🚀 EMPIEZA HOY</span>
+        <span class="section-tag">⚡ EMPIEZA HOY</span>
         <h2 class="cta-title">¿Listo para que tu empresa <span class="gradient-text">trabaje sola?</span></h2>
         <p class="cta-subtitle">Reserva una sesión de diagnóstico gratuita. En 30 minutos te decimos exactamente qué
           puedes automatizar y cuánto ahorrarías.</p>
@@ -4137,7 +4195,7 @@ function debounce(fn, wait) {
 (function() {
   var container = document.getElementById('particles-container');
   if (!container) return;
-  var count = window.innerWidth < 768 ? 10 : 40;
+  var count = window.innerWidth < 768 ? 5 : 30;
   for (var i = 0; i < count; i++) {
     var p = document.createElement('div');
     p.className = 'particle';
@@ -4476,14 +4534,20 @@ if ('IntersectionObserver' in window) {
       source: 'landing-one-agency'
     };
 
-    var WEBHOOK_URL = 'https://personal-my-n8n-personal.ewwea6.easypanel.host/webhook-test/one-agency-lead';
+    var WEBHOOK_LEAD = 'https://angel-n8n.94rrjd.easypanel.host/webhook/one-agency-lead';
+    var WEBHOOK_ONBOARDING = 'https://angel-n8n.94rrjd.easypanel.host/webhook/one-agency-onboarding';
+    var body = JSON.stringify(payload);
+    var headers = { 'Content-Type': 'application/json' };
 
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).then(function(resp) {
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    Promise.all([
+      fetch(WEBHOOK_LEAD, { method: 'POST', headers: headers, body: body }),
+      fetch(WEBHOOK_ONBOARDING, { method: 'POST', headers: headers, body: body })
+    ]).then(function(responses) {
+      var allOk = true;
+      for (var r = 0; r < responses.length; r++) {
+        if (!responses[r].ok) allOk = false;
+      }
+      if (!allOk) throw new Error('One or more webhooks failed');
       form.reset();
       showSuccessWithWhatsApp(successMsg);
     }).catch(function(err) {
@@ -4650,17 +4714,7 @@ if (window.innerWidth > 900) {
 
 </script>
 
-<!-- PRIVACY BANNER -->
-<div id="priv-banner">
-  <div id="priv-banner-inner">
-    <span id="priv-banner-icon">🔒</span>
-    <div id="priv-banner-text">
-      <strong>Tu privacidad importa</strong>
-      <p>Antes de continuar, consulta nuestra <button id="priv-open-modal">Política de Privacidad</button>. Solo recogemos los datos necesarios para responder a tu consulta.</p>
-    </div>
-    <button id="priv-banner-ok">Entendido</button>
-  </div>
-</div>
+<!-- PRIVACY BANNER (removed - privacy accessible via footer link) -->
 
 <!-- PRIVACY MODAL -->
 <div id="priv-modal" aria-hidden="true">
@@ -4695,31 +4749,15 @@ if (window.innerWidth > 900) {
 </div>
 <script>
 (function(){
-  var banner   = document.getElementById('priv-banner');
   var modal    = document.getElementById('priv-modal');
-  var btnOk    = document.getElementById('priv-banner-ok');
-  var btnOpen  = document.getElementById('priv-open-modal');
   var btnClose = document.getElementById('priv-close');
   var btnMOk   = document.getElementById('priv-modal-ok');
   var backdrop = document.getElementById('priv-backdrop');
 
-  if (!banner || !modal) return;
+  if (!modal) return;
 
-  /* ── Remove any residual inline display style ── */
   modal.style.display = '';
   modal.style.visibility = '';
-
-  function bannerHide(){
-    banner.style.animation = 'priv-slide-out .4s cubic-bezier(.4,0,1,1) forwards';
-    banner.addEventListener('animationend', function(){
-      banner.style.display = 'none';
-    }, { once: true });
-    try { sessionStorage.setItem('priv_ok','1'); } catch(e){}
-    // Show floating buttons after banner hides
-    if (typeof showFloatingButtons === 'function') {
-      setTimeout(showFloatingButtons, 500);
-    }
-  }
 
   function modalOpen(){
     modal.classList.add('priv-modal-visible');
@@ -4732,14 +4770,6 @@ if (window.innerWidth > 900) {
     document.body.style.overflow = '';
   }
 
-  // Only hide banner if accepted THIS session
-  try {
-    if(sessionStorage.getItem('priv_ok')){
-      banner.style.display = 'none';
-    }
-  } catch(e){}
-
-  // Use touchend + click with dedup for all privacy buttons (mobile fix)
   function onTap(el, fn) {
     if (!el) return;
     var touched = false;
@@ -4754,10 +4784,8 @@ if (window.innerWidth > 900) {
     });
   }
 
-  onTap(btnOk, bannerHide);
-  onTap(btnOpen, modalOpen);
   onTap(btnClose, modalClose);
-  onTap(btnMOk, function(){ modalClose(); bannerHide(); });
+  onTap(btnMOk, modalClose);
   onTap(backdrop, modalClose);
 
   document.addEventListener('keydown', function(e){
@@ -4771,36 +4799,16 @@ if (window.innerWidth > 900) {
   }
   var btnFormPriv = document.getElementById('priv-open-modal-form');
   onTap(btnFormPriv, modalOpen);
-
-  // Auto-open modal on first visit (but NOT on file:// to avoid issues)
-  window.addEventListener('load', function(){
-    try {
-      if(!sessionStorage.getItem('priv_ok')){
-        setTimeout(function(){ modalOpen(); }, 500);
-      }
-    } catch(e){}
-  });
 })();
 </script>
 
-<!-- Script para controlar animación de botones después del banner -->
+<!-- Floating buttons - show on load -->
 <script>
-  function showFloatingButtons() {
+  window.addEventListener('load', function(){
     var waFloat = document.getElementById('wa-float');
     var diagFloat = document.getElementById('diag-float');
     if (waFloat) { waFloat.style.display = 'flex'; waFloat.style.animation = 'wa-pop-in 0.6s cubic-bezier(0.34,1.4,0.64,1) both'; }
     if (diagFloat) { diagFloat.style.display = 'flex'; diagFloat.style.animation = 'wa-pop-in 0.6s cubic-bezier(0.34,1.4,0.64,1) both'; }
-  }
-  window.addEventListener('load', function(){
-    try {
-      if (sessionStorage.getItem('priv_ok')) {
-        showFloatingButtons();
-      }
-      // Otherwise buttons stay hidden until banner is dismissed
-    } catch(e) {
-      // If sessionStorage fails, show buttons after 3s
-      setTimeout(showFloatingButtons, 3000);
-    }
   });
 </script>
 
