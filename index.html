@@ -1086,7 +1086,6 @@ ul {
 .founder-section {
   padding: 120px 0;
   background: var(--bg2);
-  overflow: hidden;
 }
 
 .founder-wrapper {
@@ -2281,6 +2280,8 @@ ul {
     grid-template-columns: 1fr;
     gap: 32px;
     text-align: center;
+    max-width: 100%;
+    overflow: hidden;
   }
   .founder-avatar-wrap {
     flex-direction: row;
@@ -2383,8 +2384,8 @@ ul {
     flex-direction: column;
     align-items: center;
   }
-  .founder-avatar { transform: scale(0.8); filter: drop-shadow(0 0 8px rgba(59,130,246,0.15)); }
-  .founder-avatar-wrap { max-width: 100%; overflow: hidden; }
+  .founder-avatar { transform: scale(0.8); filter: none; }
+  .founder-avatar-wrap { max-width: 100%; }
   .founder-content { padding: 24px 16px; }
   .founder-bio { font-size: 0.9rem; }
   .founder-value { padding: 12px 14px; }
@@ -2850,7 +2851,7 @@ ul {
   .reveal { transition-duration: 0.4s; }
 
   /* Reduce filter complexity */
-  .founder-avatar { filter: none; transform: scale(0.8); }
+  .founder-avatar { filter: none !important; transform: scale(0.75); }
   .orbit-logo-img { filter: drop-shadow(0 0 10px rgba(59,130,246,0.3)); }
 
   /* Slower gradient shift on buttons (saves GPU) */
