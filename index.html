@@ -2421,6 +2421,8 @@ ul {
   #priv-banner-inner { padding: 0.85rem 1rem; gap: 0.75rem; }
   #priv-banner-text { font-size: 0.8rem; }
   #priv-banner-ok { width: 100%; text-align: center; }
+  body.banner-visible #wa-float,
+  body.banner-visible #diag-float { bottom: calc(var(--banner-h, 100px) + 1rem + env(safe-area-inset-bottom, 0px)) !important; transition: bottom .35s ease; }
 
   /* --- PRIVACY MODAL --- */
   #priv-content { padding: 1.5rem 1.25rem; }
@@ -4876,10 +4878,15 @@ if (window.innerWidth > 900) {
 
   setTimeout(function() {
     banner.style.display = '';
+    requestAnimationFrame(function() {
+      document.documentElement.style.setProperty('--banner-h', banner.offsetHeight + 'px');
+      document.body.classList.add('banner-visible');
+    });
   }, 1200);
 
   okBtn.addEventListener('click', function() {
     banner.style.animation = 'priv-slide-out .45s cubic-bezier(.4,0,.6,1) forwards';
+    document.body.classList.remove('banner-visible');
     setTimeout(function() { banner.style.display = 'none'; }, 460);
     localStorage.setItem('priv_ok', '1');
   });
