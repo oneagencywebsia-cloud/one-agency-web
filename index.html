@@ -4852,5 +4852,47 @@ if (window.innerWidth > 900) {
 }
 </style>
 
+<!-- PRIVACY BANNER -->
+<div id="priv-banner" role="dialog" aria-label="Aviso de privacidad" aria-live="polite" style="display:none">
+  <div id="priv-banner-inner">
+    <div id="priv-banner-icon">🍪</div>
+    <div id="priv-banner-text">
+      <strong>Tu privacidad importa</strong>
+      <p>Usamos cookies propias para mejorar tu experiencia. No compartimos tus datos con terceros.
+        <button type="button" id="priv-open-modal">Leer política completa</button>
+      </p>
+    </div>
+    <button type="button" id="priv-banner-ok">Entendido ✓</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var banner = document.getElementById('priv-banner');
+  var okBtn  = document.getElementById('priv-banner-ok');
+  if (!banner || !okBtn) return;
+
+  if (localStorage.getItem('priv_ok') === '1') return;
+
+  setTimeout(function() {
+    banner.style.display = '';
+  }, 1200);
+
+  okBtn.addEventListener('click', function() {
+    banner.style.animation = 'priv-slide-out .45s cubic-bezier(.4,0,.6,1) forwards';
+    setTimeout(function() { banner.style.display = 'none'; }, 460);
+    localStorage.setItem('priv_ok', '1');
+  });
+
+  var modalBtn = document.getElementById('priv-open-modal');
+  if (modalBtn) {
+    modalBtn.addEventListener('click', function() {
+      var modal = document.getElementById('privacy-modal');
+      if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
