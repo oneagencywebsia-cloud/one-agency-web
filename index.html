@@ -4888,7 +4888,7 @@ if (window.innerWidth > 900) {
   if (modalBtn) {
     modalBtn.addEventListener('click', function() {
       var modal = document.getElementById('priv-modal');
-      if (modal) { modal.removeAttribute('aria-hidden'); modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+      if (modal) { modal.classList.add('priv-modal-visible'); modal.removeAttribute('aria-hidden'); document.body.style.overflow = 'hidden'; }
     });
   }
 })();
