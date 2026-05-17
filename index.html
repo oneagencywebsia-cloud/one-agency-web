@@ -2951,6 +2951,41 @@ ul {
 
 /* Privacy checkbox */
 .form-privacy-check { margin-bottom: 1rem; }
+.no-web-label {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(59,130,246,.06);
+  border: 1px solid rgba(59,130,246,.15);
+  transition: background .2s;
+  font-size: .85rem;
+  color: var(--text3);
+}
+.no-web-label:hover { background: rgba(59,130,246,.1); }
+.no-web-label input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.no-web-custom {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(59,130,246,.4);
+  border-radius: 4px;
+  background: rgba(59,130,246,.08);
+  transition: background .2s, border-color .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.no-web-label input:checked + .no-web-custom { background: #3B82F6; border-color: #3B82F6; }
+.no-web-label input:checked + .no-web-custom::after {
+  content: '';
+  display: block;
+  width: 4px; height: 8px;
+  border: 2px solid #fff;
+  border-top: none; border-left: none;
+  transform: rotate(45deg) translate(-1px,-1px);
+}
+.no-web-text { line-height: 1.3; }
 .privacy-check-label {
   display: flex;
   align-items: flex-start;
@@ -3924,6 +3959,15 @@ ul {
           <label for="telefono">Teléfono <span aria-hidden="true" style="color:var(--orange)">*</span></label>
           <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" required autocomplete="tel" />
         </div>
+        <div class="form-group" id="web-group">
+          <label for="web">Tu web <span aria-hidden="true" style="color:var(--orange)">*</span></label>
+          <input type="url" id="web" name="web" placeholder="https://tuweb.com" autocomplete="url" />
+          <label class="no-web-label">
+            <input type="checkbox" id="no-web" name="no_web" />
+            <span class="no-web-custom"></span>
+            <span class="no-web-text">🌐 No tengo web ni presencia digital todavía</span>
+          </label>
+        </div>
         <!-- Honeypot anti-spam: invisible para humanos, los bots lo rellenan -->
         <div class="hp-field" aria-hidden="true">
           <label for="hp-website">No rellenar este campo</label>
@@ -4358,6 +4402,20 @@ if ('IntersectionObserver' in window) {
   for (var rg = 0; rg < rGrids.length; rg++) barObserver.observe(rGrids[rg]);
 }
 
+/* ── NO-WEB TOGGLE ── */
+(function() {
+  var noWeb = document.getElementById('no-web');
+  var webInput = document.getElementById('web');
+  if (!noWeb || !webInput) return;
+  noWeb.addEventListener('change', function() {
+    webInput.disabled = noWeb.checked;
+    webInput.value = '';
+    webInput.classList.remove('form-field-error');
+    webInput.style.opacity = noWeb.checked ? '0.4' : '1';
+    webInput.placeholder = noWeb.checked ? 'No aplica' : 'https://tuweb.com';
+  });
+})();
+
 /* ── CONTACT FORM ── */
 (function() {
   var form = document.getElementById('contact-form');
@@ -4403,6 +4461,9 @@ if ('IntersectionObserver' in window) {
     if (!sector) missing.push(form.querySelector('#sector'));
     if (!telefono) missing.push(form.querySelector('#telefono'));
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) missing.push(form.querySelector('#email'));
+    var noWebChecked = form.querySelector('#no-web') && form.querySelector('#no-web').checked;
+    var webVal = form.querySelector('#web') ? form.querySelector('#web').value.trim() : '';
+    if (!noWebChecked && !webVal) missing.push(form.querySelector('#web'));
 
     if (missing.length > 0) {
       for (var m = 0; m < missing.length; m++) missing[m].classList.add('form-field-error');
@@ -4428,12 +4489,13 @@ if ('IntersectionObserver' in window) {
       email: email,
       sector: sectorFinal,
       telefono: telefono,
+      web: noWebChecked ? 'Sin presencia digital' : webVal,
       timestamp: new Date().toISOString(),
       source: 'landing-one-agency'
     };
 
-    var WEBHOOK_LEAD = 'https://angel-n8n.94rrjd.easypanel.host/webhook/one-agency-lead';
-    var WEBHOOK_ONBOARDING = 'https://angel-n8n.94rrjd.easypanel.host/webhook/one-agency-onboarding';
+    var WEBHOOK_LEAD = 'https://angel-n8n-oneagency.p08ks6.easypanel.host/webhook/one-agency-lead';
+    var WEBHOOK_ONBOARDING = 'https://angel-n8n-oneagency.p08ks6.easypanel.host/webhook/one-agency-onboarding';
     var body = JSON.stringify(payload);
     var headers = { 'Content-Type': 'application/json' };
 
