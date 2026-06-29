@@ -2,6 +2,7 @@ FROM nginx:alpine
 
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY security-headers.conf /etc/nginx/security-headers.conf
 
 # Copy website files
 COPY index.html /usr/share/nginx/html/index.html
