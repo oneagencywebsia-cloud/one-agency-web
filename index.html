@@ -1247,11 +1247,11 @@ ul {
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 
 .service-card-flip {
-  height: 320px;
+  height: 256px;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -2283,7 +2283,7 @@ ul {
   .fc-1, .fc-2, .fc-3 { display: none; }
 
   /* --- SERVICIOS --- */
-  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
   /* --- RESULTADOS --- */
   .results-grid {
@@ -2397,8 +2397,8 @@ ul {
   .tech-item { font-size: 0.8rem; padding: 6px 12px; }
 
   /* --- SERVICIOS --- */
-  .services-grid { grid-template-columns: 1fr; gap: 14px; }
-  .service-card-flip { height: auto; min-height: 260px; }
+  .services-grid { grid-template-columns: 1fr; gap: 12px; }
+  .service-card-flip { height: auto; min-height: 196px; }
 
   /* --- RESULTADOS --- */
   .results-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -2536,7 +2536,7 @@ ul {
   .results-grid { grid-template-columns: 1fr; }
   .result-num { font-size: 2rem; }
   .hero-stats { gap: 10px; }
-  .service-card-flip { height: auto; min-height: 240px; }
+  .service-card-flip { height: auto; min-height: 190px; }
   .glass-card { padding: 20px 16px; }
   .contact-form { padding: 20px 16px; }
   .caso-card { padding: 20px 16px; }
@@ -3741,12 +3741,7 @@ input:focus, select:focus, textarea:focus{
    OPTIMIZACION DE RENDIMIENTO  (scroll fluido, menos repaint)
    ============================================================ */
 
-/* solo se pinta lo que esta a la vista (gran ahorro en pagina larga) */
-main > section, .footer{
-  content-visibility: auto;
-  contain-intrinsic-size: auto 760px;
-}
-.hero{ content-visibility: visible; }
+/* (content-visibility retirado: provocaba saltos de scroll al renderizar secciones) */
 
 /* menos blur de cristal en escritorio */
 @media (min-width: 981px){
@@ -3809,6 +3804,46 @@ main > section, .footer{
   .rv-l{ transform: translateY(.3em) !important; }
 }
 @keyframes rv-pop-lite{ 0%{ transform: scale(.975); } 60%{ transform: scale(1.006); } 100%{ transform: scale(1); } }
+
+
+/* ---- hero: no gastar GPU cuando no se ve, y sin giro en movil ---- */
+body.hero-paused .orbit,
+body.hero-paused .orbit-system,
+body.hero-paused .particle,
+body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
+@media (max-width: 980px){
+  .orbit, .orbit-2, .orbit-3, .orbit-4{ animation: none !important; }
+  .orbit-system{ animation: none !important; }
+}
+
+
+/* ---- SERVICIOS en movil: sin flip, tarjeta compacta con todo visible ---- */
+@media (max-width: 980px){
+  .service-card-flip{ height: auto !important; min-height: 0 !important; }
+  .service-card-inner{ height: auto !important; transform: none !important; transition: none !important; }
+  .service-card-flip{
+    background: #ffffff !important;
+    border: 1px solid rgba(59,130,246,.16) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 26px -16px rgba(59,130,246,.30) !important;
+    overflow: hidden !important;
+  }
+  .service-card-front, .service-card-back{
+    position: static !important; inset: auto !important; height: auto !important;
+    opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;
+    transform: none !important; overflow: visible !important;
+    background: transparent !important; border: 0 !important; box-shadow: none !important;
+  }
+  .service-card-front{ padding: 22px 18px 8px !important; gap: 12px !important; }
+  .service-card-back{
+    padding: 0 18px 20px !important; text-align: center !important;
+  }
+  .service-card-back .back-icon,
+  .service-card-back h3{ display: none !important; }
+  .service-card-back p{ margin: 0 auto 10px !important; }
+  .service-card-flip.flipped .service-card-front{ opacity: 1 !important; visibility: visible !important; }
+  .service-visual{ transform: none !important; }
+}
 
 </style>
 
@@ -5100,10 +5135,10 @@ document.addEventListener('click', function(e) {
   var io = new IntersectionObserver(function (entries) {
     for (var i = 0; i < entries.length; i++) {
       var t = entries[i].target;
-      var vis = entries[i].isIntersecting && entries[i].intersectionRatio >= 0.06;
+      var vis = entries[i].isIntersecting;
       if (vis) {
-        if (!reduce) {
-          t.style.setProperty('--rev-y', (dir < 0 ? -28 : 28) + 'px');
+        if (!reduce && window.innerWidth > 980) {
+          t.style.setProperty('--rev-y', (dir < 0 ? -24 : 24) + 'px');
           t.style.setProperty('--rev-d', staggerFor(t) + 'ms');
         }
         t.classList.add('visible');
@@ -5113,7 +5148,7 @@ document.addEventListener('click', function(e) {
         t.classList.remove('visible');
       }
     }
-  }, { threshold: [0, 0.06, 0.15], rootMargin: '0px 0px 0px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px 18% 0px' });
 
   var els = document.querySelectorAll('.reveal');
   for (var r = 0; r < els.length; r++) io.observe(els[r]);
@@ -5811,8 +5846,10 @@ if (window.innerWidth > 900) {
     });
     el.innerHTML = ''; el.appendChild(frag);
   }
-  var titles = document.querySelectorAll('.section-title, .hero-title');
-  for (var ti = 0; ti < titles.length; ti++) splitTitle(titles[ti]);
+  if (window.matchMedia('(min-width: 981px)').matches) {
+    var titles = document.querySelectorAll('.section-title, .hero-title');
+    for (var ti = 0; ti < titles.length; ti++) splitTitle(titles[ti]);
+  }
 
   /* --- split de etiquetas (letra a letra, emoji intacto) --- */
   function splitTag(el) {
@@ -5836,8 +5873,10 @@ if (window.innerWidth > 900) {
     });
     el.textContent = ''; el.appendChild(frag);
   }
-  var tags = document.querySelectorAll('.section-tag');
-  for (var tg = 0; tg < tags.length; tg++) splitTag(tags[tg]);
+  if (window.matchMedia('(min-width: 981px)').matches) {
+    var tags = document.querySelectorAll('.section-tag');
+    for (var tg = 0; tg < tags.length; tg++) splitTag(tags[tg]);
+  }
 
   /* --- contadores + barras --- */
   function runCounters(scope) {
@@ -5877,14 +5916,12 @@ if (window.innerWidth > 900) {
   var io = new IntersectionObserver(function (entries) {
     for (var i = 0; i < entries.length; i++) {
       var t = entries[i].target;
-      var vis = entries[i].isIntersecting && entries[i].intersectionRatio >= 0.06;
+      var vis = entries[i].isIntersecting;
       if (vis) {
         if (t._rvSeen) continue;
         t._rvSeen = true;
-        if (t.matches && t.matches(POP)) {
-          t.classList.remove('rv-pop');
-          void t.offsetWidth;
-          t.style.animationDelay = Math.min(sibIndex(t) * 28, 260) + 'ms';
+        if (POP_ON && t.matches && t.matches(POP)) {
+          t.style.animationDelay = Math.min(sibIndex(t) * 26, 240) + 'ms';
           t.classList.add('rv-pop');
         }
         runCounters(t); runBars(t);
@@ -5894,8 +5931,9 @@ if (window.innerWidth > 900) {
         resetCounters(t);
       }
     }
-  }, { threshold: [0, 0.06, 0.2] });
-  var popEls = document.querySelectorAll(POP + ',.hero-stats,.results-grid,.hero');
+  }, { threshold: 0, rootMargin: '0px 0px 12% 0px' });
+  var POP_ON = window.matchMedia('(min-width: 981px)').matches;
+  var popEls = document.querySelectorAll((POP_ON ? POP + ',' : '') + '.hero-stats,.results-grid,.hero');
   for (var pe = 0; pe < popEls.length; pe++) io.observe(popEls[pe]);
   document.addEventListener('animationend', function (e) {
     if (e.animationName === 'rv-pop') { e.target.classList.remove('rv-pop'); e.target.style.animationDelay = ''; }
@@ -5935,6 +5973,16 @@ if (window.innerWidth > 900) {
       })(tilt[c]);
     }
   }
+})();
+
+/* -- pausa las animaciones del hero cuando no esta a la vista -- */
+(function () {
+  var hero = document.querySelector('.hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
+  var o = new IntersectionObserver(function (e) {
+    document.body.classList.toggle('hero-paused', !e[0].isIntersecting);
+  }, { threshold: 0 });
+  o.observe(hero);
 })();
 </script>
 
