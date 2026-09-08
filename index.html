@@ -3845,6 +3845,92 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
   .service-visual{ transform: none !important; }
 }
 
+
+/* ============================================================
+   TARJETAS 3D  (se inclinan al entrar/salir con el scroll)
+   ============================================================ */
+.js-loaded .s3d.reveal{
+  opacity: 0;
+  transform: perspective(1300px) rotateX(var(--rev-rx, 11deg)) translateY(var(--rev-y, 30px)) scale(.945);
+  filter: none;
+  transform-origin: center 80%;
+  transition:
+    opacity .55s ease var(--rev-d, 0s),
+    transform .72s cubic-bezier(.2,.9,.25,1) var(--rev-d, 0s);
+}
+.js-loaded .s3d.reveal.visible{
+  opacity: 1;
+  transform: perspective(1300px) rotateX(0deg) translateY(0) scale(1);
+}
+@media (max-width: 980px){
+  .js-loaded .s3d.reveal{
+    transform: perspective(1000px) rotateX(var(--rev-rx, 7deg)) translateY(var(--rev-y, 16px)) scale(.976);
+    transition: opacity .45s ease, transform .5s cubic-bezier(.2,.9,.25,1);
+  }
+  .js-loaded .s3d.reveal.visible{ transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce){
+  .js-loaded .s3d.reveal, .js-loaded .s3d.reveal.visible{ transform: none !important; }
+}
+
+/* ============================================================
+   MAS SOMBRAS DE MARCA  (y mucha presencia al principio / hero)
+   ============================================================ */
+:root{
+  --sh-brand:    0 24px 52px -18px rgba(var(--bBlue),.42), 0 10px 26px -12px rgba(var(--bOrange),.26), 0 2px 6px -2px rgba(var(--bBlue),.16);
+  --sh-brand-lg: 0 48px 92px -24px rgba(var(--bBlue),.52), 0 22px 46px -16px rgba(var(--bOrange),.32);
+}
+
+.hero{ position: relative; }
+.hero::before{
+  content:""; position:absolute; inset:-8% -16% 14% -16%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(44% 42% at 20% 28%, rgba(var(--bBlue),.30), transparent 70%),
+    radial-gradient(40% 40% at 84% 24%, rgba(var(--bOrange),.24), transparent 70%),
+    radial-gradient(52% 48% at 56% 84%, rgba(var(--bViolet),.20), transparent 72%);
+}
+.hero > *{ position: relative; z-index: 1; }
+
+.hero-badge{ box-shadow: 0 16px 36px -14px rgba(var(--bBlue),.55), 0 0 0 1px rgba(var(--bBlue),.16) !important; }
+.hero-ctas .btn-primary{ box-shadow: 0 24px 56px -14px rgba(var(--bBlue),.72), 0 12px 28px -10px rgba(var(--bOrange),.52) !important; }
+.hero-ctas .btn-outline{ box-shadow: 0 16px 36px -16px rgba(var(--bBlue),.44) !important; }
+.hero-stats .stat-num, .hero-stats .stat-unit{ text-shadow: 0 12px 32px rgba(var(--bBlue),.38), 0 3px 10px rgba(var(--bOrange),.28); }
+
+.float-card{
+  box-shadow: 0 28px 58px -18px rgba(var(--bBlue),.52), 0 12px 26px -12px rgba(var(--bOrange),.32), 0 0 0 1px rgba(var(--bBlue),.10) !important;
+}
+
+.orbit-node{ box-shadow: 0 12px 28px -8px rgba(var(--bBlue),.5), 0 0 20px rgba(var(--bOrange),.32) !important; }
+.orbit-node.node-orange{ box-shadow: 0 12px 28px -8px rgba(var(--bOrange),.5), 0 0 20px rgba(var(--bBlue),.32) !important; }
+.orbit-core{ filter: drop-shadow(0 18px 36px rgba(var(--bBlue),.34)) drop-shadow(0 6px 16px rgba(var(--bOrange),.20)) !important; }
+.orbit-system{ position: relative; }
+.orbit-system::after{
+  content:""; position:absolute; left:50%; bottom:2%; width:56%; height:30px; transform:translateX(-50%);
+  border-radius:50%; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse at center, rgba(var(--bBlue),.24), rgba(var(--bOrange),.10) 55%, transparent 72%);
+  filter: blur(12px);
+}
+
+.navbar:not(.scrolled){ box-shadow: 0 12px 44px -26px rgba(var(--bBlue),.42); }
+.hero-title .gradient-text, .hero-title .rv-gt{ filter: drop-shadow(0 10px 28px rgba(var(--bBlue),.34)); }
+
+@media (max-width: 980px){
+  .orbit-node{ -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .hero::before{ inset:-4% -8% 10% -8%; }
+}
+
+
+/* ---- ORBITAS DEL HERO: visibles pero sutiles ---- */
+.orbit-ring{
+  border-width: 1.5px !important;
+  border-color: rgba(var(--bBlue),.26) !important;
+  box-shadow: 0 0 18px rgba(var(--bBlue),.10) !important;
+}
+.orbit-ring-1{ border-color: rgba(var(--bBlue),.32) !important; }
+.orbit-ring-2{ border-style: dashed !important; border-color: rgba(var(--bViolet),.24) !important; box-shadow: none !important; }
+.orbit-ring-3{ border-color: rgba(var(--bOrange),.24) !important; box-shadow: 0 0 18px rgba(var(--bOrange),.08) !important; }
+body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
+
 </style>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -5140,11 +5226,15 @@ document.addEventListener('click', function(e) {
         if (!reduce && window.innerWidth > 980) {
           t.style.setProperty('--rev-y', (dir < 0 ? -24 : 24) + 'px');
           t.style.setProperty('--rev-d', staggerFor(t) + 'ms');
+          if (t.classList.contains('s3d')) t.style.setProperty('--rev-rx', (dir < 0 ? -9 : 11) + 'deg');
         }
         t.classList.add('visible');
       } else if (!t.hasAttribute('data-reveal-once')) {
         var below = entries[i].boundingClientRect.top > 0;
-        if (!reduce) t.style.setProperty('--rev-y', (below ? 40 : -40) + 'px');
+        if (!reduce) {
+          t.style.setProperty('--rev-y', (below ? 40 : -40) + 'px');
+          if (window.innerWidth > 980 && t.classList.contains('s3d')) t.style.setProperty('--rev-rx', (below ? 12 : -10) + 'deg');
+        }
         t.classList.remove('visible');
       }
     }
@@ -5920,7 +6010,7 @@ if (window.innerWidth > 900) {
       if (vis) {
         if (t._rvSeen) continue;
         t._rvSeen = true;
-        if (POP_ON && t.matches && t.matches(POP)) {
+        if (POP_ON && t.matches && t.matches(POP) && !t.classList.contains('s3d')) {
           t.style.animationDelay = Math.min(sibIndex(t) * 26, 240) + 'ms';
           t.classList.add('rv-pop');
         }
@@ -5962,12 +6052,12 @@ if (window.innerWidth > 900) {
           raf = requestAnimationFrame(function () {
             raf = null;
             card.style.transition = 'transform .08s linear';
-            card.style.transform = 'perspective(950px) rotateX(' + ((0.5 - py) * 6.5).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * 7.5).toFixed(2) + 'deg)';
+            card.style.setProperty('transform', 'perspective(950px) rotateX(' + ((0.5 - py) * 6.5).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * 7.5).toFixed(2) + 'deg)', 'important');
           });
         });
         card.addEventListener('pointerleave', function () {
           card.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
-          card.style.transform = '';
+          card.style.removeProperty('transform');
           setTimeout(function () { card.style.transition = ''; }, 620);
         });
       })(tilt[c]);
@@ -5983,6 +6073,15 @@ if (window.innerWidth > 900) {
     document.body.classList.toggle('hero-paused', !e[0].isIntersecting);
   }, { threshold: 0 });
   o.observe(hero);
+})();
+
+/* -- marca las tarjetas de info para el efecto 3D al scroll -- */
+(function () {
+  try {
+    var sel = '.ia-card, .result-card, .step-card, .service-card-flip, .tools-panel, .comparison-item, .faq-item, .caso-card';
+    var els = document.querySelectorAll(sel);
+    for (var i = 0; i < els.length; i++) els[i].classList.add('s3d');
+  } catch (e) {}
 })();
 </script>
 
