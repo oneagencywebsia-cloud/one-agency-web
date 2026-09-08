@@ -3479,6 +3479,155 @@ main, .navbar, footer, #wave-fx, #particles-container{ position: relative; z-ind
   .navbar.scrolled{ background: rgba(255,255,255,.9) !important; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 }
 
+
+/* ============================================================
+   COLOR DE MARCA EN TODA LA WEB  +  SOMBRAS DE MARCA
+   Azul #3B82F6 · Naranja #F97316 · toque violeta #8B5CF6
+   ============================================================ */
+:root{
+  --bBlue: 59,130,246;
+  --bOrange: 249,115,22;
+  --bViolet: 139,92,246;
+  --sh-brand:    0 20px 46px -20px rgba(var(--bBlue),.34), 0 8px 20px -12px rgba(var(--bOrange),.20);
+  --sh-brand-lg: 0 40px 80px -26px rgba(var(--bBlue),.42), 0 16px 36px -16px rgba(var(--bOrange),.26);
+  --lg-shadow: var(--sh-brand);
+}
+
+/* --- lienzo de color bajo toda la página --- */
+body{ background: transparent !important; }
+.fx-bg{
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(72% 60% at 4% 0%,   rgba(var(--bBlue),.22),   transparent 55%),
+    radial-gradient(66% 60% at 100% 24%, rgba(var(--bOrange),.16), transparent 55%),
+    radial-gradient(90% 80% at 50% 118%, rgba(var(--bViolet),.15), transparent 55%),
+    #ffffff;
+}
+.fx-aurora{ z-index: -1; }
+.fx-aurora span{ opacity: .38 !important; }
+.fx-aurora span:nth-child(1){ background: radial-gradient(circle, rgba(var(--bBlue),.60), transparent 70%); }
+.fx-aurora span:nth-child(2){ background: radial-gradient(circle, rgba(var(--bOrange),.52), transparent 70%); }
+.fx-aurora span:nth-child(3){ background: radial-gradient(circle, rgba(var(--bViolet),.42), transparent 70%); }
+
+/* --- secciones translúcidas: el color de fondo respira a través --- */
+.hero, .social-proof, .servicios, .resultados, .ia-section, .tools-section,
+.comparison-section, .proceso, .founder-section, .cta-final, .faq-section, .marquee-strip{
+  background-color: rgba(255,255,255,.80) !important;
+  background-image: none !important;
+}
+.hero{ background-image:
+   radial-gradient(58% 50% at 12% 0%, rgba(var(--bBlue),.16), transparent 68%),
+   radial-gradient(52% 46% at 100% 16%, rgba(var(--bOrange),.13), transparent 68%) !important; }
+.servicios{ background-image:
+   radial-gradient(50% 42% at 100% 0%, rgba(var(--bBlue),.12), transparent 70%) !important; }
+.resultados{ background-color: rgba(255,255,255,.74) !important; background-image:
+   linear-gradient(180deg, rgba(var(--bBlue),.10), rgba(var(--bOrange),.08)) !important; }
+.ia-section{ background-image:
+   radial-gradient(58% 50% at 0% 50%, rgba(var(--bOrange),.13), transparent 70%),
+   radial-gradient(48% 50% at 100% 100%, rgba(var(--bBlue),.12), transparent 70%) !important; }
+.tools-section{ background-color: rgba(255,255,255,.74) !important; background-image:
+   linear-gradient(135deg, rgba(var(--bBlue),.11), rgba(var(--bOrange),.09)) !important; }
+.comparison-section{ background-image:
+   radial-gradient(60% 48% at 50% 0%, rgba(var(--bBlue),.11), transparent 72%) !important; }
+.proceso{ background-color: rgba(255,255,255,.74) !important; background-image:
+   radial-gradient(48% 44% at 0% 100%, rgba(var(--bOrange),.13), transparent 72%),
+   radial-gradient(48% 44% at 100% 0%, rgba(var(--bBlue),.10), transparent 72%) !important; }
+.founder-section{ background-image:
+   radial-gradient(54% 50% at 100% 0%, rgba(var(--bBlue),.15), transparent 70%),
+   radial-gradient(46% 46% at 0% 100%, rgba(var(--bOrange),.10), transparent 70%) !important; }
+.cta-final{ background-color: rgba(255,255,255,.72) !important; background-image:
+   radial-gradient(72% 64% at 50% 122%, rgba(var(--bBlue),.22), transparent 68%),
+   radial-gradient(50% 50% at 0% 0%, rgba(var(--bOrange),.14), transparent 66%) !important; }
+.faq-section{ background-image:
+   radial-gradient(50% 40% at 100% 100%, rgba(var(--bBlue),.11), transparent 72%) !important; }
+.footer{
+  position: relative;
+  background-color: rgba(255,255,255,.66) !important;
+  background-image:
+    linear-gradient(180deg, rgba(var(--bBlue),.10), rgba(var(--bViolet),.06) 60%, transparent) !important;
+}
+.footer::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px; pointer-events:none;
+  background: linear-gradient(90deg, transparent, rgba(var(--bBlue),.7), rgba(var(--bOrange),.7), rgba(var(--bViolet),.6), transparent);
+}
+
+/* --- línea luminosa de marca entre secciones --- */
+.servicios, .resultados, .ia-section, .tools-section, .comparison-section,
+.proceso, .founder-section, .cta-final, .faq-section{ position: relative; }
+.servicios::before, .resultados::before, .ia-section::before, .tools-section::before,
+.comparison-section::before, .proceso::before, .founder-section::before,
+.cta-final::before, .faq-section::before{
+  content:""; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:min(780px,86%); height:2px; pointer-events:none;
+  background: linear-gradient(90deg, transparent, rgba(var(--bBlue),.6), rgba(var(--bOrange),.6), transparent);
+  border-radius: 2px;
+}
+
+/* --- SOMBRAS DE MARCA EN TODO --- */
+.glass-card, .ia-card, .tools-panel, .float-card, .result-card, .step-card,
+.service-card-front, .service-card-back{
+  box-shadow: var(--sh-brand), inset 0 1px 0 var(--lg-hi) !important;
+  border-color: rgba(var(--bBlue),.24) !important;
+}
+.glass-card:hover, .ia-card:hover, .float-card:hover, .result-card:hover, .step-card:hover{
+  box-shadow: var(--sh-brand-lg), 0 0 0 1px rgba(var(--bBlue),.30), inset 0 1px 0 var(--lg-hi) !important;
+  border-color: rgba(var(--bBlue),.4) !important;
+}
+.glass-card, .ia-card, .tools-panel, .float-card{
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.66), rgba(255,255,255,.40)),
+    radial-gradient(130% 130% at 0% 0%,   rgba(var(--bBlue),.18),   transparent 55%),
+    radial-gradient(130% 130% at 100% 100%, rgba(var(--bOrange),.14), transparent 55%) !important;
+}
+.btn-primary{ box-shadow: 0 16px 40px -12px rgba(var(--bBlue),.60), 0 8px 20px -10px rgba(var(--bOrange),.42) !important; }
+.btn-primary:hover{ box-shadow: 0 24px 56px -12px rgba(var(--bBlue),.75), 0 12px 30px -10px rgba(var(--bOrange),.55) !important; }
+.btn-outline{ box-shadow: 0 10px 26px -14px rgba(var(--bBlue),.40) !important; }
+.tool-chip{ box-shadow: 0 8px 20px -12px rgba(var(--bBlue),.32), inset 0 1px 0 rgba(255,255,255,.92) !important; }
+.tool-chip:hover{ box-shadow: 0 20px 38px -16px rgba(var(--bBlue),.46), 0 0 0 1px var(--b,rgba(var(--bBlue),.42)), inset 0 1px 0 #fff !important; }
+.navbar.scrolled{ box-shadow: 0 14px 38px -16px rgba(var(--bBlue),.32), inset 0 1px 0 rgba(255,255,255,.9) !important; }
+.section-tag{ box-shadow: 0 8px 22px -10px rgba(var(--bOrange),.40); }
+.faq-item{ box-shadow: 0 10px 26px -16px rgba(var(--bBlue),.28) !important; }
+.faq-item.open{ box-shadow: 0 18px 40px -18px rgba(var(--bBlue),.40), 0 0 0 1px rgba(var(--bBlue),.22) !important; }
+.comparison-item-before{ box-shadow: 0 10px 24px -16px rgba(220,38,38,.35) !important; }
+.comparison-item-after{ box-shadow: 0 10px 24px -16px rgba(22,163,74,.35) !important; }
+input, select, textarea, .form-input, .form-select, .form-group input, .form-group select, .form-group textarea{
+  box-shadow: 0 6px 18px -12px rgba(var(--bBlue),.28) !important;
+}
+input:focus, select:focus, textarea:focus{
+  box-shadow: 0 0 0 3px rgba(var(--bBlue),.18), 0 10px 26px -10px rgba(var(--bBlue),.4) !important;
+  border-color: rgba(var(--bBlue),.55) !important;
+}
+.founder-avatar, .orbit-core, .result-icon, .step-icon{
+  filter: drop-shadow(0 12px 30px rgba(var(--bBlue),.42)) drop-shadow(0 6px 16px rgba(var(--bOrange),.28)) !important;
+}
+.wa-float, #wa-float, .whatsapp-float{ box-shadow: 0 14px 34px -10px rgba(37,211,102,.55), 0 0 0 6px rgba(37,211,102,.10) !important; }
+.social-link{ box-shadow: 0 8px 20px -12px rgba(var(--bBlue),.35); }
+
+/* --- partículas más vivas --- */
+.particle{ opacity: .6 !important; box-shadow: 0 0 12px 2px rgba(var(--bBlue),.5); }
+.particle:nth-child(even){ box-shadow: 0 0 12px 2px rgba(var(--bOrange),.5); }
+
+/* --- degradados de texto con vida --- */
+.gradient-text{ background-size: 220% 220% !important; animation: gradient-shift 9s ease infinite !important; }
+
+/* --- respiración suave del CTA principal --- */
+@keyframes brand-breathe{
+  0%,100%{ box-shadow: 0 16px 40px -12px rgba(var(--bBlue),.55), 0 8px 20px -10px rgba(var(--bOrange),.40); }
+  50%{     box-shadow: 0 22px 54px -12px rgba(var(--bBlue),.78), 0 12px 30px -10px rgba(var(--bOrange),.55); }
+}
+#nav-cta.btn-primary, .cta-final .btn-primary{ animation: gradient-shift 4s ease infinite, brand-breathe 4.5s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce){
+  #nav-cta.btn-primary, .cta-final .btn-primary{ animation: none !important; }
+  .gradient-text{ animation: none !important; }
+}
+@media (max-width: 820px){
+  .hero, .social-proof, .servicios, .resultados, .ia-section, .tools-section,
+  .comparison-section, .proceso, .founder-section, .cta-final, .faq-section, .marquee-strip{
+    background-color: rgba(255,255,255,.9) !important;
+  }
+}
+
 </style>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -5402,6 +5551,18 @@ if (window.innerWidth > 900) {
           c.style.setProperty('--py', (e.clientY - r.top) + 'px');
         });
       });
+    }
+  } catch (e) {}
+})();
+
+/* -- lienzo de color de marca detrás de todo -- */
+(function () {
+  try {
+    if (!document.querySelector('.fx-bg')) {
+      var d = document.createElement('div');
+      d.className = 'fx-bg';
+      d.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(d, document.body.firstChild);
     }
   } catch (e) {}
 })();
