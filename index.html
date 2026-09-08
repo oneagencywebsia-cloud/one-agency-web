@@ -3210,6 +3210,87 @@ ul {
 }
 .ia-bottom-banner p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; }
 
+/* --- HERRAMIENTAS / STACK ---------------------------- */
+.tools-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(249,115,22,0.05));
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.tools-intro {
+  max-width: 760px;
+  margin: -24px auto 44px;
+  text-align: center;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--text3);
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.tool-card {
+  padding: 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--b, rgba(59,130,246,0.4));
+  box-shadow: 0 20px 40px -18px var(--b, rgba(59,130,246,0.4));
+}
+.tool-window {
+  position: relative;
+  height: 118px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  background: radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--b) 24%, transparent), transparent 72%), #0b0b0f;
+  border: 1px solid color-mix(in srgb, var(--b) 34%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.tool-dots {
+  position: absolute;
+  top: 10px; left: 12px;
+  display: flex; gap: 5px;
+}
+.tool-dots i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+}
+.tool-logo {
+  width: 52px; height: 52px;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+}
+.tool-card h3 { font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
+.tool-what { font-size: 0.9rem; color: rgba(255,255,255,0.82); margin: 0 0 10px; }
+.tool-benefit { font-size: 0.85rem; color: rgba(255,255,255,0.62); margin: 0; line-height: 1.6; }
+.tool-benefit strong { color: var(--blue-light); font-weight: 600; }
+.tools-extra {
+  margin-top: 20px;
+  padding: 26px 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  text-align: center;
+}
+.tools-extra p { font-size: 0.92rem; color: rgba(255,255,255,0.82); margin: 0; }
+.tools-extra strong { color: #fff; }
+.tools-cta { margin-top: 40px; text-align: center; }
+.tools-cta p { font-size: 1.02rem; color: var(--text2); margin-bottom: 18px; }
+@media (max-width: 480px) {
+  .tool-window { height: 104px; }
+  .tools-intro { margin-top: -8px; }
+}
+
 .comparison-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -3248,6 +3329,7 @@ ul {
       </a>
       <ul class="nav-links" id="nav-links">
         <li><a href="#servicios" class="nav-link">Servicios</a></li>
+        <li><a href="#herramientas" class="nav-link">Herramientas</a></li>
         <li><a href="#resultados" class="nav-link">Resultados</a></li>
         <li><a href="#proceso" class="nav-link">Proceso</a></li>
         <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
@@ -3265,6 +3347,7 @@ ul {
   <div class="mobile-menu" id="mobile-menu">
     <button id="menu-close" aria-label="Cerrar menú" style="position:fixed;top:24px;right:24px;background:none;border:none;color:#fff;font-size:2.2rem;cursor:pointer;z-index:100000;line-height:1;padding:12px;display:none;">✕</button>
     <a href="#servicios" class="mobile-link">Servicios</a>
+    <a href="#herramientas" class="mobile-link">Herramientas</a>
     <a href="#resultados" class="mobile-link">Resultados</a>
     <a href="#proceso" class="mobile-link">Proceso</a>
     <a href="#nosotros" class="mobile-link">Nosotros</a>
@@ -3753,6 +3836,132 @@ ul {
       </div>
       <div class="ia-bottom-banner">
         <p>La IA no reemplaza a tu equipo. <strong>Lo empodera.</strong> Eliminamos lo repetitivo, dejamos lo creativo para humanos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS / STACK -->
+  <section class="tools-section" id="herramientas" aria-label="Herramientas que usamos para automatizar tu negocio">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-tag">🧰 CON QUÉ TRABAJAMOS</span>
+        <h2 class="section-title">Las herramientas que ponemos <span class="gradient-text">a trabajar para ti</span></h2>
+        <p class="section-subtitle">No necesitas saber qué es cada una. Nosotros las montamos, las conectamos y las mantenemos. Pero para que veas que no hay humo, aquí tienes qué hace cada pieza y, sobre todo, qué ganas tú con ella.</p>
+      </div>
+
+      <p class="tools-intro reveal reveal-delay-1">Esto es lo que hay «bajo el capó» de cada automatización que te entregamos: tecnología profesional, la misma que usan empresas mucho más grandes, aplicada a tu negocio y a tu presupuesto. Tú solo ves el resultado: menos trabajo manual, respuestas más rápidas y clientes mejor atendidos.</p>
+
+      <div class="tools-grid reveal reveal-delay-1">
+
+        <article class="tool-card" style="--b:#4285F4">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Google Cloud"><path fill="#4285F4" d="M12.19 2.38a9.344 9.344 0 0 0-9.234 6.893c.053-.02-.055.013 0 0-3.875 2.551-3.922 8.11-.247 10.941l.006-.007-.007.03a6.717 6.717 0 0 0 4.077 1.356h5.173l.03.03h5.192c6.687.053 9.376-8.605 3.835-12.35a9.365 9.365 0 0 0-2.821-4.552l-.043.043.006-.05A9.344 9.344 0 0 0 12.19 2.38zm-.358 4.146c1.244-.04 2.518.368 3.486 1.15a5.186 5.186 0 0 1 1.862 4.078v.518c3.53-.07 3.53 5.262 0 5.193h-5.193l-.008.009v-.04H6.785a2.59 2.59 0 0 1-1.067-.23h.001a2.597 2.597 0 1 1 3.437-3.437l3.013-3.012A6.747 6.747 0 0 0 8.11 8.24c.018-.01.04-.026.054-.023a5.186 5.186 0 0 1 3.67-1.69z"/></svg>
+          </div>
+          <h3>Google Cloud</h3>
+          <p class="tool-what">Los servidores de Google donde vive y se ejecuta tu automatización, 24 horas al día.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> la misma infraestructura que usan las grandes marcas. Rápida, segura y siempre encendida: tu sistema no se cae aunque te entren cientos de pedidos o mensajes a la vez.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#3FCF8E">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Supabase"><path fill="#3FCF8E" d="M11.9 1.036c-.015-.986-1.26-1.41-1.874-.637L.764 12.05C-.33 13.427.65 15.455 2.409 15.455h9.579l.113 7.51c.014.985 1.259 1.408 1.873.636l9.262-11.653c1.093-1.375.113-3.403-1.645-3.403h-9.642z"/></svg>
+          </div>
+          <h3>Supabase</h3>
+          <p class="tool-what">La base de datos: el archivador digital donde se guarda ordenada toda tu información (clientes, pedidos, historial, citas).</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> todos tus datos en un solo sitio, encontrables al instante y con copia de seguridad automática. Se acabaron los Excel sueltos y el «¿dónde apunté esto?».</p>
+        </article>
+
+        <article class="tool-card" style="--b:#EA4B71">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="n8n"><path fill="#EA4B71" d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></svg>
+          </div>
+          <h3>n8n</h3>
+          <p class="tool-what">El motor que conecta todas tus aplicaciones entre sí y ejecuta los procesos automáticos, paso a paso.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> aquí montamos tus flujos del tipo «entra un cliente nuevo → se guarda, te avisa y le manda un WhatsApp de bienvenida». Todo solo, sin que nadie tenga que acordarse de hacerlo.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#26A5E4">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Telegram"><path fill="#26A5E4" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </div>
+          <h3>Telegram</h3>
+          <p class="tool-what">Una app de mensajería que usamos como tu «mando a distancia»: recibes avisos y das órdenes al sistema escribiendo un mensaje.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> te enteras al momento en el móvil de cada venta, incidencia o cliente nuevo. Y si quieres lanzar algo (un informe, un envío), lo pides por chat y ya está.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#25D366">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="WhatsApp"><path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </div>
+          <h3>WhatsApp</h3>
+          <p class="tool-what">El canal donde ya están tus clientes y donde sí abren los mensajes.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> confirmaciones de cita, seguimiento de pedidos, recordatorios y respuestas automáticas por WhatsApp. Menos llamadas perdidas, menos «se me olvidó contestar» y más ventas cerradas.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#0467DF">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Meta"><path fill="#0467DF" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>
+          </div>
+          <h3>Meta (Instagram y Facebook)</h3>
+          <p class="tool-what">Tus anuncios y tus mensajes directos de Instagram y Facebook.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> cada persona que deja un comentario, un DM o pincha en un anuncio entra directa en tu sistema y recibe respuesta en segundos, no al día siguiente. Ningún interesado se enfría.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#10A37F">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="OpenAI"><path fill="#ffffff" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+          </div>
+          <h3>OpenAI (ChatGPT)</h3>
+          <p class="tool-what">La inteligencia artificial que redacta, resume y entiende texto como una persona.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> contesta emails y consultas frecuentes, clasifica lo que entra, resume documentos largos y atiende dudas con el tono de tu marca, a cualquier hora y sin cansarse.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#8E75B2">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Google Gemini"><path fill="#8E75B2" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+          </div>
+          <h3>Gemini</h3>
+          <p class="tool-what">La inteligencia artificial de Google, muy buena leyendo imágenes y documentos y analizando mucha información de golpe.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> le pasas facturas, tickets o formularios y saca los datos solos. Y cuando hay que analizar un montón de datos, te devuelve una decisión clara, no una hoja de números.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#FF4438">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Redis"><path fill="#FF4438" d="M22.71 13.145c-1.66 2.092-3.452 4.483-7.038 4.483-3.203 0-4.397-2.825-4.48-5.12.701 1.484 2.073 2.685 4.214 2.63 4.117-.133 6.94-3.852 6.94-7.239 0-4.05-3.022-6.972-8.268-6.972-3.752 0-8.4 1.428-11.455 3.685C2.59 6.937 3.885 9.958 4.35 9.626c2.648-1.904 4.748-3.13 6.784-3.744C8.12 9.244.886 17.05 0 18.425c.1 1.261 1.66 4.648 2.424 4.648.232 0 .431-.133.664-.365a100.49 100.49 0 0 0 5.54-6.765c.222 3.104 1.748 6.898 6.014 6.898 3.819 0 7.604-2.756 9.33-8.965.2-.764-.73-1.361-1.261-.73zm-4.349-5.013c0 1.959-1.926 2.922-3.685 2.922-.941 0-1.664-.247-2.235-.568 1.051-1.592 2.092-3.225 3.21-4.973 1.972.334 2.71 1.43 2.71 2.619z"/></svg>
+          </div>
+          <h3>Redis</h3>
+          <p class="tool-what">Una memoria ultrarrápida que hace que el sistema responda al instante y no se líe cuando hay mucho movimiento.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> aunque lleguen muchas peticiones a la vez, las cosas pasan en el orden correcto, sin duplicados ni bloqueos. El cliente nota una respuesta inmediata.</p>
+        </article>
+
+        <article class="tool-card" style="--b:#D97757">
+          <div class="tool-window">
+            <span class="tool-dots"><i></i><i></i><i></i></span>
+            <svg class="tool-logo" viewBox="0 0 24 24" role="img" aria-label="Claude de Anthropic"><path fill="#D97757" d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
+          </div>
+          <h3>Claude (Anthropic)</h3>
+          <p class="tool-what">Otra inteligencia artificial de primer nivel, muy fiable cuando hay que seguir instrucciones largas y con criterio.</p>
+          <p class="tool-benefit"><strong>Para tu negocio:</strong> la usamos para lo delicado: revisar contratos, seguir protocolos complejos o redactar sin salirse de tus normas. Precisión donde un error te costaría dinero.</p>
+        </article>
+
+      </div>
+
+      <div class="tools-extra reveal">
+        <p>¿Ya usas otras herramientas (Shopify, Holded, HubSpot, Calendly, Google Sheets, tu CRM…)? <strong>También las integramos.</strong> No te pedimos que cambies de programa: conectamos lo que ya tienes y lo hacemos trabajar junto.</p>
+      </div>
+
+      <div class="tools-cta reveal">
+        <p>Cuéntanos qué herramientas usas hoy y te decimos <strong>qué se puede automatizar</strong> — sin coste y sin compromiso.</p>
+        <a href="#contacto" class="btn-primary btn-glow">Quiero mi diagnóstico gratuito</a>
       </div>
     </div>
   </section>
