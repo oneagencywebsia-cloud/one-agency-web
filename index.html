@@ -3280,7 +3280,7 @@ ul {
   align-items: center;
   justify-content: center;
   background: rgba(15, 23, 42, 0.05);
-  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--b, #3B82F6) 26%, transparent), transparent 72%), #0b0b0f;
+  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--b, #3B82F6) 26%, transparent), transparent 74%), #eef1f6;
   border: 1px solid color-mix(in srgb, var(--b, #3B82F6) 32%, transparent);
 }
 .tools-panel-logo svg { width: 28px; height: 28px; }
@@ -3325,6 +3325,160 @@ ul {
 .comparison-item-before { background: rgba(220,38,38,0.07); border-left: 3px solid rgba(220,38,38,0.55); }
 .comparison-item-after { background: rgba(22,163,74,0.08); border-left: 3px solid rgba(22,163,74,0.55); }
 .comparison-item p { font-size: 0.9rem; color: rgba(15, 23, 42, 0.8); margin: 0; }
+
+/* ============================================================
+   LIQUID GLASS  ·  estilo iOS 26  +  efectos visuales
+   ============================================================ */
+:root{
+  --lg-blur: 20px;
+  --lg-border: rgba(255,255,255,0.75);
+  --lg-hi: rgba(255,255,255,0.95);
+  --lg-shadow: 0 10px 34px -14px rgba(15,23,42,.22), 0 3px 10px -4px rgba(15,23,42,.12);
+  --spring: cubic-bezier(.22,1.15,.36,1);
+}
+
+/* --- superficies de cristal líquido --- */
+.glass-card,
+.ia-card,
+.tools-panel{
+  position: relative;
+}
+.glass-card,
+.ia-card,
+.tools-panel,
+.float-card{
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.60), rgba(255,255,255,.40)),
+    radial-gradient(130% 130% at 0% 0%, rgba(59,130,246,.10), transparent 55%),
+    radial-gradient(130% 130% at 100% 100%, rgba(249,115,22,.07), transparent 55%);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(185%) brightness(1.05);
+  backdrop-filter: blur(var(--lg-blur)) saturate(185%) brightness(1.05);
+  border: 1px solid var(--lg-border);
+  border-radius: 24px;
+  box-shadow: var(--lg-shadow), inset 0 1px 0 var(--lg-hi), inset 0 -8px 20px -12px rgba(15,23,42,.10);
+  transition: transform .55s var(--spring), box-shadow .5s var(--spring), border-color .4s ease;
+}
+/* brillo especular (reflejo de luz sobre el cristal) */
+.glass-card::after,
+.ia-card::after,
+.tools-panel::after,
+.float-card::after{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
+  background: linear-gradient(150deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 32%, rgba(255,255,255,0) 70%, rgba(255,255,255,.12) 100%);
+  mix-blend-mode: screen; opacity:.85;
+}
+/* halo que sigue al cursor */
+.glass-card::before,
+.ia-card::before,
+.tools-panel::before,
+.float-card::before{
+  content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none; z-index:1;
+  background: radial-gradient(260px circle at var(--px,50%) var(--py,-20%), rgba(59,130,246,.20), rgba(249,115,22,.10) 40%, transparent 62%);
+  opacity:0; transition: opacity .45s ease;
+}
+.glass-card:hover::before,
+.ia-card:hover::before,
+.tools-panel:hover::before,
+.float-card:hover::before{ opacity:1; }
+.glass-card:hover,
+.ia-card:hover,
+.float-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px -18px rgba(15,23,42,.26), 0 0 0 1px rgba(59,130,246,.18), inset 0 1px 0 var(--lg-hi);
+  border-color: rgba(59,130,246,.28);
+}
+.glass-card > *, .ia-card > *, .tools-panel > *, .float-card > *{ position:relative; z-index:3; }
+
+/* --- chips de herramientas: mini cristal --- */
+.tool-chip{
+  background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.30));
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow: 0 4px 14px -8px rgba(15,23,42,.18), inset 0 1px 0 rgba(255,255,255,.9);
+  transition: transform .4s var(--spring), box-shadow .4s var(--spring), border-color .3s ease, background .3s ease;
+}
+.tool-chip:hover{
+  transform: translateY(-4px) scale(1.03);
+  border-color: var(--b, rgba(59,130,246,.5));
+  box-shadow: 0 16px 30px -14px rgba(15,23,42,.28), 0 0 0 1px var(--b, rgba(59,130,246,.35)), inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+/* --- barra de navegación / menú móvil: vidrio real --- */
+.navbar.scrolled{
+  background: rgba(255,255,255,0.62) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  backdrop-filter: blur(26px) saturate(190%);
+  border-bottom: 1px solid rgba(255,255,255,.6);
+  box-shadow: 0 8px 30px -14px rgba(15,23,42,.20), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.mobile-menu{
+  background: rgba(255,255,255,0.82) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+}
+
+/* --- botón primario: barrido de luz (shine) --- */
+.btn-primary{ position:relative; overflow:hidden; }
+.btn-primary::after{
+  content:""; position:absolute; top:0; left:-90%; width:35%; height:100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: skewX(-18deg); transition: none; pointer-events:none;
+}
+.btn-primary:hover::after{ animation: btn-shine .9s ease forwards; }
+@keyframes btn-shine{ to{ left:120%; } }
+
+/* --- aurora ambiental (blobs de color muy difuminados) --- */
+.fx-aurora{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.fx-aurora span{
+  position:absolute; display:block; border-radius:50%;
+  filter: blur(80px); opacity:.32; will-change: transform;
+}
+.fx-aurora span:nth-child(1){ width:46vw; height:46vw; left:-12vw; top:-10vw;
+  background: radial-gradient(circle, rgba(59,130,246,.55), transparent 70%); animation: aurora-a 26s ease-in-out infinite; }
+.fx-aurora span:nth-child(2){ width:40vw; height:40vw; right:-14vw; top:24vh;
+  background: radial-gradient(circle, rgba(249,115,22,.42), transparent 70%); animation: aurora-b 32s ease-in-out infinite; }
+.fx-aurora span:nth-child(3){ width:38vw; height:38vw; left:18vw; bottom:-16vw;
+  background: radial-gradient(circle, rgba(139,92,246,.34), transparent 70%); animation: aurora-c 30s ease-in-out infinite; }
+@keyframes aurora-a{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(6vw,4vh,0) scale(1.15); } }
+@keyframes aurora-b{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(-5vw,-3vh,0) scale(1.1); } }
+@keyframes aurora-c{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(3vw,-5vh,0) scale(1.2); } }
+main, .navbar, footer, #wave-fx, #particles-container{ position: relative; z-index: 1; }
+
+/* --- reveal con enfoque (blur-in) --- */
+.js-loaded .reveal{ filter: blur(6px); }
+.js-loaded .reveal.visible{ filter: blur(0); transition: opacity .6s ease, transform .6s var(--spring), filter .6s ease; }
+
+/* --- respeta accesibilidad y rendimiento --- */
+/* --- tarjetas de servicios (cara frontal) a juego --- */
+.service-card-front,
+.stat-card,
+.proceso-step,
+.step-card{
+  background: linear-gradient(135deg, rgba(255,255,255,.6), rgba(255,255,255,.4)) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow: var(--lg-shadow), inset 0 1px 0 var(--lg-hi) !important;
+  border-radius: 22px !important;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .fx-aurora span{ animation: none !important; }
+  .btn-primary:hover::after{ animation: none; }
+  .js-loaded .reveal{ filter: none; }
+}
+@media (max-width: 820px){
+  .glass-card, .ia-card, .tools-panel, .float-card, .tool-chip{
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: rgba(255,255,255,.9);
+  }
+  .glass-card::before, .ia-card::before, .tools-panel::before, .float-card::before{ display:none; }
+  .fx-aurora span{ filter: blur(60px); opacity:.22; }
+  .navbar.scrolled{ background: rgba(255,255,255,.9) !important; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+}
+
 </style>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -3886,7 +4040,7 @@ ul {
           <span>Cloudflare</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#dddddd" data-name="Vercel" data-what="El sitio donde publicamos webs y paneles y se actualizan solos." data-benefit="Cada mejora sale publicada en segundos y sin cortes de servicio. Tu web siempre rapida y al dia." aria-expanded="false" aria-controls="tools-panel">
-          <svg viewBox="0 0 24 24" role="img" aria-label="Vercel"><path fill="#ffffff" d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
+          <svg viewBox="0 0 24 24" role="img" aria-label="Vercel"><path fill="#000000" d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
           <span>Vercel</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#FF4438" data-name="Redis" data-what="Memoria ultrarrapida para que todo responda al instante y sin atascos." data-benefit="Aunque lleguen muchas peticiones a la vez, las cosas pasan en el orden correcto, sin duplicados ni bloqueos. El cliente nota respuesta inmediata." aria-expanded="false" aria-controls="tools-panel">
@@ -3910,7 +4064,7 @@ ul {
           <span>Airtable</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#10A37F" data-name="OpenAI (ChatGPT)" data-what="La IA que redacta, resume y entiende texto como una persona." data-benefit="Contesta emails y consultas frecuentes, clasifica lo que entra, resume documentos y atiende dudas con el tono de tu marca, 24/7." aria-expanded="false" aria-controls="tools-panel">
-          <svg viewBox="0 0 24 24" role="img" aria-label="OpenAI (ChatGPT)"><path fill="#ffffff" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+          <svg viewBox="0 0 24 24" role="img" aria-label="OpenAI (ChatGPT)"><path fill="#0d0d0d" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
           <span>OpenAI (ChatGPT)</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#8E75B2" data-name="Gemini" data-what="La IA de Google, potente leyendo imagenes y documentos." data-benefit="Le pasas facturas, tickets o formularios y saca los datos solos. Y cuando hay muchos datos, te devuelve una decision clara, no una hoja de numeros." aria-expanded="false" aria-controls="tools-panel">
@@ -3922,7 +4076,7 @@ ul {
           <span>Claude (Anthropic)</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#cccccc" data-name="ElevenLabs" data-what="IA que genera voz humana natural a partir de texto." data-benefit="Locuciones para tus videos, mensajes de voz y audios de atencion telefonica en minutos, sin estudio de grabacion." aria-expanded="false" aria-controls="tools-panel">
-          <svg viewBox="0 0 24 24" role="img" aria-label="ElevenLabs"><path fill="#ffffff" d="M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z"/></svg>
+          <svg viewBox="0 0 24 24" role="img" aria-label="ElevenLabs"><path fill="#0d0d0d" d="M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z"/></svg>
           <span>ElevenLabs</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#25D366" data-name="WhatsApp" data-what="El canal donde ya estan tus clientes y si abren los mensajes." data-benefit="Confirmaciones de cita, seguimiento de pedidos y respuestas automaticas por WhatsApp. Menos llamadas perdidas y mas ventas cerradas." aria-expanded="false" aria-controls="tools-panel">
@@ -3938,7 +4092,7 @@ ul {
           <span>Gmail / Workspace</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#ECB22E" data-name="Slack" data-what="El chat interno de tu equipo, tambien como centro de avisos." data-benefit="Cada evento importante (venta, incidencia, tarea) aparece en el canal correcto y tu equipo actua al momento." aria-expanded="false" aria-controls="tools-panel">
-          <svg viewBox="0 0 24 24" role="img" aria-label="Slack"><path fill="#ffffff" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+          <svg viewBox="0 0 24 24" role="img" aria-label="Slack"><path fill="#611F69" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
           <span>Slack</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#4285F4" data-name="Google Calendar" data-what="La agenda de Google, conectada a tus procesos." data-benefit="Las reuniones, visitas y recordatorios se crean y actualizan solos. Tu calendario siempre cuadra con la realidad." aria-expanded="false" aria-controls="tools-panel">
@@ -3990,7 +4144,7 @@ ul {
           <span>Asana</span>
         </button>
         <button type="button" class="tool-chip" style="--b:#8b949e" data-name="GitHub" data-what="Donde se guarda y versiona todo el codigo de tus automatizaciones." data-benefit="Cada cambio queda registrado y es reversible. Tu sistema es auditable y no depende de una sola persona." aria-expanded="false" aria-controls="tools-panel">
-          <svg viewBox="0 0 24 24" role="img" aria-label="GitHub"><path fill="#ffffff" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg viewBox="0 0 24 24" role="img" aria-label="GitHub"><path fill="#181717" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span>GitHub</span>
         </button>
       </div>
@@ -5226,6 +5380,30 @@ if (window.innerWidth > 900) {
   for (var i = 0; i < chips.length; i++) {
     (function (c) { c.addEventListener('click', function () { pick(c); }); })(chips[i]);
   }
+})();
+
+/* -- LIQUID GLASS: halo que sigue al puntero + aurora -- */
+(function () {
+  try {
+    if (!document.querySelector('.fx-aurora')) {
+      var a = document.createElement('div');
+      a.className = 'fx-aurora';
+      a.setAttribute('aria-hidden', 'true');
+      a.innerHTML = '<span></span><span></span><span></span>';
+      document.body.insertBefore(a, document.body.firstChild);
+    }
+    var cards = document.querySelectorAll('.glass-card, .ia-card, .tools-panel, .float-card');
+    var fine = window.matchMedia('(pointer:fine)').matches;
+    if (fine) {
+      cards.forEach(function (c) {
+        c.addEventListener('pointermove', function (e) {
+          var r = c.getBoundingClientRect();
+          c.style.setProperty('--px', (e.clientX - r.left) + 'px');
+          c.style.setProperty('--py', (e.clientY - r.top) + 'px');
+        });
+      });
+    }
+  } catch (e) {}
 })();
 </script>
 
