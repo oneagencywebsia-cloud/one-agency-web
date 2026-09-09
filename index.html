@@ -408,7 +408,7 @@ ul {
 }
 
 .section-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -509,7 +509,7 @@ ul {
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
@@ -730,7 +730,7 @@ ul {
 }
 
 .hero-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
@@ -1738,7 +1738,7 @@ ul {
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
@@ -1839,7 +1839,7 @@ ul {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   font-size: 0.8rem;
   color: var(--text4);
@@ -3894,7 +3894,9 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
     radial-gradient(40% 40% at 84% 24%, rgba(var(--bOrange),.24), transparent 70%),
     radial-gradient(52% 48% at 56% 84%, rgba(var(--bViolet),.20), transparent 72%);
 }
-.hero > *{ position: relative; z-index: 1; }
+/* el contenido ya va por encima del glow: .hero-container tiene z-index:1.
+   NO forzar position en todos los hijos de .hero (rompia el centrado). */
+.hero-container{ z-index: 2; }
 
 .hero-badge{ box-shadow: 0 16px 36px -14px rgba(var(--bBlue),.55), 0 0 0 1px rgba(var(--bBlue),.16) !important; }
 .hero-ctas .btn-primary{ box-shadow: 0 24px 56px -14px rgba(var(--bBlue),.72), 0 12px 28px -10px rgba(var(--bOrange),.52) !important; }
