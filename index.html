@@ -3847,30 +3847,35 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 
 
 /* ============================================================
-   TARJETAS 3D  (se inclinan al entrar/salir con el scroll)
+   TARJETAS 3D  ·  se mueven en perspectiva SEGUN el scroll
+   (variables --s3* actualizadas por rAF; ver JS al final)
    ============================================================ */
-.js-loaded .s3d.reveal{
-  opacity: 0;
-  transform: perspective(1300px) rotateX(var(--rev-rx, 11deg)) translateY(var(--rev-y, 30px)) scale(.945);
-  filter: none;
-  transform-origin: center 80%;
-  transition:
-    opacity .55s ease var(--rev-d, 0s),
-    transform .72s cubic-bezier(.2,.9,.25,1) var(--rev-d, 0s);
+.js-loaded .s3d{
+  transform:
+    perspective(1150px)
+    translate3d(0, 0, var(--s3z, 0px))
+    rotateX(var(--s3rx, 0deg))
+    rotateY(var(--s3ry, 0deg))
+    scale(var(--s3s, 1));
+  transition: transform .16s linear;
+  transform-origin: center 55%;
 }
-.js-loaded .s3d.reveal.visible{
-  opacity: 1;
-  transform: perspective(1300px) rotateX(0deg) translateY(0) scale(1);
+/* al llevar 3D, el reveal SOLO toca la opacidad */
+.js-loaded .s3d.reveal{ opacity: 0; filter: none; }
+.js-loaded .s3d.reveal.visible{ opacity: 1; transition: opacity .5s ease, transform .16s linear; }
+/* sombra de marca que "cae" con la inclinacion -> se nota que despega del papel (solo escritorio) */
+@media (min-width: 981px){
+  .js-loaded .s3d{
+    box-shadow:
+      0 calc(24px + var(--s3lift, 0px)) 52px -20px rgba(var(--bBlue), calc(.32 + var(--s3glow, 0) * .16)),
+      0 calc(9px + var(--s3lift, 0px) * .5) 22px -12px rgba(var(--bOrange), .20);
+  }
 }
 @media (max-width: 980px){
-  .js-loaded .s3d.reveal{
-    transform: perspective(1000px) rotateX(var(--rev-rx, 7deg)) translateY(var(--rev-y, 16px)) scale(.976);
-    transition: opacity .45s ease, transform .5s cubic-bezier(.2,.9,.25,1);
-  }
-  .js-loaded .s3d.reveal.visible{ transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
+  .js-loaded .s3d{ transition: transform .12s linear; transform-origin: center 60%; }
 }
 @media (prefers-reduced-motion: reduce){
-  .js-loaded .s3d.reveal, .js-loaded .s3d.reveal.visible{ transform: none !important; }
+  .js-loaded .s3d{ transform: none !important; }
 }
 
 /* ============================================================
@@ -6075,13 +6080,72 @@ if (window.innerWidth > 900) {
   o.observe(hero);
 })();
 
-/* -- marca las tarjetas de info para el efecto 3D al scroll -- */
+/* -- TARJETAS 3D: perspectiva viva ligada al scroll -- */
 (function () {
-  try {
-    var sel = '.ia-card, .result-card, .step-card, .service-card-flip, .tools-panel, .comparison-item, .faq-item, .caso-card';
-    var els = document.querySelectorAll(sel);
-    for (var i = 0; i < els.length; i++) els[i].classList.add('s3d');
-  } catch (e) {}
+  var sel = '.ia-card, .result-card, .step-card, .service-card-flip, .tools-panel, .comparison-item, .faq-item, .caso-card';
+  var cards = [].slice.call(document.querySelectorAll(sel));
+  if (!cards.length) return;
+  for (var t = 0; t < cards.length; t++) cards[t].classList.add('s3d');
+
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var mobile = window.matchMedia('(max-width: 980px)').matches;
+  var MAXX = mobile ? 8 : 13;     // grados de giro en X (arriba/abajo del centro)
+  var MAXY = mobile ? 0  : 4;     // grados de giro en Y (izq/dcha)
+  var MAXZ = mobile ? 12 : 34;    // profundidad
+  var vw = window.innerWidth, vh = window.innerHeight;
+  window.addEventListener('resize', function () {
+    vw = window.innerWidth; vh = window.innerHeight;
+    mobile = window.matchMedia('(max-width: 980px)').matches;
+    MAXX = mobile ? 8 : 13; MAXY = mobile ? 0 : 4; MAXZ = mobile ? 12 : 34;
+  }, { passive: true });
+
+  var active = [], rects = [], ticking = false;
+
+  function frame() {
+    ticking = false;
+    var n = active.length;
+    if (!n) return;
+    var cy = vh / 2, cx = vw / 2;
+    for (var i = 0; i < n; i++) rects[i] = active[i].getBoundingClientRect();   // 1) leer todo
+    for (i = 0; i < n; i++) {                                                   // 2) escribir todo
+      var r = rects[i], c = active[i];
+      var p = (r.top + r.height / 2 - cy) / vh;        // <0 encima del centro, >0 debajo
+      if (p > 1) p = 1; else if (p < -1) p = -1;
+      var ph = (r.left + r.width / 2 - cx) / vw;
+      if (ph > 1) ph = 1; else if (ph < -1) ph = -1;
+      var d = p < 0 ? -p : p;
+      c.style.setProperty('--s3rx', (-p * MAXX).toFixed(2) + 'deg');
+      c.style.setProperty('--s3ry', (-ph * MAXY).toFixed(2) + 'deg');
+      c.style.setProperty('--s3s',  (1 - d * 0.05).toFixed(3));
+      c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
+      c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');
+      c.style.setProperty('--s3glow', (1 - d).toFixed(2));
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+
+  var io = new IntersectionObserver(function (es) {
+    for (var i = 0; i < es.length; i++) {
+      var c = es[i].target, k = active.indexOf(c);
+      if (es[i].isIntersecting) {
+        if (k < 0) { active.push(c); c.style.willChange = 'transform'; }
+      } else if (k >= 0) {
+        active.splice(k, 1);
+        c.style.willChange = '';
+        c.style.removeProperty('--s3rx'); c.style.removeProperty('--s3ry');
+        c.style.removeProperty('--s3s');  c.style.removeProperty('--s3z');
+        c.style.removeProperty('--s3lift'); c.style.removeProperty('--s3glow');
+      }
+    }
+    frame();
+  }, { rootMargin: '35% 0px 35% 0px' });
+  for (var j = 0; j < cards.length; j++) io.observe(cards[j]);
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  requestAnimationFrame(frame);
 })();
 </script>
 
