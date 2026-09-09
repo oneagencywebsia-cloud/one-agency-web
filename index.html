@@ -3733,7 +3733,7 @@ input:focus, select:focus, textarea:focus{
   .cta-final::before,.faq-section::before{ transform: translateX(-50%) scaleX(1) !important; }
 }
 @media (max-width: 820px){
-  .rv-tilt{ transform: none !important; }
+  .rv-tilt:not(.s3d){ transform: none !important; }
 }
 
 
@@ -3785,18 +3785,19 @@ input:focus, select:focus, textarea:focus{
   .orbit-system, .marquee-track, .btn-primary, .btn-outline, .particle,
   .glass-card, .ia-card, .tools-panel, .float-card{ will-change: auto !important; }
 
-  /* reveal barato: sin blur, poco recorrido, sin escala */
-  .js-loaded .reveal{
+  /* reveal barato: sin blur, poco recorrido, sin escala (las .s3d se excluyen: llevan su propio 3D) */
+  .js-loaded .reveal:not(.s3d){
     filter: none !important;
     transform: translate3d(0, var(--rev-y, 14px), 0) !important;
     transition: opacity .45s ease, transform .5s cubic-bezier(.16,1,.3,1) !important;
   }
-  .js-loaded .reveal.visible{ transform: none !important; filter: none !important; }
+  .js-loaded .reveal:not(.s3d).visible{ transform: none !important; filter: none !important; }
+  .js-loaded .s3d.reveal{ filter: none !important; }
 
   /* nada de halos con el puntero, tilt ni anillo de pop */
   .glass-card::before, .ia-card::before, .tools-panel::before, .float-card::before,
   .glass-card::after, .ia-card::after, .tools-panel::after, .float-card::after{ display: none !important; }
-  .rv-tilt{ transform: none !important; }
+  .rv-tilt:not(.s3d){ transform: none !important; }
   .rv-pop{ animation: rv-pop-lite .45s ease both !important; }
 
   /* texto partido: se revela pero mas simple (menos spans animando a la vez) */
@@ -6093,14 +6094,14 @@ if (window.innerWidth > 900) {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var mobile = window.matchMedia('(max-width: 980px)').matches;
-  var MAXX = mobile ? 8 : 13;     // grados de giro en X (arriba/abajo del centro)
-  var MAXY = mobile ? 0  : 4;     // grados de giro en Y (izq/dcha)
-  var MAXZ = mobile ? 12 : 34;    // profundidad
+  var MAXX = mobile ? 11 : 13;    // grados de giro en X (arriba/abajo)
+  var MAXY = mobile ? 6  : 4;     // grados de giro en Y (izq/dcha)
+  var MAXZ = mobile ? 16 : 34;    // profundidad
   var vw = window.innerWidth, vh = window.innerHeight;
   window.addEventListener('resize', function () {
     vw = window.innerWidth; vh = window.innerHeight;
     mobile = window.matchMedia('(max-width: 980px)').matches;
-    MAXX = mobile ? 8 : 13; MAXY = mobile ? 0 : 4; MAXZ = mobile ? 12 : 34;
+    MAXX = mobile ? 11 : 13; MAXY = mobile ? 6 : 4; MAXZ = mobile ? 16 : 34;
   }, { passive: true });
 
   var active = [], rects = [], ticking = false;
@@ -6118,12 +6119,24 @@ if (window.innerWidth > 900) {
       var ph = (r.left + r.width / 2 - cx) / vw;
       if (ph > 1) ph = 1; else if (ph < -1) ph = -1;
       var d = p < 0 ? -p : p;
-      c.style.setProperty('--s3rx', (-p * MAXX).toFixed(2) + 'deg');
-      c.style.setProperty('--s3ry', (-ph * MAXY).toFixed(2) + 'deg');
-      c.style.setProperty('--s3s',  (1 - d * 0.05).toFixed(3));
-      c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
-      c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');
-      c.style.setProperty('--s3glow', (1 - d).toFixed(2));
+      if (mobile) {
+        /* cursor virtual: la tarjeta pasa por una linea fija (45% de la ventana);
+           mapeamos donde cae esa linea DENTRO de la tarjeta -> como si un cursor la barriera de abajo a arriba */
+        var line = vh * 0.45;
+        var curY = (line - r.top) / r.height; if (curY < 0) curY = 0; else if (curY > 1) curY = 1;
+        var curX = (cx - r.left) / r.width;   if (curX < 0) curX = 0; else if (curX > 1) curX = 1;
+        c.style.setProperty('--s3rx', ((0.5 - curY) * MAXX).toFixed(2) + 'deg');
+        c.style.setProperty('--s3ry', ((curX - 0.5) * MAXY).toFixed(2) + 'deg');
+        c.style.setProperty('--s3s',  (1 - d * 0.04).toFixed(3));
+        c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
+      } else {
+        c.style.setProperty('--s3rx', (-p * MAXX).toFixed(2) + 'deg');
+        c.style.setProperty('--s3ry', (-ph * MAXY).toFixed(2) + 'deg');
+        c.style.setProperty('--s3s',  (1 - d * 0.05).toFixed(3));
+        c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
+        c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');
+        c.style.setProperty('--s3glow', (1 - d).toFixed(2));
+      }
     }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
@@ -6132,10 +6145,9 @@ if (window.innerWidth > 900) {
     for (var i = 0; i < es.length; i++) {
       var c = es[i].target, k = active.indexOf(c);
       if (es[i].isIntersecting) {
-        if (k < 0) { active.push(c); c.style.willChange = 'transform'; }
+        if (k < 0) { active.push(c); }
       } else if (k >= 0) {
         active.splice(k, 1);
-        c.style.willChange = '';
         c.style.removeProperty('--s3rx'); c.style.removeProperty('--s3ry');
         c.style.removeProperty('--s3s');  c.style.removeProperty('--s3z');
         c.style.removeProperty('--s3lift'); c.style.removeProperty('--s3glow');
