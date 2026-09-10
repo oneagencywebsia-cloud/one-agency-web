@@ -3751,10 +3751,12 @@ input:focus, select:focus, textarea:focus{
 /* ---------- MOVIL / TABLET: maxima ligereza ---------- */
 @media (max-width: 980px){
 
-  /* fuera capas fijas caras de compositing */
+  /* capas fijas de compositing caras: fuera. Particulas: unas pocas (transform/opacity = compositor, no tocan scroll) */
   .fx-aurora{ display: none !important; }
   .fx-bg{ display: none !important; }
-  #particles-container, .particle{ display: none !important; }
+  #particles-container{ display: block !important; }
+  .particle{ display: block !important; box-shadow: none !important; }
+  .particle:nth-child(n+9){ display: none !important; }  /* max 8 en movil/tablet */
 
   /* CERO backdrop-filter (es lo que atasca el scroll en movil) */
   .glass-card, .ia-card, .tools-panel, .float-card, .tool-chip,
@@ -3811,10 +3813,19 @@ input:focus, select:focus, textarea:focus{
 body.hero-paused .orbit,
 body.hero-paused .orbit-system,
 body.hero-paused .particle,
+body.hero-paused .hero::before,
 body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 @media (max-width: 980px){
-  .orbit, .orbit-2, .orbit-3, .orbit-4{ animation: none !important; }
-  .orbit-system{ animation: none !important; }
+  .hero::before{ animation: hero-aura 9s ease-in-out infinite; }
+}
+@keyframes hero-aura{ 0%,100%{ opacity:.78; transform: scale(1); } 50%{ opacity:1; transform: scale(1.05); } }
+@media (max-width: 980px){
+  /* orbitas activas pero MUY lentas (transform = compositor). Se pausan al salir del hero (body.hero-paused) */
+  .orbit  { animation: spin 60s linear infinite !important; }
+  .orbit-2{ animation: spin 78s linear infinite reverse !important; }
+  .orbit-3{ animation: spin 96s linear infinite !important; }
+  .orbit-4{ animation: spin 72s linear infinite reverse !important; }
+  .orbit-system{ animation: float 8s ease-in-out infinite !important; }
 }
 
 
@@ -3873,7 +3884,17 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
   }
 }
 @media (max-width: 980px){
-  .js-loaded .s3d{ transition: transform .12s linear; transform-origin: center 60%; }
+  /* en movil no hay rAF: la tarjeta 3D se inclina UNA vez al aparecer y se queda plana */
+  .js-loaded .s3d{ transition: none; }
+  .js-loaded .s3d:not(.reveal){ transform: none; }
+  .js-loaded .s3d.reveal{
+    opacity: 0;
+    transform: perspective(900px) translate3d(0, 26px, 0) rotateX(11deg) scale(.955);
+    transform-origin: 50% 100%;
+    transition: opacity .5s ease var(--rev-d, 0s),
+                transform .62s cubic-bezier(.2,.9,.25,1) var(--rev-d, 0s);
+  }
+  .js-loaded .s3d.reveal.visible{ opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce){
   .js-loaded .s3d{ transform: none !important; }
@@ -6092,6 +6113,9 @@ if (window.innerWidth > 900) {
 
   if (!('IntersectionObserver' in window) ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* MOVIL: nada de rAF por frame. Las .s3d se inclinan una vez al revelarse (CSS puro) -> scroll 100% fluido */
+  if (window.matchMedia('(max-width: 980px)').matches) return;
 
   var mobile = window.matchMedia('(max-width: 980px)').matches;
   var MAXX = mobile ? 11 : 13;    // grados de giro en X (arriba/abajo)
