@@ -1858,12 +1858,21 @@ ul {
   padding: 3px 9px;
   border-radius: 999px;
   letter-spacing: 0.08em;
-  animation: live-pulse 2s ease-in-out infinite;
+  position: relative;
 }
-
-@keyframes live-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-  50% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+/* anillo de pulso SOLO transform+opacity (sin box-shadow): no repinta, va por GPU */
+.live-badge::after{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  border: 1px solid rgba(34, 197, 94, .55);
+  animation: live-pulse-ring 2s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes live-pulse-ring{
+  0%{ transform:scale(1); opacity:.65; }
+  100%{ transform:scale(1.4); opacity:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .live-badge::after{ animation: none !important; opacity: 0; }
 }
 
 /* --- MARQUEE STRIP ------------------------------------ */
@@ -3640,12 +3649,15 @@ input:focus, select:focus, textarea:focus{
 /* --- degradados de texto con vida --- */
 .gradient-text{ background-size: 220% 220% !important; animation: gradient-shift 9s ease infinite !important; }
 
-/* --- respiración suave del CTA principal --- */
+/* --- respiracion suave del CTA principal: solo transform (compositor), nada de box-shadow animado --- */
 @keyframes brand-breathe{
-  0%,100%{ box-shadow: 0 16px 40px -12px rgba(var(--bBlue),.55), 0 8px 20px -10px rgba(var(--bOrange),.40); }
-  50%{     box-shadow: 0 22px 54px -12px rgba(var(--bBlue),.78), 0 12px 30px -10px rgba(var(--bOrange),.55); }
+  0%,100%{ transform: scale(1); }
+  50%{     transform: scale(1.035); }
 }
-#nav-cta.btn-primary, .cta-final .btn-primary{ animation: gradient-shift 4s ease infinite, brand-breathe 4.5s ease-in-out infinite; }
+#nav-cta.btn-primary, .cta-final .btn-primary{
+  animation: gradient-shift 4s ease infinite, brand-breathe 4.5s ease-in-out infinite;
+  box-shadow: 0 16px 40px -12px rgba(var(--bBlue),.55), 0 8px 20px -10px rgba(var(--bOrange),.40) !important;
+}
 
 @media (prefers-reduced-motion: reduce){
   #nav-cta.btn-primary, .cta-final .btn-primary{ animation: none !important; }
