@@ -354,7 +354,7 @@ ul {
   gap: 8px;
   background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 40%, var(--orange) 100%);
   background-size: 200% 200%;
-  animation: gradient-shift 4s ease infinite;
+  /* sin animacion continua: gradient-shift animaba background-position (repinta, no compositor) en TODOS los botones de la web sin parar */
   color: #fff;
   font-weight: 600;
   font-size: 1rem;
@@ -374,8 +374,15 @@ ul {
   box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.6), 0 8px 40px rgba(59, 130, 246, 0.5);
 }
 
-.btn-glow {
-  animation: gradient-shift 4s ease infinite, pulse-glow 3s ease-in-out infinite;
+.btn-glow{ position:relative; }
+.btn-glow::before{
+  content:""; position:absolute; inset:-3px; border-radius:14px; z-index:-1; pointer-events:none;
+  border: 2px solid rgba(59,130,246,.55);
+  animation: btn-glow-ring 2.2s ease-out infinite;
+}
+@keyframes btn-glow-ring{
+  0%{ transform: scale(1); opacity: .7; }
+  100%{ transform: scale(1.08); opacity: 0; }
 }
 
 .btn-outline {
@@ -2854,9 +2861,8 @@ ul {
   .founder-avatar { filter: drop-shadow(0 0 15px rgba(59,130,246,0.2)); }
   .orbit-logo-img { filter: drop-shadow(0 0 10px rgba(59,130,246,0.3)); }
 
-  /* Slower gradient shift on buttons (saves GPU) */
-  .btn-primary { animation-duration: 8s; }
-  .btn-glow { animation: gradient-shift 8s ease infinite; }
+  /* gradient-shift retirado de botones (era animacion de background-position, no compositor) */
+  .btn-glow::before{ animation-duration: 3s; }
 }
 
 /* ── OVERFLOW PREVENTION ─────────── */
@@ -3647,7 +3653,8 @@ input:focus, select:focus, textarea:focus{
 .particle:nth-child(even){ box-shadow: 0 0 12px 2px rgba(var(--bOrange),.5); }
 
 /* --- degradados de texto con vida --- */
-.gradient-text{ background-size: 220% 220% !important; animation: gradient-shift 9s ease infinite !important; }
+.gradient-text{ background-size: 220% 220% !important; background-position: 35% 50% !important; }
+/* sin animacion: gradient-shift en texto grande repinta los glifos cada frame (muy caro), sitewide y sin parar */
 
 /* --- respiracion suave del CTA principal: solo transform (compositor), nada de box-shadow animado --- */
 @keyframes brand-breathe{
@@ -3655,13 +3662,13 @@ input:focus, select:focus, textarea:focus{
   50%{     transform: scale(1.035); }
 }
 #nav-cta.btn-primary, .cta-final .btn-primary{
-  animation: gradient-shift 4s ease infinite, brand-breathe 4.5s ease-in-out infinite;
+  animation: brand-breathe 4.5s ease-in-out infinite;
   box-shadow: 0 16px 40px -12px rgba(var(--bBlue),.55), 0 8px 20px -10px rgba(var(--bOrange),.40) !important;
 }
 
 @media (prefers-reduced-motion: reduce){
   #nav-cta.btn-primary, .cta-final .btn-primary{ animation: none !important; }
-  .gradient-text{ animation: none !important; }
+  .btn-glow::before{ animation: none !important; opacity: 0; }
 }
 @media (max-width: 820px){
   .hero, .social-proof, .servicios, .resultados, .ia-section, .tools-section,
