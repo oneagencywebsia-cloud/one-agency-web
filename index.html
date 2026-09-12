@@ -5056,6 +5056,40 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
    ===================================================== */
 document.documentElement.classList.add('js-loaded');
 
+/* -- BLOQUEO DE SCROLL centralizado con contador --
+   Antes habia 5 sitios distintos poniendo overflow:hidden/'' por su
+   cuenta (menu movil, modal de privacidad...). Si dos se solapaban,
+   uno podia cerrar y "robarle" el bloqueo al otro, o un cierre podia
+   no limpiar bien -> el scroll se quedaba bloqueado sin motivo aparente.
+   Con contador, solo se desbloquea de verdad cuando NADIE lo necesita. */
+window.__scrollLockCount = 0;
+window.lockPageScroll = function () {
+  window.__scrollLockCount++;
+  document.body.style.overflow = 'hidden';
+};
+window.unlockPageScroll = function () {
+  window.__scrollLockCount = Math.max(0, window.__scrollLockCount - 1);
+  if (window.__scrollLockCount === 0) document.body.style.overflow = '';
+};
+/* red de seguridad: si por lo que sea nada esta abierto pero el scroll
+   quedo bloqueado (bfcache, error en algun handler...), se libera solo */
+(function () {
+  function safetyUnlock() {
+    var menuOpen = document.getElementById('mobile-menu');
+    menuOpen = menuOpen && menuOpen.classList.contains('open');
+    var modalOpen = document.getElementById('priv-modal');
+    modalOpen = modalOpen && modalOpen.classList.contains('priv-modal-visible');
+    if (!menuOpen && !modalOpen) {
+      window.__scrollLockCount = 0;
+      document.body.style.overflow = '';
+    }
+  }
+  window.addEventListener('pageshow', safetyUnlock);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') safetyUnlock();
+  });
+})();
+
 /* ── REVEAL FALLBACK ── */
 (function() {
   function forceReveal() {
@@ -5111,7 +5145,7 @@ if (navbar) {
   function hideCloseBtn() { if (closeBtn) closeBtn.style.display = 'none'; }
   function toggleMenu(btn, menu) {
     var isOpen = menu.classList.toggle('open');
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen) window.lockPageScroll(); else window.unlockPageScroll();
     var spans = btn.querySelectorAll('span');
     if (isOpen) {
       spans[0].style.cssText = 'transform:translateY(7px) rotate(45deg)';
@@ -5124,8 +5158,9 @@ if (navbar) {
     }
   }
   function closeMenu(btn, menu) {
+    var wasOpen = menu.classList.contains('open');
     menu.classList.remove('open');
-    document.body.style.overflow = '';
+    if (wasOpen) window.unlockPageScroll();
     var spans = btn.querySelectorAll('span');
     for (var i = 0; i < spans.length; i++) spans[i].style.cssText = '';
     hideCloseBtn();
@@ -5188,7 +5223,7 @@ if (navbar) {
     var wasOpen = mm && mm.classList.contains('open');
     if (wasOpen) {
       mm.classList.remove('open');
-      document.body.style.overflow = '';
+      window.unlockPageScroll();  /* idempotente: si el propio link ya la cerro, esto no hace nada de mas */
       var spans = document.querySelectorAll('#menu-toggle span');
       for(var s=0;s<spans.length;s++) spans[s].style.cssText = '';
     }
@@ -5687,14 +5722,17 @@ if (window.innerWidth > 900) {
   modal.style.visibility = '';
 
   function modalOpen(){
+    if (modal.classList.contains('priv-modal-visible')) return;  /* evita doble bloqueo si ya estaba abierto */
     modal.classList.add('priv-modal-visible');
     modal.setAttribute('aria-hidden', 'false');
+    window.lockPageScroll();
   }
 
   function modalClose(){
+    var wasVisible = modal.classList.contains('priv-modal-visible');
     modal.classList.remove('priv-modal-visible');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (wasVisible) window.unlockPageScroll();
   }
 
   function onTap(el, fn) {
@@ -5863,7 +5901,11 @@ if (window.innerWidth > 900) {
   if (modalBtn) {
     modalBtn.addEventListener('click', function() {
       var modal = document.getElementById('priv-modal');
-      if (modal) { modal.classList.add('priv-modal-visible'); modal.removeAttribute('aria-hidden'); document.body.style.overflow = 'hidden'; }
+      if (modal && !modal.classList.contains('priv-modal-visible')) {
+        modal.classList.add('priv-modal-visible');
+        modal.removeAttribute('aria-hidden');
+        window.lockPageScroll();
+      }
     });
   }
 })();
