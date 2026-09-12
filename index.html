@@ -503,6 +503,7 @@ ul {
   width: 100%;
   z-index: 10003;
   padding: 20px 0;
+  background: linear-gradient(180deg, rgba(59,130,246,.06), rgba(249,115,22,.03) 70%, transparent);
   transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
   will-change: background, padding;
 }
@@ -532,6 +533,12 @@ ul {
   }
   .nav-links { display: none !important; }
   .btn-nav { display: none !important; }
+}
+@media(max-width:420px) {
+  .logo-text { font-size: .92rem; }
+}
+@media(max-width:340px) {
+  .logo-text { display: none; }
 }
 
 .nav-logo {
@@ -635,8 +642,9 @@ ul {
   display: none;
   flex-direction: column;
   gap: 5px;
-  background: none;
-  border: none;
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(59,130,246,.18);
+  border-radius: 12px;
   padding: 8px;
   cursor: pointer;
   position: relative;
@@ -647,6 +655,9 @@ ul {
   min-height: 44px;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 6px 16px -8px rgba(59,130,246,.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .mobile-menu-toggle span {
@@ -3990,6 +4001,7 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
     <div class="nav-container">
       <a href="#" class="nav-logo" id="nav-logo-link">
         <img src="/logo.png" width="40" height="40" loading="eager" decoding="async" alt="O.N.E Agency" class="logo-img" />
+        <span class="logo-text">O.N.E <span class="logo-accent">Agency</span></span>
       </a>
       <ul class="nav-links" id="nav-links">
         <li><a href="#servicios" class="nav-link">Servicios</a></li>
