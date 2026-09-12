@@ -5542,19 +5542,22 @@ if ('IntersectionObserver' in window) {
   }
 })();
 
-/* ── PARALLAX HERO BG ── */
+/* ── PARALLAX HERO BG (solo mientras el hero esta a la vista) ── */
 (function() {
   var heroBg = document.querySelector('.hero-bg-glow');
-  if (!heroBg) return;
-  var ticking = false;
+  var heroEl = document.querySelector('.hero');
+  if (!heroBg || !heroEl) return;
+  var ticking = false, active = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { active = es[0].isIntersecting; }, { threshold: 0 }).observe(heroEl);
+  }
   window.addEventListener('scroll', function() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(function() {
-        heroBg.style.transform = 'translateX(-50%) translateY(' + (window.scrollY * 0.25) + 'px)';
-        ticking = false;
-      });
-    }
+    if (!active || ticking) return;
+    ticking = true;
+    requestAnimationFrame(function() {
+      heroBg.style.transform = 'translateX(-50%) translateY(' + (window.scrollY * 0.25) + 'px)';
+      ticking = false;
+    });
   }, { passive: true });
 })();
 
