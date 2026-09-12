@@ -3469,7 +3469,9 @@ ul {
 @keyframes aurora-a{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(6vw,4vh,0) scale(1.15); } }
 @keyframes aurora-b{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(-5vw,-3vh,0) scale(1.1); } }
 @keyframes aurora-c{ 0%,100%{ transform: translate3d(0,0,0) scale(1); } 50%{ transform: translate3d(3vw,-5vh,0) scale(1.2); } }
-main, .navbar, footer, #wave-fx, #particles-container{ position: relative; z-index: 1; }
+main, footer, #wave-fx, #particles-container{ position: relative; z-index: 1; }
+/* .navbar fuera de esta lista: esto le pisaba el position:fixed (lo dejaba en relative) y el z-index (lo bajaba a 1),
+   asi que en cuanto scrolleabas mas alla de su alto se iba de la pantalla con el resto de la pagina -> el menu "desaparecia" */
 
 /* --- reveal con enfoque (blur-in) --- */
 .js-loaded .reveal{ filter: blur(6px); }
