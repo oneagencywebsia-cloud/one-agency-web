@@ -1,0 +1,65 @@
+{
+  "url": "https://one-agency.es",
+  "name": "O.N.E Agency",
+  "author": {
+    "name": "Ángel Carrillo",
+    "role": "Fundador de O.N.E Agency",
+    "bio": "Desarrollador full-stack especializado en automatización con IA. Diseña e implementa flujos con n8n, OpenAI y WhatsApp para que las empresas dejen de perder horas en tareas repetitivas.",
+    "url": "https://angelcarrillo.es",
+    "sameAs": [
+      "https://www.linkedin.com/in/%C3%A1ngel-carrillo-7260013b7/",
+      "https://www.instagram.com/_anlg11"
+    ]
+  },
+  "clusters": [
+    {
+      "id": "automatizacion-ia",
+      "name": "Automatización con IA",
+      "desc": "Cómo automatizar procesos de una pyme con inteligencia artificial: qué automatizar, cómo empezar y qué errores evitar.",
+      "pillar": "automatizacion-de-procesos-con-ia-pymes",
+      "cta": { "title": "¿Qué procesos de tu empresa se pueden automatizar?", "text": "Cuéntanos cómo trabajas y en 30 minutos te decimos qué automatizar primero y cuánto tiempo ahorrarías." }
+    },
+    {
+      "id": "chatbots-whatsapp",
+      "name": "Chatbots y WhatsApp",
+      "desc": "Atención al cliente automática por WhatsApp y web: cómo funciona, qué necesitas y cómo hacerlo bien.",
+      "pillar": "chatbot-whatsapp-empresas",
+      "cta": { "title": "¿Quieres atender a tus clientes por WhatsApp las 24 horas?", "text": "Revisamos tu caso y te decimos qué puede responder solo un asistente de IA y qué debe seguir en manos de tu equipo." }
+    },
+    {
+      "id": "herramientas-n8n",
+      "name": "Herramientas: n8n, Make y Zapier",
+      "desc": "Guías y comparativas de las herramientas de automatización: n8n, Make, Zapier y cómo integrarlas con IA.",
+      "pillar": "n8n-que-es-y-como-usarlo-en-tu-empresa",
+      "cta": { "title": "¿Quieres montar tus flujos sin perder semanas de prueba y error?", "text": "Te decimos qué herramienta encaja con tu caso y cómo sería el primer flujo a implantar." }
+    },
+    {
+      "id": "sectores",
+      "name": "Automatización por sectores",
+      "desc": "Qué automatizar en cada tipo de negocio: obra, comercio, clínicas, despachos, logística, agencias y más.",
+      "pillar": "automatizacion-con-ia-por-sectores",
+      "cta": { "title": "Automatización pensada para tu sector", "text": "Cuéntanos a qué se dedica tu negocio y te proponemos los flujos que más tiempo te devolverían." }
+    },
+    {
+      "id": "administracion-facturacion",
+      "name": "Administración y facturación",
+      "desc": "Automatizar facturas, cobros, conciliación y tareas administrativas sin perder el control.",
+      "pillar": "automatizar-facturacion-y-administracion",
+      "cta": { "title": "Quita la administración repetitiva de tu día a día", "text": "Vemos qué parte de tu papeleo se puede automatizar y cuánto tiempo mensual liberarías." }
+    },
+    {
+      "id": "ia-empresas",
+      "name": "IA en la empresa",
+      "desc": "ChatGPT, agentes de IA y RGPD: cómo usar inteligencia artificial en una empresa con criterio y sin riesgos.",
+      "pillar": "chatgpt-y-agentes-de-ia-para-empresas",
+      "cta": { "title": "Lleva la IA a tu empresa con criterio", "text": "Te ayudamos a decidir dónde aporta valor real la IA en tu negocio y dónde no compensa." }
+    },
+    {
+      "id": "coste-roi",
+      "name": "Coste y retorno",
+      "desc": "Cuánto cuesta automatizar, cómo calcular el retorno y cómo decidir con números antes de invertir.",
+      "pillar": "cuanto-cuesta-automatizar-una-empresa",
+      "cta": { "title": "Valida el retorno antes de invertir", "text": "En el diagnóstico ponemos números a tu caso: horas que se liberan, coste del proyecto y plazo de amortización." }
+    }
+  ]
+}

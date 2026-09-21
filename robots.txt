@@ -10,5 +10,3 @@ Disallow: /*.json$
 # Sitemap
 Sitemap: https://one-agency.es/sitemap.xml
 
-# Crawl-delay (optional, for polite bots)
-Crawl-delay: 1
