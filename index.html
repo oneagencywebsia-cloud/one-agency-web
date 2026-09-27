@@ -5538,16 +5538,16 @@ setTimeout(function() {
       attribution: (window.__leadSrc ? window.__leadSrc() : {})
     };
 
-    var WEBHOOK_LEAD = 'https://angel-n8n-oneagency.p08ks6.easypanel.host/webhook/one-agency-lead';
-    var WEBHOOK_ONBOARDING = 'https://angel-n8n-oneagency.p08ks6.easypanel.host/webhook/one-agency-onboarding';
-    var WEBHOOK_ANALISIS = 'https://angel-n8n-oneagency.p08ks6.easypanel.host/webhook/one-agency-analisis-prereunion';
+    var WEBHOOK_LEAD = 'https://angel-n8nprobar.p08ks6.easypanel.host/webhook/one-agency-lead';
+    var WEBHOOK_ONBOARDING = 'https://angel-n8nprobar.p08ks6.easypanel.host/webhook/one-agency-onboarding';
     var body = JSON.stringify(payload);
     var headers = { 'Content-Type': 'application/json' };
 
+    /* el analisis pre-reunion ya NO se llama desde aqui: solo tiene sentido cuando el lead
+       responde de verdad, y eso lo dispara el workflow "CRM Ligero" automaticamente */
     Promise.all([
       fetch(WEBHOOK_LEAD, { method: 'POST', headers: headers, body: body }),
-      fetch(WEBHOOK_ONBOARDING, { method: 'POST', headers: headers, body: body }),
-      fetch(WEBHOOK_ANALISIS, { method: 'POST', headers: headers, body: body })
+      fetch(WEBHOOK_ONBOARDING, { method: 'POST', headers: headers, body: body })
     ]).then(function(responses) {
       var allOk = true;
       for (var r = 0; r < responses.length; r++) {
