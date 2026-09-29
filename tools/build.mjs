@@ -553,7 +553,7 @@ function casePage(p) {
       image: [SITE + og], datePublished: p.date, dateModified: p.modified, inLanguage: 'es-ES',
       mainEntityOfPage: { '@type': 'WebPage', '@id': SITE + url }, author: personLd(),
       publisher: { '@type': 'Organization', name: site.name, '@id': SITE + '/#organization', logo: { '@type': 'ImageObject', url: SITE + '/logo.png' } },
-      about: { '@type': 'Organization', name: p.fm.client, address: p.fm.clientLocation }, articleSection: 'Casos de éxito',
+      about: { '@type': 'Organization', name: p.fm.client, address: p.fm.clientLocation, logo: p.fm.clientLogo ? SITE + p.fm.clientLogo : undefined }, articleSection: 'Casos de éxito',
     },
   ];
   if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
@@ -563,7 +563,7 @@ function casePage(p) {
   return `${head({ title: seoTitle, desc: p.fm.description, url, ogImage: og, jsonld: ld, type: 'article' })}<body>${header()}
 ${crumbsHtml(crumbs)}
 <div class="case-hero reveal-io"><div class="case-hero-in">
-<div class="case-brand"><img src="/logo.png" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency</span></div>
+<div class="case-brand"><img src="${p.fm.clientLogo || '/logo.png'}" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency${p.fm.clientLogo ? ' × ' + esc(p.fm.clientName || '') : ''}</span></div>
 <h1>${esc(p.fm.title)}</h1>
 ${p.fm.lead ? `<p class="lead">${esc(p.fm.lead)}</p>` : ''}
 ${p.fm.client ? `<p class="case-client">${esc(p.fm.client)}</p>` : ''}
