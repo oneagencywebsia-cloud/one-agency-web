@@ -691,13 +691,9 @@ ul {
   opacity: 1;
   transform: translateX(0);
 }
-.mobile-menu.open .mobile-link:nth-child(1) { transition-delay: 0.05s; }
-.mobile-menu.open .mobile-link:nth-child(2) { transition-delay: 0.1s; }
-.mobile-menu.open .mobile-link:nth-child(3) { transition-delay: 0.15s; }
-.mobile-menu.open .mobile-link:nth-child(4) { transition-delay: 0.2s; }
-.mobile-menu.open .mobile-link:nth-child(5) { transition-delay: 0.25s; }
-.mobile-menu.open .mobile-link:nth-child(6) { transition-delay: 0.3s; }
-.mobile-menu.open .mobile-link:nth-child(7) { transition-delay: 0.35s; }
+/* El retraso escalonado de cada .mobile-link se fija por JS (ver "MOBILE MENU"),
+   no por nth-child: contar posiciones fijas se desincroniza cada vez que se
+   añade o quita un enlace del menú (pasó con "Casos de éxito"). */
 
 .mobile-link {
   font-size: 1.5rem;
@@ -5362,9 +5358,26 @@ if (navbar) {
     if (touchFired) { touchFired = false; return; }
     toggleMenu(menuToggle, mobileMenu);
   });
+  /* Retraso escalonado por JS (no por nth-child, que se desincroniza si se
+     añade o quita un enlace): cada .mobile-link recibe su propio delay según
+     su posición real entre los enlaces, sin importar cuántos haya. */
+  var staggerLinks = mobileMenu.querySelectorAll('a.mobile-link');
+  for (var s = 0; s < staggerLinks.length; s++) {
+    staggerLinks[s].style.transitionDelay = (0.05 + s * 0.05) + 's';
+  }
   var links = mobileMenu.querySelectorAll('a');
   for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function() { closeMenu(menuToggle, mobileMenu); });
+    links[i].addEventListener('click', function(e) {
+      var href = this.getAttribute('href') || '';
+      /* Los enlaces con ancla (#servicios, #casos...) los cierra el handler
+         global de "SMOOTH SCROLL + WAVE": el necesita ver el menu todavia
+         abierto para esperar a que termine de cerrarse antes de hacer scroll.
+         Si lo cerramos aqui primero, ese handler cree que ya estaba cerrado
+         y hace scroll de inmediato, debajo del menu que aun se esta
+         desvaneciendo -> el scroll parece no hacer nada. */
+      if (href.charAt(0) === '#' && href.length > 1) return;
+      closeMenu(menuToggle, mobileMenu);
+    });
   }
   var menuClose = document.getElementById('menu-close');
   if (menuClose) {
