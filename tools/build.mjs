@@ -1,8 +1,9 @@
-// Generador estático de O.N.E Agency (sin dependencias). Uso:  node tools/build.mjs && python tools/og.py
+// Generador estático de O.N.E Agency (sin dependencias). Uso:  node tools/build.mjs  (genera también las og.jpg vía tools/og.py)
 // Lee content/**/*.md + content/site.json y escribe HTML listo para Nginx en blog/, servicios/, recursos/, privacidad/,
 // 404.html, sitemap.xml y blog/feed.xml. Valida enlaces internos y longitudes SEO.
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site.json'), 'utf8'));
@@ -396,6 +397,8 @@ function extractFaq(blocks) {
     if (!inFaq) continue;
     if (b.t === 'h3') { cur = { q: b.text, a: '' }; faq.push(cur); }
     else if (cur && b.t === 'p') cur.a += (cur.a ? ' ' : '') + stripTags(b.html).replace(/\s+/g, ' ').trim();
+    // bodyWithCtas sustituye la sección FAQ entera por renderFaq(): lo que no sea párrafo se pierde
+    else warn(`FAQ${cur ? ` "${cur.q}"` : ''}: bloque "${b.t}" descartado (en las respuestas FAQ solo se publican párrafos)`);
   }
   return faq;
 }
@@ -702,4 +705,16 @@ console.log(`Artículos: ${articles.length} · Servicios: ${services.length} · 
 console.log(`Palabras totales artículos: ${articles.reduce((s, a) => s + a.words, 0)}`);
 if (warnings.length) { console.log(`\nAVISOS (${warnings.length}):`); warnings.forEach((w) => console.log(' · ' + w)); }
 if (broken) { console.error(`\n${broken} enlaces internos rotos`); process.exit(1); }
+
+// El rmrf de arriba borra las og.jpg de todas las páginas; sin este paso, todas las
+// previsualizaciones sociales quedan rotas (ya pasó dos veces al olvidar og.py).
+let og = null;
+for (const py of ['python3', 'python']) {
+  const r = spawnSync(py, [path.join(ROOT, 'tools/og.py')], { stdio: 'inherit' });
+  if (!r.error) { og = r; break; } // r.error = intérprete no encontrado; si existe, no probar el siguiente
+}
+if (!og || og.status !== 0) {
+  console.error('\nERROR: no se pudieron generar las imágenes OG (tools/og.py). No despliegues: las páginas apuntan a og.jpg que no existen.');
+  process.exit(1);
+}
 console.log('\nBuild OK');
