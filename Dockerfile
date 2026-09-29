@@ -15,5 +15,6 @@ COPY blog/ /usr/share/nginx/html/blog/
 COPY servicios/ /usr/share/nginx/html/servicios/
 COPY recursos/ /usr/share/nginx/html/recursos/
 COPY privacidad/ /usr/share/nginx/html/privacidad/
+COPY casos/ /usr/share/nginx/html/casos/
 
 EXPOSE 80
