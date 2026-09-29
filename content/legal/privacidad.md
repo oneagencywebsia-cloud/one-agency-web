@@ -9,7 +9,7 @@ date: 2026-09-21
 
 ## 1. Responsable del tratamiento
 
-O.N.E Agency — Ángel Carrillo. Santaella, Córdoba, España. Correo electrónico: [angel@one-agency.es](mailto:angel@one-agency.es).
+O.N.E Agency — Ángel Carrillo. Santaella, Córdoba, España. Correo electrónico: [oneagencywebsia@gmail.com](mailto:oneagencywebsia@gmail.com).
 
 ## 2. Finalidad del tratamiento
 
@@ -31,7 +31,7 @@ Tus datos no serán cedidos a terceros, salvo obligación legal. Podrán ser tra
 
 ## 5. Derechos
 
-Puedes ejercer tus derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición escribiendo a [angel@one-agency.es](mailto:angel@one-agency.es). Si consideras que el tratamiento no se ajusta a la normativa, puedes presentar una reclamación ante la Agencia Española de Protección de Datos.
+Puedes ejercer tus derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición escribiendo a [oneagencywebsia@gmail.com](mailto:oneagencywebsia@gmail.com). Si consideras que el tratamiento no se ajusta a la normativa, puedes presentar una reclamación ante la Agencia Española de Protección de Datos.
 
 ## 6. Conservación
 

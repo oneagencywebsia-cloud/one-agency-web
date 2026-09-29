@@ -305,6 +305,7 @@ function head({ title, desc, url, ogImage, jsonld = [], noindex = false, type = 
 <meta property="og:image" content="${img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${img}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>${CSS}</style>
@@ -324,9 +325,9 @@ const footer = () => `<footer class="ft"><div class="ft-in">
 <div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
 <div><h4>Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
 <div><h4>Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
-<div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:angel@one-agency.es">angel@one-agency.es</a></div>
+<div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
 </div><div class="ft-b"><span>© ${new Date().getFullYear()} O.N.E Agency. Todos los derechos reservados.</span><span><a href="/privacidad/">Política de privacidad y cookies</a> · <a href="/blog/feed.xml">RSS</a></span></div></footer>
-<div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Más información</a>
+<div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
 <div class="r"><button class="ok" id="ck-ok" type="button">Aceptar</button><button class="no" id="ck-no" type="button">Rechazar</button></div></div>
 <script>${SCRIPT}</script></body></html>`;
 
