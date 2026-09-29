@@ -120,7 +120,30 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .res .big{font-size:clamp(2rem,6vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em}
 .res .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}.res .g3 div{background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
 .res .g3 b{display:block;font-size:1.25rem}.res .g3 span{font-size:.78rem;color:#BFDBFE}.res p.n{font-size:.78rem;color:#BFDBFE;margin:14px 0 0}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.case-hero{background:linear-gradient(135deg,#0B1226,#1D4ED8 60%,#EA580C);color:#fff;padding:44px 20px 52px;position:relative;overflow:hidden}
+.case-hero:after{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);pointer-events:none}
+.case-hero-in{max-width:820px;margin:0 auto;position:relative}
+.case-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.case-brand img{width:40px;height:40px;border-radius:50%;background:#fff;padding:4px}
+.case-brand span{font-size:.76rem;font-weight:800;color:#FDBA74;text-transform:uppercase;letter-spacing:.09em}
+.case-hero h1{color:#fff;margin:0 0 14px;font-size:clamp(1.9rem,4.4vw,2.85rem);line-height:1.13;letter-spacing:-.025em;font-weight:800}
+.case-hero .lead{color:#DBEAFE;font-size:1.1rem;margin:0 0 20px;max-width:640px}
+.case-client{font-size:.92rem;color:#fff;font-weight:700;margin:0 0 16px}
+.case-chips{display:flex;flex-wrap:wrap;gap:8px}
+.case-chip{font-size:.8rem;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:7px 13px;border-radius:99px;white-space:nowrap}
+.chat-mock{margin:1.6em 0;padding:18px 18px 8px;background:#E9EDF3;border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.chat-mock .cm-row{display:flex;gap:8px;align-items:flex-end}
+.chat-mock .cm-row.out{flex-direction:row-reverse}
+.chat-mock .cm-av{width:28px;height:28px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff}
+.chat-mock .cm-av.in{background:var(--soft)}
+.chat-mock .cm-av.out{background:linear-gradient(135deg,var(--blue),var(--orange))}
+.chat-mock .cm-bub{max-width:78%;padding:10px 14px;border-radius:16px;font-size:.92rem;line-height:1.45;box-shadow:0 6px 16px -10px rgba(15,23,42,.3)}
+.chat-mock .cm-bub.in{background:#fff;color:var(--ink2);border-bottom-left-radius:4px}
+.chat-mock .cm-bub.out{background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.chat-mock .cm-tag{display:block;font-size:.68rem;color:#94A3B8;margin:2px 0 10px;text-align:center}
+.js-reveal .reveal-io{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.js-reveal .reveal-io.is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.js-reveal .reveal-io{opacity:1!important;transform:none!important}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Cómo automatizar un despacho de abogados o una gestoría","description":"Qué automatizar en un despacho o gestoría: recepción de clientes, documentación, plazos, clasificación de correos y facturación, cuidando la confidencialidad.","image":["https://one-agency.es/blog/automatizar-un-despacho-de-abogados-o-gestoria/og.jpg"],"datePublished":"2026-09-21","dateModified":"2026-09-21","inLanguage":"es-ES","mainEntityOfPage":{"@type":"WebPage","@id":"https://one-agency.es/blog/automatizar-un-despacho-de-abogados-o-gestoria/"},"author":{"@type":"Person","name":"Ángel Carrillo","url":"https://angelcarrillo.es","jobTitle":"Fundador de O.N.E Agency","sameAs":["https://www.linkedin.com/in/%C3%A1ngel-carrillo-7260013b7/","https://www.instagram.com/_anlg11"],"worksFor":{"@id":"https://one-agency.es/#organization"}},"publisher":{"@type":"Organization","name":"O.N.E Agency","@id":"https://one-agency.es/#organization","logo":{"@type":"ImageObject","url":"https://one-agency.es/logo.png"}},"articleSection":"Automatización por sectores","wordCount":850}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://one-agency.es/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://one-agency.es/blog/"},{"@type":"ListItem","position":3,"name":"Automatización por sectores","item":"https://one-agency.es/blog/sectores/"},{"@type":"ListItem","position":4,"name":"Cómo automatizar un despacho de abogados o una gestoría","item":"https://one-agency.es/blog/automatizar-un-despacho-de-abogados-o-gestoria/"}]}</script>
@@ -196,5 +219,11 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-cta]');if(t&&typeof gtag==='function')gtag('event','cta_click',{cta_position:t.getAttribute('data-cta'),page_path:location.pathname})});
   var st=document.getElementById('sticky');
   if(st){var on=function(){st.classList.toggle('on',window.scrollY>520)};window.addEventListener('scroll',on,{passive:true});on()}
+  var rv=document.querySelectorAll('.reveal-io');
+  if(rv.length&&'IntersectionObserver' in window){
+    document.documentElement.classList.add('js-reveal');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.15});
+    rv.forEach(function(el){io.observe(el)});
+  }
 })();
 </script></body></html>

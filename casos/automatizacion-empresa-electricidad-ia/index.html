@@ -10,7 +10,7 @@
 <meta name="author" content="Ángel Carrillo">
 <link rel="icon" type="image/png" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png">
 <link rel="alternate" type="application/rss+xml" title="Blog de O.N.E Agency" href="/blog/feed.xml">
-<meta property="og:type" content="website"><meta property="og:site_name" content="O.N.E Agency"><meta property="og:locale" content="es_ES">
+<meta property="og:type" content="article"><meta property="og:site_name" content="O.N.E Agency"><meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Automatización con IA para electricistas: caso real | O.N.E Agency"><meta property="og:description" content="Cómo construimos un sistema con n8n y un agente de IA en Telegram para que un electricista registre partes, materiales y presupuestos sin papeleo."><meta property="og:url" content="https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/">
 <meta property="og:image" content="https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Automatización con IA para electricistas: caso real | O.N.E Agency"><meta name="twitter:description" content="Cómo construimos un sistema con n8n y un agente de IA en Telegram para que un electricista registre partes, materiales y presupuestos sin papeleo."><meta name="twitter:image" content="https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/og.jpg">
@@ -120,7 +120,30 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .res .big{font-size:clamp(2rem,6vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em}
 .res .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}.res .g3 div{background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
 .res .g3 b{display:block;font-size:1.25rem}.res .g3 span{font-size:.78rem;color:#BFDBFE}.res p.n{font-size:.78rem;color:#BFDBFE;margin:14px 0 0}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.case-hero{background:linear-gradient(135deg,#0B1226,#1D4ED8 60%,#EA580C);color:#fff;padding:44px 20px 52px;position:relative;overflow:hidden}
+.case-hero:after{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);pointer-events:none}
+.case-hero-in{max-width:820px;margin:0 auto;position:relative}
+.case-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.case-brand img{width:40px;height:40px;border-radius:50%;background:#fff;padding:4px}
+.case-brand span{font-size:.76rem;font-weight:800;color:#FDBA74;text-transform:uppercase;letter-spacing:.09em}
+.case-hero h1{color:#fff;margin:0 0 14px;font-size:clamp(1.9rem,4.4vw,2.85rem);line-height:1.13;letter-spacing:-.025em;font-weight:800}
+.case-hero .lead{color:#DBEAFE;font-size:1.1rem;margin:0 0 20px;max-width:640px}
+.case-client{font-size:.92rem;color:#fff;font-weight:700;margin:0 0 16px}
+.case-chips{display:flex;flex-wrap:wrap;gap:8px}
+.case-chip{font-size:.8rem;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:7px 13px;border-radius:99px;white-space:nowrap}
+.chat-mock{margin:1.6em 0;padding:18px 18px 8px;background:#E9EDF3;border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.chat-mock .cm-row{display:flex;gap:8px;align-items:flex-end}
+.chat-mock .cm-row.out{flex-direction:row-reverse}
+.chat-mock .cm-av{width:28px;height:28px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff}
+.chat-mock .cm-av.in{background:var(--soft)}
+.chat-mock .cm-av.out{background:linear-gradient(135deg,var(--blue),var(--orange))}
+.chat-mock .cm-bub{max-width:78%;padding:10px 14px;border-radius:16px;font-size:.92rem;line-height:1.45;box-shadow:0 6px 16px -10px rgba(15,23,42,.3)}
+.chat-mock .cm-bub.in{background:#fff;color:var(--ink2);border-bottom-left-radius:4px}
+.chat-mock .cm-bub.out{background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.chat-mock .cm-tag{display:block;font-size:.68rem;color:#94A3B8;margin:2px 0 10px;text-align:center}
+.js-reveal .reveal-io{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.js-reveal .reveal-io.is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.js-reveal .reveal-io{opacity:1!important;transform:none!important}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://one-agency.es/"},{"@type":"ListItem","position":2,"name":"Casos de éxito","item":"https://one-agency.es/casos/"},{"@type":"ListItem","position":3,"name":"Automatizamos los partes de trabajo de un electricista con un agente de IA en Telegram","item":"https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Automatizamos los partes de trabajo de un electricista con un agente de IA en Telegram","description":"Cómo construimos un sistema con n8n y un agente de IA en Telegram para que un electricista registre partes, materiales y presupuestos sin papeleo.","image":["https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/og.jpg"],"datePublished":"2026-09-29","dateModified":"2026-09-29","inLanguage":"es-ES","mainEntityOfPage":{"@type":"WebPage","@id":"https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/"},"author":{"@type":"Person","name":"Ángel Carrillo","url":"https://angelcarrillo.es","jobTitle":"Fundador de O.N.E Agency","sameAs":["https://www.linkedin.com/in/%C3%A1ngel-carrillo-7260013b7/","https://www.instagram.com/_anlg11"],"worksFor":{"@id":"https://one-agency.es/#organization"}},"publisher":{"@type":"Organization","name":"O.N.E Agency","@id":"https://one-agency.es/#organization","logo":{"@type":"ImageObject","url":"https://one-agency.es/logo.png"}},"about":{"@type":"Organization","name":"Instalaciones Carrillo (Juan Carrillo Nieto), electricista en Santaella, Córdoba","address":"Santaella, Córdoba, España"},"articleSection":"Casos de éxito"}</script>
@@ -133,49 +156,14 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 <a class="btn btn-sm" data-cta="header" href="/?fuente=header&amp;utm_source=blog&amp;utm_medium=cta-header#contacto">Diagnóstico gratuito</a>
 </nav></div></header>
 <nav class="crumbs" aria-label="Migas de pan"><a href="/">Inicio</a><i>›</i><a href="/casos/">Casos de éxito</a><i>›</i><span>Automatizamos los partes de trabajo de un electricista con un agente de IA en Telegram</span></nav>
-<div class="wrap one" id="main"><article>
+<div class="case-hero reveal-io"><div class="case-hero-in">
+<div class="case-brand"><img src="/logo.png" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency</span></div>
 <h1>Automatizamos los partes de trabajo de un electricista con un agente de IA en Telegram</h1>
 <p class="lead">Instalaciones Carrillo es una empresa de electricidad de Santaella (Córdoba). Así es el sistema que le construimos para que dejar de rellenar partes a mano.</p>
-<style>
-.cs-hero{margin:0 0 2.2em;padding:26px 28px;border-radius:20px;background:linear-gradient(135deg,#0B1226,#1D4ED8 60%,#EA580C);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:18px;box-shadow:0 30px 60px -28px rgba(29,78,216,.6)}
-.cs-hero img{width:44px;height:44px;border-radius:50%;background:#fff;padding:4px;flex:0 0 auto}
-.cs-hero .cs-k{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#FDBA74;display:block;margin-bottom:4px}
-.cs-hero .cs-h{font-size:1.02rem;font-weight:800;color:#fff}
-.cs-chips{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
-.cs-chip{font-size:.8rem;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:7px 13px;border-radius:99px;white-space:nowrap}
-.cs-chat{margin:1.6em 0;padding:18px 18px 8px;background:#E9EDF3;border-radius:18px;display:flex;flex-direction:column;gap:10px}
-.cs-chat .cs-row{display:flex;gap:8px;align-items:flex-end}
-.cs-chat .cs-row.out{flex-direction:row-reverse}
-.cs-chat .cs-av{width:28px;height:28px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff}
-.cs-chat .cs-av.in{background:#64748B}
-.cs-chat .cs-av.out{background:linear-gradient(135deg,#3B82F6,#F97316)}
-.cs-chat .cs-bub{max-width:78%;padding:10px 14px;border-radius:16px;font-size:.92rem;line-height:1.45;box-shadow:0 6px 16px -10px rgba(15,23,42,.3)}
-.cs-chat .cs-bub.in{background:#fff;color:#1E293B;border-bottom-left-radius:4px}
-.cs-chat .cs-bub.out{background:#3B82F6;color:#fff;border-bottom-right-radius:4px}
-.cs-chat .cs-tag{display:block;font-size:.68rem;color:#94A3B8;margin:2px 0 10px;text-align:center}
-.reveal-io{opacity:1;transform:none}
-.js-cs-ready .reveal-io{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
-.js-cs-ready .reveal-io.cs-visible{opacity:1;transform:none}
-@media (prefers-reduced-motion: reduce){.js-cs-ready .reveal-io{opacity:1;transform:none;transition:none}}
-</style>
-<div class="cs-hero reveal-io">
-<img src="/logo.png" alt="" loading="lazy">
-<div><span class="cs-k">Caso de éxito · O.N.E Agency</span><span class="cs-h">Instalaciones Carrillo — Santaella, Córdoba</span></div>
-<div class="cs-chips">
-<span class="cs-chip">⚡ Electricidad</span>
-<span class="cs-chip">🤖 n8n + OpenAI</span>
-<span class="cs-chip">💬 Telegram</span>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded', function(){
-var els = document.querySelectorAll('.reveal-io');
-if (!('IntersectionObserver' in window) || !els.length) return;
-document.documentElement.classList.add('js-cs-ready');
-var io = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('cs-visible'); io.unobserve(e.target); } });
-}, { threshold: 0.15 });
-els.forEach(function(el){ io.observe(el); });
-});</script>
+<p class="case-client">Instalaciones Carrillo (Juan Carrillo Nieto), electricista en Santaella, Córdoba</p>
+<div class="case-chips"><span class="case-chip">⚡ Electricidad</span><span class="case-chip">🤖 n8n + OpenAI</span><span class="case-chip">💬 Telegram</span></div>
+</div></div>
+<div class="wrap one" id="main"><article>
 <h2 id="el-punto-de-partida">El punto de partida</h2>
 <p>Instalaciones Carrillo es una empresa de electricidad de Santaella, en Córdoba: instalaciones, averías, boletines y mantenimiento para particulares y empresas de la zona. Como en la mayoría de empresas de instalaciones, el trabajo real pasa fuera de la oficina: en la obra, en casa del cliente, subido a una escalera. El papeleo —quién trabajó, cuántas horas, qué material se usó, en qué cliente— se apunta a mano o se intenta recordar por la noche.</p>
 <p>Ese es el problema que resuelve casi cualquier sistema de gestión para electricistas o instaladores: cómo capturar la información del día sin obligar a nadie a rellenar un formulario con las manos llenas de grasa o con prisa por llegar al siguiente aviso.</p>
@@ -228,10 +216,10 @@ els.forEach(function(el){ io.observe(el); });
 </figure>
 <h3 id="un-agente-de-ia-que-entiende-como-habla-un-electricista-no-un-formulario">Un agente de IA que entiende cómo habla un electricista, no un formulario</h3>
 <p>Esta es la pieza central del sistema. El electricista no rellena ningún formulario: le escribe a un bot de Telegram tal cual hablaría por WhatsApp con un compañero. Por ejemplo (recreación ilustrativa, no una captura real):</p>
-<div class="cs-chat reveal-io">
-<span class="cs-tag">Telegram — chat con el bot de partes</span>
-<div class="cs-row in"><span class="cs-av in">JC</span><span class="cs-bub in">Joaquín debajo museo, angel y pino, de 9 a 11, 2 marcos</span></div>
-<div class="cs-row out"><span class="cs-av out">IA</span><span class="cs-bub out">✅ Parte registrado<br>Cliente: Joaquín (debajo museo)<br>Trabajadores: Ángel, Pino<br>Horas: 2h (9:00–11:00)<br>Material: 2 marcos</span></div>
+<div class="chat-mock reveal-io">
+<span class="cm-tag">Telegram — chat con el bot de partes</span>
+<div class="cm-row in"><span class="cm-av in">JC</span><span class="cm-bub in">Joaquín debajo museo, angel y pino, de 9 a 11, 2 marcos</span></div>
+<div class="cm-row out"><span class="cm-av out">IA</span><span class="cm-bub out">✅ Parte registrado<br>Cliente: Joaquín (debajo museo)<br>Trabajadores: Ángel, Pino<br>Horas: 2h (9:00–11:00)<br>Material: 2 marcos</span></div>
 </div>
 <p>El agente de IA interpreta ese mensaje entero solo: identifica que &quot;Joaquín debajo museo&quot; es el cliente (así es como lo tienen registrado, con el lugar incluido en el nombre), que Ángel y Pino son los dos trabajadores, que el horario &quot;de 9 a 11&quot; son 2 horas, y que se han usado 2 marcos como material. Con eso registra el parte del día directamente en la hoja de cálculo de la empresa, sin que nadie tenga que abrir una app ni escribir una sola palabra de más.</p>
 <p>Si falta un dato realmente imprescindible, el agente pregunta. Si no, no interrumpe: solo confirma que ha quedado registrado.</p>
@@ -264,5 +252,11 @@ els.forEach(function(el){ io.observe(el); });
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-cta]');if(t&&typeof gtag==='function')gtag('event','cta_click',{cta_position:t.getAttribute('data-cta'),page_path:location.pathname})});
   var st=document.getElementById('sticky');
   if(st){var on=function(){st.classList.toggle('on',window.scrollY>520)};window.addEventListener('scroll',on,{passive:true});on()}
+  var rv=document.querySelectorAll('.reveal-io');
+  if(rv.length&&'IntersectionObserver' in window){
+    document.documentElement.classList.add('js-reveal');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.15});
+    rv.forEach(function(el){io.observe(el)});
+  }
 })();
 </script></body></html>

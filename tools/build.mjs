@@ -259,7 +259,30 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .res .big{font-size:clamp(2rem,6vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em}
 .res .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}.res .g3 div{background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
 .res .g3 b{display:block;font-size:1.25rem}.res .g3 span{font-size:.78rem;color:#BFDBFE}.res p.n{font-size:.78rem;color:#BFDBFE;margin:14px 0 0}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.case-hero{background:linear-gradient(135deg,#0B1226,#1D4ED8 60%,#EA580C);color:#fff;padding:44px 20px 52px;position:relative;overflow:hidden}
+.case-hero:after{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);pointer-events:none}
+.case-hero-in{max-width:820px;margin:0 auto;position:relative}
+.case-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.case-brand img{width:40px;height:40px;border-radius:50%;background:#fff;padding:4px}
+.case-brand span{font-size:.76rem;font-weight:800;color:#FDBA74;text-transform:uppercase;letter-spacing:.09em}
+.case-hero h1{color:#fff;margin:0 0 14px;font-size:clamp(1.9rem,4.4vw,2.85rem);line-height:1.13;letter-spacing:-.025em;font-weight:800}
+.case-hero .lead{color:#DBEAFE;font-size:1.1rem;margin:0 0 20px;max-width:640px}
+.case-client{font-size:.92rem;color:#fff;font-weight:700;margin:0 0 16px}
+.case-chips{display:flex;flex-wrap:wrap;gap:8px}
+.case-chip{font-size:.8rem;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:7px 13px;border-radius:99px;white-space:nowrap}
+.chat-mock{margin:1.6em 0;padding:18px 18px 8px;background:#E9EDF3;border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.chat-mock .cm-row{display:flex;gap:8px;align-items:flex-end}
+.chat-mock .cm-row.out{flex-direction:row-reverse}
+.chat-mock .cm-av{width:28px;height:28px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff}
+.chat-mock .cm-av.in{background:var(--soft)}
+.chat-mock .cm-av.out{background:linear-gradient(135deg,var(--blue),var(--orange))}
+.chat-mock .cm-bub{max-width:78%;padding:10px 14px;border-radius:16px;font-size:.92rem;line-height:1.45;box-shadow:0 6px 16px -10px rgba(15,23,42,.3)}
+.chat-mock .cm-bub.in{background:#fff;color:var(--ink2);border-bottom-left-radius:4px}
+.chat-mock .cm-bub.out{background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.chat-mock .cm-tag{display:block;font-size:.68rem;color:#94A3B8;margin:2px 0 10px;text-align:center}
+.js-reveal .reveal-io{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.js-reveal .reveal-io.is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.js-reveal .reveal-io{opacity:1!important;transform:none!important}}
 `;
 
 const SCRIPT = `
@@ -272,6 +295,12 @@ const SCRIPT = `
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-cta]');if(t&&typeof gtag==='function')gtag('event','cta_click',{cta_position:t.getAttribute('data-cta'),page_path:location.pathname})});
   var st=document.getElementById('sticky');
   if(st){var on=function(){st.classList.toggle('on',window.scrollY>520)};window.addEventListener('scroll',on,{passive:true});on()}
+  var rv=document.querySelectorAll('.reveal-io');
+  if(rv.length&&'IntersectionObserver' in window){
+    document.documentElement.classList.add('js-reveal');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.15});
+    rv.forEach(function(el){io.observe(el)});
+  }
 })();
 `;
 
@@ -510,11 +539,47 @@ ${ctaBox(c.id, 'cluster-' + c.id, '', 'cluster')}
 </main>${footer()}`;
 }
 
+function casePage(p) {
+  const url = p.url;
+  const crumbs = [['Inicio', '/'], ['Casos de éxito', '/casos/'], [p.fm.title, url]];
+  const faq = extractFaq(p.blocks);
+  const cluster = p.fm.cluster || 'sectores';
+  const body = bodyWithCtas(p, cluster).replace('@@FAQ@@', renderFaq(faq));
+  const og = `${url}og.jpg`;
+  const ld = [
+    breadcrumbLd(crumbs),
+    {
+      '@context': 'https://schema.org', '@type': 'Article', headline: p.fm.title, description: p.fm.description,
+      image: [SITE + og], datePublished: p.date, dateModified: p.modified, inLanguage: 'es-ES',
+      mainEntityOfPage: { '@type': 'WebPage', '@id': SITE + url }, author: personLd(),
+      publisher: { '@type': 'Organization', name: site.name, '@id': SITE + '/#organization', logo: { '@type': 'ImageObject', url: SITE + '/logo.png' } },
+      about: { '@type': 'Organization', name: p.fm.client, address: p.fm.clientLocation }, articleSection: 'Casos de éxito',
+    },
+  ];
+  if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+  const chips = (p.fm.chips || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const seoTitle = p.fm.seoTitle || `${p.fm.title} | ${site.name}`;
+  const sticky = `<div class="sticky" id="sticky"><a class="btn" data-cta="sticky" href="${ctaUrl(p.slug, p.fm.sector, cluster, 'sticky')}">⚡ Reservar diagnóstico gratuito</a></div>`;
+  return `${head({ title: seoTitle, desc: p.fm.description, url, ogImage: og, jsonld: ld, type: 'article' })}<body>${header()}
+${crumbsHtml(crumbs)}
+<div class="case-hero reveal-io"><div class="case-hero-in">
+<div class="case-brand"><img src="/logo.png" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency</span></div>
+<h1>${esc(p.fm.title)}</h1>
+${p.fm.lead ? `<p class="lead">${esc(p.fm.lead)}</p>` : ''}
+${p.fm.client ? `<p class="case-client">${esc(p.fm.client)}</p>` : ''}
+${chips.length ? `<div class="case-chips">${chips.map((c) => `<span class="case-chip">${esc(c)}</span>`).join('')}</div>` : ''}
+</div></div>
+<div class="wrap one" id="main"><article>
+${body}
+${ctaBox(cluster, p.slug, p.fm.sector, 'final')}
+</article></div>${sticky}
+${footer()}`;
+}
+
 function simplePage(p, { serviceLd = false } = {}) {
   const url = p.url;
   const crumbs = p.kind === 'service' ? [['Inicio', '/'], ['Servicios', '/servicios/automatizacion-con-ia/'], [p.fm.title, url]]
     : p.kind === 'resource' ? [['Inicio', '/'], ['Recursos', url], [p.fm.title, url]]
-    : p.kind === 'case' ? [['Inicio', '/'], ['Casos de éxito', '/casos/'], [p.fm.title, url]]
     : [['Inicio', '/'], [p.fm.title, url]];
   if (p.kind === 'service') crumbs[1] = ['Servicios', '/servicios/automatizacion-con-ia/'];
   if (p.kind === 'resource') crumbs.splice(1, 1);
@@ -527,16 +592,6 @@ function simplePage(p, { serviceLd = false } = {}) {
     ld.push({
       '@context': 'https://schema.org', '@type': 'Service', name: p.fm.title, description: p.fm.description, url: SITE + url,
       provider: orgRef, areaServed: { '@type': 'Country', name: 'España' }, serviceType: p.fm.serviceType || p.fm.title,
-    });
-  }
-  if (p.kind === 'resource') ld.push({ '@context': 'https://schema.org', '@type': 'WebApplication', name: p.fm.title, description: p.fm.description, url: SITE + url, applicationCategory: 'BusinessApplication', operatingSystem: 'Web' });
-  if (p.kind === 'case') {
-    ld.push({
-      '@context': 'https://schema.org', '@type': 'Article', headline: p.fm.title, description: p.fm.description,
-      image: [SITE + `${url}og.jpg`], datePublished: p.date, dateModified: p.modified, inLanguage: 'es-ES',
-      mainEntityOfPage: { '@type': 'WebPage', '@id': SITE + url }, author: personLd(),
-      publisher: { '@type': 'Organization', name: site.name, '@id': SITE + '/#organization', logo: { '@type': 'ImageObject', url: SITE + '/logo.png' } },
-      about: { '@type': 'Organization', name: p.fm.client, address: p.fm.clientLocation }, articleSection: 'Casos de éxito',
     });
   }
   if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
@@ -605,7 +660,7 @@ for (const r of resources) {
   sitemap.push({ url: r.url, lastmod: r.modified, cf: 'monthly', pr: '0.8' });
 }
 for (const cs of cases) {
-  writeOut(`casos/${cs.slug}/index.html`, simplePage(cs));
+  writeOut(`casos/${cs.slug}/index.html`, casePage(cs));
   sitemap.push({ url: cs.url, lastmod: cs.modified, cf: 'monthly', pr: '0.8' });
   if (cs.fm.description.length < 110 || cs.fm.description.length > 165) warn(`${cs.slug}: description ${cs.fm.description.length} car.`);
 }
