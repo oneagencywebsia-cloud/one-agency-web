@@ -1275,6 +1275,12 @@ ul {
   box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.25);
 }
 
+.case-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .case-logo-card strong {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1rem;
@@ -2448,6 +2454,7 @@ ul {
     justify-content: center;
     gap: 20px;
   }
+  .case-logo-text { text-align: left; }
   .case-content { padding: 28px 24px; }
   .case-features { justify-content: center; }
 
@@ -4999,8 +5006,10 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
       <div class="case-wrapper reveal reveal-delay-1">
         <div class="case-logo-card">
           <img src="/carrillo-logo.png" width="84" height="84" loading="lazy" decoding="async" alt="Logo de Instalaciones Eléctricas Carrillo" />
-          <strong>Carrillo Electricidad</strong>
-          <small>Santaella, Córdoba</small>
+          <div class="case-logo-text">
+            <strong>Carrillo Electricidad</strong>
+            <small>Santaella, Córdoba</small>
+          </div>
         </div>
         <div class="case-content glass-card">
           <span class="section-tag">⚡ Construcción / Obra</span>
@@ -5377,7 +5386,7 @@ if (navbar) {
      su posición real entre los enlaces, sin importar cuántos haya. */
   var staggerLinks = mobileMenu.querySelectorAll('a.mobile-link');
   for (var s = 0; s < staggerLinks.length; s++) {
-    staggerLinks[s].style.transitionDelay = (0.05 + s * 0.05) + 's';
+    staggerLinks[s].style.transitionDelay = (0.05 + s * 0.05).toFixed(2) + 's';
   }
   var links = mobileMenu.querySelectorAll('a');
   for (var i = 0; i < links.length; i++) {
