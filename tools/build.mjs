@@ -476,12 +476,14 @@ function hubPage() {
   ];
   const pillars = site.clusters.map((c) => articleBySlug[c.pillar]).filter(Boolean);
   const latest = [...articles].filter((a) => a.fm.type !== 'pillar').sort((x, y) => y.date.localeCompare(x.date)).slice(0, 12);
+  const casesSection = cases.length ? `<h2>Casos de éxito</h2><p class="sub">Sistemas reales que ya funcionan en empresas de toda España. <a href="/casos/">Ver todos →</a></p><div class="grid">${cases.map(caseCardHtml).join('')}</div>` : '';
   return `${head({ title: 'Blog de automatización con IA para empresas | O.N.E Agency', desc: 'Guías prácticas de automatización con IA para pymes y empresas de España: chatbots, WhatsApp, n8n, facturación, costes y casos por sector.', url, jsonld: ld })}<body>${header()}
 ${crumbsHtml([['Inicio', '/'], ['Blog', url]])}
 <main class="hub" id="main"><span class="kick">Blog</span><h1>Automatización con IA para empresas, explicada sin humo</h1>
 <p class="lead" style="max-width:760px">Guías prácticas para pymes y negocios de toda España: qué automatizar, cómo hacerlo, cuánto cuesta y qué resultados esperar. Escritas por quien construye estos sistemas cada semana.</p>
 <h2>Guías completas por tema</h2><p class="sub">Empieza por la guía del tema que más te interese.</p>
 <div class="grid">${pillars.map(cardHtml).join('')}</div>
+${casesSection}
 ${site.clusters.map((c) => {
     const list = articles.filter((a) => a.fm.cluster === c.id && a.fm.type !== 'pillar');
     if (!list.length) return '';
@@ -494,6 +496,7 @@ ${ctaBox('automatizacion-ia', 'blog-hub', '', 'hub')}
 function clusterPage(c) {
   const url = `/blog/${c.id}/`;
   const list = articles.filter((a) => a.fm.cluster === c.id).sort((x, y) => (x.fm.type === 'pillar' ? -1 : 1) - (y.fm.type === 'pillar' ? -1 : 1) || x.fm.title.localeCompare(y.fm.title));
+  const relatedCases = cases.filter((cs) => cs.fm.cluster === c.id);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: c.name, description: c.desc, url: SITE + url, inLanguage: 'es-ES', isPartOf: { '@type': 'Blog', '@id': SITE + '/blog/' } },
     breadcrumbLd([['Inicio', '/'], ['Blog', '/blog/'], [c.name, url]]),
@@ -502,6 +505,7 @@ function clusterPage(c) {
 ${crumbsHtml([['Inicio', '/'], ['Blog', '/blog/'], [c.name, url]])}
 <main class="hub" id="main"><span class="kick">${esc(c.name)}</span><h1>${esc(c.name)}</h1><p class="lead" style="max-width:760px">${esc(c.desc)}</p>
 <div class="grid">${list.map(cardHtml).join('')}</div>
+${relatedCases.length ? `<h2>Casos de éxito de este tema</h2><p class="sub">Empresas reales a las que ya se lo hemos construido.</p><div class="grid">${relatedCases.map(caseCardHtml).join('')}</div>` : ''}
 ${ctaBox(c.id, 'cluster-' + c.id, '', 'cluster')}
 </main>${footer()}`;
 }
