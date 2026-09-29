@@ -49,6 +49,8 @@ En lugar de papeles o mensajes sueltos, el encargado puede enviar un parte por m
 - Registra horas, materiales y incidencias.
 - Genera un resumen diario o semanal para el responsable y, si procede, para el cliente.
 
+Así lo hicimos para una empresa real de electricidad: [un agente de IA en Telegram que registra los partes con solo un mensaje](/casos/automatizacion-empresa-electricidad-ia/), sin abrir ninguna app.
+
 ## 4. Proveedores y compras
 
 - Solicitar presupuestos de material a varios proveedores con un mismo formato.

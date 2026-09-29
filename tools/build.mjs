@@ -8,7 +8,7 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site.json'), 'utf8'));
 const SITE = site.url;
 const TODAY = new Date().toISOString().slice(0, 10);
-const OUT_DIRS = ['blog', 'servicios', 'recursos', 'privacidad'];
+const OUT_DIRS = ['blog', 'servicios', 'recursos', 'privacidad', 'casos'];
 
 const warnings = [];
 const warn = (m) => warnings.push(m);
@@ -145,6 +145,7 @@ const articles = loadDir('blog', 'article');
 const services = loadDir('servicios', 'service');
 const resources = loadDir('recursos', 'resource');
 const legal = loadDir('legal', 'legal');
+const cases = loadDir('casos', 'case');
 const clusterById = Object.fromEntries(site.clusters.map((c) => [c.id, c]));
 const articleBySlug = Object.fromEntries(articles.map((a) => [a.slug, a]));
 
@@ -317,7 +318,7 @@ const header = () => `<a class="skip" href="#main">Saltar al contenido</a>
 <header class="hd"><div class="hd-in">
 <a class="brand" href="/" aria-label="O.N.E Agency, inicio"><img src="/logo.png" width="38" height="38" alt="" decoding="async"><span class="w">O.N.E <b>Agency</b></span></a>
 <nav class="nav" aria-label="Principal">
-<a href="/servicios/automatizacion-con-ia/">Servicios</a><a href="/blog/">Blog</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora</a>
+<a href="/servicios/automatizacion-con-ia/">Servicios</a><a href="/casos/">Casos de éxito</a><a href="/blog/">Blog</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora</a>
 <a class="btn btn-sm" data-cta="header" href="${ctaUrl('header', '', '', 'header')}">Diagnóstico gratuito</a>
 </nav></div></header>`;
 
@@ -325,7 +326,7 @@ const footer = () => `<footer class="ft"><div class="ft-in">
 <div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
 <div><h4>Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
 <div><h4>Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
-<div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
+<div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
 </div><div class="ft-b"><span>© ${new Date().getFullYear()} O.N.E Agency. Todos los derechos reservados.</span><span><a href="/privacidad/">Política de privacidad y cookies</a> · <a href="/blog/feed.xml">RSS</a></span></div></footer>
 <div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
 <div class="r"><button class="ok" id="ck-ok" type="button">Aceptar</button><button class="no" id="ck-no" type="button">Rechazar</button></div></div>
@@ -442,6 +443,25 @@ ${footer()}`;
   return html;
 }
 
+function caseCardHtml(cs) {
+  return `<a class="card" href="${cs.url}"><span class="tag p">Caso de éxito</span><span class="t">${esc(cs.fm.title)}</span><span class="d">${esc(cs.fm.description)}</span><span class="m">${esc(cs.fm.client)}</span></a>`;
+}
+
+function casesHubPage() {
+  const url = '/casos/';
+  const ld = [
+    { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Casos de éxito', description: 'Sistemas de automatización con IA que hemos construido para empresas reales de toda España.', url: SITE + url, inLanguage: 'es-ES' },
+    breadcrumbLd([['Inicio', '/'], ['Casos de éxito', url]]),
+  ];
+  return `${head({ title: 'Casos de éxito: automatización con IA en empresas reales | O.N.E Agency', desc: 'Sistemas de automatización con IA construidos para empresas reales de toda España: qué problema resolvían, qué se automatizó y cómo funciona hoy.', url, jsonld: ld })}<body>${header()}
+${crumbsHtml([['Inicio', '/'], ['Casos de éxito', url]])}
+<main class="hub" id="main"><span class="kick">Casos de éxito</span><h1>Empresas reales, sistemas reales</h1>
+<p class="lead" style="max-width:760px">Nada de maquetas ni demos: estos son sistemas de automatización con IA que ya funcionan en el día a día de negocios de toda España. Qué problema tenían, qué construimos y cómo lo usan hoy.</p>
+<div class="grid">${cases.map(caseCardHtml).join('')}</div>
+${ctaBox('sectores', 'casos-hub', '', 'hub')}
+</main>${footer()}`;
+}
+
 function cardHtml(a) {
   const c = clusterById[a.fm.cluster];
   const mins = Math.max(3, Math.round(a.words / 200));
@@ -490,6 +510,7 @@ function simplePage(p, { serviceLd = false } = {}) {
   const url = p.url;
   const crumbs = p.kind === 'service' ? [['Inicio', '/'], ['Servicios', '/servicios/automatizacion-con-ia/'], [p.fm.title, url]]
     : p.kind === 'resource' ? [['Inicio', '/'], ['Recursos', url], [p.fm.title, url]]
+    : p.kind === 'case' ? [['Inicio', '/'], ['Casos de éxito', '/casos/'], [p.fm.title, url]]
     : [['Inicio', '/'], [p.fm.title, url]];
   if (p.kind === 'service') crumbs[1] = ['Servicios', '/servicios/automatizacion-con-ia/'];
   if (p.kind === 'resource') crumbs.splice(1, 1);
@@ -505,6 +526,15 @@ function simplePage(p, { serviceLd = false } = {}) {
     });
   }
   if (p.kind === 'resource') ld.push({ '@context': 'https://schema.org', '@type': 'WebApplication', name: p.fm.title, description: p.fm.description, url: SITE + url, applicationCategory: 'BusinessApplication', operatingSystem: 'Web' });
+  if (p.kind === 'case') {
+    ld.push({
+      '@context': 'https://schema.org', '@type': 'Article', headline: p.fm.title, description: p.fm.description,
+      image: [SITE + `${url}og.jpg`], datePublished: p.date, dateModified: p.modified, inLanguage: 'es-ES',
+      mainEntityOfPage: { '@type': 'WebPage', '@id': SITE + url }, author: personLd(),
+      publisher: { '@type': 'Organization', name: site.name, '@id': SITE + '/#organization', logo: { '@type': 'ImageObject', url: SITE + '/logo.png' } },
+      about: { '@type': 'Organization', name: p.fm.client, address: p.fm.clientLocation }, articleSection: 'Casos de éxito',
+    });
+  }
   if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   const showCta = p.kind !== 'legal';
   const seoTitle = p.fm.seoTitle || `${p.fm.title} | ${site.name}`;
@@ -569,6 +599,15 @@ for (const s of services) {
 for (const r of resources) {
   writeOut(`recursos/${r.slug}/index.html`, simplePage(r));
   sitemap.push({ url: r.url, lastmod: r.modified, cf: 'monthly', pr: '0.8' });
+}
+for (const cs of cases) {
+  writeOut(`casos/${cs.slug}/index.html`, simplePage(cs));
+  sitemap.push({ url: cs.url, lastmod: cs.modified, cf: 'monthly', pr: '0.8' });
+  if (cs.fm.description.length < 110 || cs.fm.description.length > 165) warn(`${cs.slug}: description ${cs.fm.description.length} car.`);
+}
+if (cases.length) {
+  writeOut('casos/index.html', casesHubPage());
+  sitemap.push({ url: '/casos/', lastmod: TODAY, cf: 'weekly', pr: '0.8' });
 }
 for (const l of legal) {
   if (l.slug === 'privacidad') {

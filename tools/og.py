@@ -106,4 +106,9 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'content/recursos/*.md'))):
     slug = fm.get('slug') or os.path.basename(f)[:-3]
     make(fm['title'], 'Calculadora', os.path.join(ROOT, 'recursos', slug, 'og.jpg'))
     count += 1
+for f in sorted(glob.glob(os.path.join(ROOT, 'content/casos/*.md'))):
+    fm = front(f)
+    slug = fm.get('slug') or os.path.basename(f)[:-3]
+    make(fm['title'], 'Caso de éxito', os.path.join(ROOT, 'casos', slug, 'og.jpg'))
+    count += 1
 print('OG generadas:', count)
