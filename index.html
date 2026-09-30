@@ -3957,6 +3957,9 @@ body.hero-paused .orbit-system,
 body.hero-paused .particle,
 body.hero-paused .hero::before,
 body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
+/* animaciones infinitas de lo que no se ve: pausadas (se reanudan al volver a verse; mismo aspecto, menos trabajo) */
+.marquee-strip.anim-off .marquee-track,
+.btn-glow.anim-off::before{ animation-play-state: paused !important; }
 @media (max-width: 980px){
   .hero::before{ animation: hero-aura 9s ease-in-out infinite; }
 }
@@ -4005,12 +4008,10 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
    (variables --s3* actualizadas por rAF; ver JS al final)
    ============================================================ */
 .js-loaded .s3d{
-  transform:
-    perspective(1150px)
-    translate3d(0, 0, var(--s3z, 0px))
-    rotateX(var(--s3rx, 0deg))
-    rotateY(var(--s3ry, 0deg))
-    scale(var(--s3s, 1));
+  /* en reposo NO lleva transform 3D (con perspective/translate3d cada tarjeta ocupaba una capa de GPU
+     permanente, aunque no se moviese, lo que pesa mucho en móviles con poca memoria). El JS le pone el
+     transform 3D solo mientras la tarjeta está en pantalla y se lo quita al salir. Mismo aspecto. */
+  transform: none;
   transition: transform .12s linear;
   transform-origin: center 55%;
 }
@@ -6387,6 +6388,7 @@ if (window.innerWidth > 900) {
         card.addEventListener('pointerleave', function () {
           card.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
           card.style.removeProperty('transform');
+          if (window.__s3dRefresh) window.__s3dRefresh();   // restaura al instante el 3D ligado al scroll que esto acaba de borrar
           setTimeout(function () { card.style.transition = ''; }, 620);
         });
       })(tilt[c]);
@@ -6402,6 +6404,16 @@ if (window.innerWidth > 900) {
     document.body.classList.toggle('hero-paused', !e[0].isIntersecting);
   }, { threshold: 0 });
   o.observe(hero);
+})();
+
+/* -- pausa las animaciones infinitas de lo que está fuera de pantalla (franja de logos, anillos de los botones) -- */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var els = document.querySelectorAll('.marquee-strip, .btn-glow');
+  var io = new IntersectionObserver(function (es) {
+    for (var i = 0; i < es.length; i++) es[i].target.classList.toggle('anim-off', !es[i].isIntersecting);
+  }, { rootMargin: '120px 0px' });
+  for (var i = 0; i < els.length; i++) io.observe(els[i]);
 })();
 
 /* -- TARJETAS 3D: perspectiva viva ligada al scroll -- */
@@ -6428,6 +6440,25 @@ if (window.innerWidth > 900) {
 
   var active = [], rects = [], ticking = false;
 
+  /* Adaptación al dispositivo SIN quitar la animación: en móviles flojos (poca RAM/núcleos) o que
+     empiezan a dar tirones al hacer scroll, se actualiza cada 2.º/3.er evento de scroll (más una
+     actualización final al parar). La transición CSS de 120 ms rellena los huecos, así que se ve igual. */
+  var lvl = 0, skipN = 0, tail = 0, lastScrollAt = -1e9;
+  if ((navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)) lvl = 1;
+  try {
+    var jank = 0, jankT = 0;
+    new PerformanceObserver(function (list) {
+      var es = list.getEntries();
+      for (var q = 0; q < es.length; q++) {
+        if (Math.abs(es[q].startTime - lastScrollAt) > 400) continue;   // solo tirones DURANTE el scroll (no la carga)
+        if (es[q].startTime - jankT > 3000) jank = 0;
+        jankT = es[q].startTime; jank++;
+        if (jank >= 4 && lvl < 2) { lvl++; jank = 0; }
+      }
+    }).observe({ entryTypes: ['longtask'] });
+  } catch (e) {}
+
   function frame() {
     ticking = false;
     var n = active.length;
@@ -6447,21 +6478,29 @@ if (window.innerWidth > 900) {
         var line = vh * 0.45;
         var curY = (line - r.top) / r.height; if (curY < 0) curY = 0; else if (curY > 1) curY = 1;
         var curX = (cx - r.left) / r.width;   if (curX < 0) curX = 0; else if (curX > 1) curX = 1;
-        c.style.setProperty('--s3rx', ((0.5 - curY) * MAXX).toFixed(2) + 'deg');
-        c.style.setProperty('--s3ry', ((curX - 0.5) * MAXY).toFixed(2) + 'deg');
-        c.style.setProperty('--s3s',  (1 - d * 0.04).toFixed(3));
-        c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
+        /* transform directo (mismo resultado que las variables --s3*): las variables CSS se heredan y
+           obligaban a recalcular el estilo de TODO el contenido de cada tarjeta en cada fotograma */
+        c.style.transform = 'perspective(1150px) translate3d(0,0,' + (-d * MAXZ).toFixed(1) + 'px) rotateX(' +
+          ((0.5 - curY) * MAXX).toFixed(2) + 'deg) rotateY(' + ((curX - 0.5) * MAXY).toFixed(2) + 'deg) scale(' +
+          (1 - d * 0.04).toFixed(3) + ')';
       } else {
-        c.style.setProperty('--s3rx', (-p * MAXX).toFixed(2) + 'deg');
-        c.style.setProperty('--s3ry', (-ph * MAXY).toFixed(2) + 'deg');
-        c.style.setProperty('--s3s',  (1 - d * 0.05).toFixed(3));
-        c.style.setProperty('--s3z',  (-d * MAXZ).toFixed(1) + 'px');
-        c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');
+        c.style.transform = 'perspective(1150px) translate3d(0,0,' + (-d * MAXZ).toFixed(1) + 'px) rotateX(' +
+          (-p * MAXX).toFixed(2) + 'deg) rotateY(' + (-ph * MAXY).toFixed(2) + 'deg) scale(' +
+          (1 - d * 0.05).toFixed(3) + ')';
+        c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');   // solo escritorio: sombra que cae
         c.style.setProperty('--s3glow', (1 - d).toFixed(2));
       }
     }
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  function onScroll() {
+    lastScrollAt = performance.now();
+    clearTimeout(tail);
+    tail = setTimeout(function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, 110);  // posición final exacta al parar
+    if (lvl && (skipN++ % (lvl + 1))) return;
+    if (!ticking) { ticking = true; requestAnimationFrame(frame); }
+  }
+
+  window.__s3dRefresh = function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
 
   var io = new IntersectionObserver(function (es) {
     for (var i = 0; i < es.length; i++) {
@@ -6470,8 +6509,7 @@ if (window.innerWidth > 900) {
         if (k < 0) { active.push(c); }
       } else if (k >= 0) {
         active.splice(k, 1);
-        c.style.removeProperty('--s3rx'); c.style.removeProperty('--s3ry');
-        c.style.removeProperty('--s3s');  c.style.removeProperty('--s3z');
+        c.style.transform = '';
         c.style.removeProperty('--s3lift'); c.style.removeProperty('--s3glow');
       }
     }
