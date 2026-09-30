@@ -5398,7 +5398,12 @@ if (navbar) {
          Si lo cerramos aqui primero, ese handler cree que ya estaba cerrado
          y hace scroll de inmediato, debajo del menu que aun se esta
          desvaneciendo -> el scroll parece no hacer nada. */
-      if (href.charAt(0) === '#' && href.length > 1) return;
+      var handledByScroll = false;
+      if (href.charAt(0) === '#' && href.length > 1) {
+        try { handledByScroll = !!document.querySelector(href); } catch (err) {}
+      }
+      /* si el destino no existe, el handler global no hace nada: cerramos aquí para no dejar el menú abierto con el scroll bloqueado */
+      if (handledByScroll) return;
       closeMenu(menuToggle, mobileMenu);
     });
   }
@@ -5927,6 +5932,12 @@ if (window.innerWidth > 900) {
       <p>Tus datos se conservarán mientras exista una relación comercial o interés mutuo, y durante los plazos legales aplicables.</p>
       <h3>7. Seguridad</h3>
       <p>Aplicamos medidas técnicas y organizativas apropiadas para garantizar la seguridad de tus datos frente a accesos no autorizados, alteración o destrucción.</p>
+      <h3>8. Cookies y almacenamiento local</h3>
+      <ul>
+        <li>Almacenamiento local técnico para recordar tu decisión sobre las cookies. No requiere consentimiento.</li>
+        <li>Cookies analíticas de Google Analytics para conocer cómo se usa la web y qué contenidos resultan útiles. Solo se activan si las aceptas en el aviso de cookies, y puedes cambiar de opinión borrando los datos del sitio en tu navegador.</li>
+      </ul>
+      <p>No utilizamos cookies publicitarias ni de personalización de anuncios. Política completa: <a href="/privacidad/" style="color:#60a5fa">one-agency.es/privacidad</a></p>
     </div>
     <button id="priv-modal-ok">Entendido</button>
   </div>

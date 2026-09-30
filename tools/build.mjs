@@ -136,6 +136,19 @@ function loadDir(dir, kind) {
     const base = kind === 'article' ? 'blog' : dir;
     const url = `/${base}/${slug}/`;
     const blocks = parseBlocks(body, url);
+    // Encabezados con el mismo texto en distintas secciones (p. ej. "El flujo" en la parte 1 y en la 2)
+    // generarían ids duplicados y anclas rotas: se desambiguan con -2, -3...
+    const seenIds = new Map();
+    for (const b of blocks) {
+      if (!b.id) continue;
+      const n = (seenIds.get(b.id) || 0) + 1;
+      seenIds.set(b.id, n);
+      if (n > 1) {
+        const nid = `${b.id}-${n}`;
+        b.html = b.html.replace(`id="${b.id}"`, `id="${nid}"`);
+        b.id = nid;
+      }
+    }
     const text = stripTags(blocks.map((b) => b.html).join(' '));
     const words = text.split(/\s+/).filter(Boolean).length;
     return { kind, fm, slug, url, blocks, words, file: f, date: fm.date || TODAY, modified: fm.modified || fm.date || TODAY };
@@ -486,7 +499,7 @@ function casesHubPage() {
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Casos de éxito', description: 'Sistemas de automatización con IA que hemos construido para empresas reales de toda España.', url: SITE + url, inLanguage: 'es-ES' },
     breadcrumbLd([['Inicio', '/'], ['Casos de éxito', url]]),
   ];
-  return `${head({ title: 'Casos de éxito: automatización con IA en empresas reales | O.N.E Agency', desc: 'Sistemas de automatización con IA construidos para empresas reales de toda España: qué problema resolvían, qué se automatizó y cómo funciona hoy.', url, jsonld: ld })}<body>${header()}
+  return `${head({ title: 'Casos de éxito: automatización con IA real | O.N.E Agency', desc: 'Sistemas de automatización con IA construidos para empresas reales de toda España: qué problema resolvían, qué se automatizó y cómo funciona hoy.', url, jsonld: ld })}<body>${header()}
 ${crumbsHtml([['Inicio', '/'], ['Casos de éxito', url]])}
 <main class="hub" id="main"><span class="kick">Casos de éxito</span><h1>Empresas reales, sistemas reales</h1>
 <p class="lead" style="max-width:760px">Nada de maquetas ni demos: estos son sistemas de automatización con IA que ya funcionan en el día a día de negocios de toda España. Qué problema tenían, qué construimos y cómo lo usan hoy.</p>
@@ -567,7 +580,7 @@ function casePage(p) {
   return `${head({ title: seoTitle, desc: p.fm.description, url, ogImage: og, jsonld: ld, type: 'article' })}<body>${header()}
 ${crumbsHtml(crumbs)}
 <div class="case-hero reveal-io"><div class="case-hero-in">
-<div class="case-brand"><img src="${p.fm.clientLogo || '/logo.png'}" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency${p.fm.clientLogo ? ' × ' + esc(p.fm.clientName || '') : ''}</span></div>
+<div class="case-brand"><img src="${esc(p.fm.clientLogo || '/logo.png')}" alt="" loading="lazy" width="40" height="40"><span>Caso de éxito · O.N.E Agency${p.fm.clientLogo ? ' × ' + esc(p.fm.clientName || '') : ''}</span></div>
 <h1>${esc(p.fm.title)}</h1>
 ${p.fm.lead ? `<p class="lead">${esc(p.fm.lead)}</p>` : ''}
 ${p.fm.client ? `<p class="case-client">${esc(p.fm.client)}</p>` : ''}
@@ -598,6 +611,7 @@ function simplePage(p, { serviceLd = false } = {}) {
       provider: orgRef, areaServed: { '@type': 'Country', name: 'España' }, serviceType: p.fm.serviceType || p.fm.title,
     });
   }
+  if (p.kind === 'resource') ld.push({ '@context': 'https://schema.org', '@type': 'WebApplication', name: p.fm.title, description: p.fm.description, url: SITE + url, applicationCategory: 'BusinessApplication', operatingSystem: 'Web' });
   if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   const showCta = p.kind !== 'legal';
   const seoTitle = p.fm.seoTitle || `${p.fm.title} | ${site.name}`;
@@ -708,12 +722,14 @@ if (broken) { console.error(`\n${broken} enlaces internos rotos`); process.exit(
 
 // El rmrf de arriba borra las og.jpg de todas las páginas; sin este paso, todas las
 // previsualizaciones sociales quedan rotas (ya pasó dos veces al olvidar og.py).
+// En Windows "python3" puede ser el atajo de la Microsoft Store (sale con error sin ejecutar nada):
+// se prueba el siguiente intérprete si falla el arranque O termina con código distinto de 0.
 let og = null;
-for (const py of ['python3', 'python']) {
+for (const py of ['python3', 'python', 'py']) {
   const r = spawnSync(py, [path.join(ROOT, 'tools/og.py')], { stdio: 'inherit' });
-  if (!r.error) { og = r; break; } // r.error = intérprete no encontrado; si existe, no probar el siguiente
+  if (!r.error && r.status === 0) { og = r; break; }
 }
-if (!og || og.status !== 0) {
+if (!og) {
   console.error('\nERROR: no se pudieron generar las imágenes OG (tools/og.py). No despliegues: las páginas apuntan a og.jpg que no existen.');
   process.exit(1);
 }
