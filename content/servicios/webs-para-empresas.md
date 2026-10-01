@@ -35,7 +35,7 @@ Puedes ver el enfoque general en el [servicio de automatización con IA](/servic
 
 ## Blog y contenidos para atraer clientes
 
-Para que te encuentren en buscadores, la web necesita contenido útil y bien estructurado. Ayudamos a planificar qué páginas y artículos crear según lo que buscan tus clientes, y a organizarlos para que se refuercen entre sí. Puedes ver cómo lo hacemos en nuestro propio [blog de automatización con IA](/blog/).
+Para que te encuentren en buscadores, la web necesita contenido útil y bien estructurado. Ayudamos a planificar qué páginas y artículos crear según lo que buscan tus clientes, y a organizarlos para que se refuercen entre sí. Puedes ver cómo lo hacemos en nuestro propio [blog de automatización con IA](/blog/) y, con un ejemplo real de marca, web y SEO desde cero, en el caso de [FishZone, la guía de pesca de Córdoba y Andalucía](/casos/marca-y-web-de-pesca-fishzone/).
 
 ## Cómo trabajamos
 
