@@ -296,6 +296,22 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .chat-mock .cm-tag{display:block;font-size:.68rem;color:#94A3B8;margin:2px 0 10px;text-align:center}
 .js-reveal .reveal-io{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
 .js-reveal .reveal-io.is-visible{opacity:1;transform:none}
+.case-cover-wrap{max-width:1000px;margin:-26px auto 8px;padding:0 20px;position:relative;z-index:2}
+.case-cover{margin:0}.case-cover img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid rgba(255,255,255,.14);box-shadow:0 34px 64px -30px rgba(15,23,42,.65)}
+.cfig{margin:1.8em 0;background:#0B1226;border-radius:18px;padding:14px;box-shadow:0 22px 44px -26px rgba(15,23,42,.55)}
+.cfig img{display:block;width:100%;height:auto;border-radius:12px}
+.cfig figcaption{color:#94A3B8;font-size:.82rem;margin:10px 4px 2px;line-height:1.5}
+.cfig-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.cfig-row figure{margin:0}
+.cfig.phones{max-width:600px;margin-left:auto;margin-right:auto}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin:1.6em 0}
+.kpis div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center}
+.kpis b{display:block;font-size:1.7rem;line-height:1.1;color:var(--blue-d);font-weight:800;letter-spacing:-.02em}
+.kpis span{display:block;font-size:.8rem;color:var(--mut);margin-top:6px;line-height:1.35}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin:1.4em 0}
+.swatches span{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 8px 8px;font-size:.84rem;font-weight:700;color:var(--ink2)}
+.swatches i{width:30px;height:30px;border-radius:9px;display:inline-block;border:1px solid rgba(15,23,42,.14)}
+.swatches small{color:var(--soft);font-weight:600;margin-left:2px}
+@media(max-width:560px){.cfig-row{gap:8px}.cfig{padding:10px}.case-cover-wrap{padding:0 12px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.js-reveal .reveal-io{opacity:1!important;transform:none!important}}
 `;
 
@@ -496,13 +512,13 @@ function caseCardHtml(cs) {
 function casesHubPage() {
   const url = '/casos/';
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Casos de éxito', description: 'Sistemas de automatización con IA que hemos construido para empresas reales de toda España.', url: SITE + url, inLanguage: 'es-ES' },
+    { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Casos de éxito', description: 'Proyectos reales de automatización con IA, diseño web y marca que hemos construido para negocios y proyectos de Córdoba y toda España.', url: SITE + url, inLanguage: 'es-ES' },
     breadcrumbLd([['Inicio', '/'], ['Casos de éxito', url]]),
   ];
-  return `${head({ title: 'Casos de éxito: automatización con IA real | O.N.E Agency', desc: 'Sistemas de automatización con IA construidos para empresas reales de toda España: qué problema resolvían, qué se automatizó y cómo funciona hoy.', url, jsonld: ld })}<body>${header()}
+  return `${head({ title: 'Casos de éxito: IA, webs y marcas reales | O.N.E Agency', desc: 'Casos reales de O.N.E Agency: automatización con IA, diseño web y creación de marca para negocios y proyectos de Córdoba y toda España, con resultados medibles.', url, jsonld: ld })}<body>${header()}
 ${crumbsHtml([['Inicio', '/'], ['Casos de éxito', url]])}
-<main class="hub" id="main"><span class="kick">Casos de éxito</span><h1>Empresas reales, sistemas reales</h1>
-<p class="lead" style="max-width:760px">Nada de maquetas ni demos: estos son sistemas de automatización con IA que ya funcionan en el día a día de negocios de toda España. Qué problema tenían, qué construimos y cómo lo usan hoy.</p>
+<main class="hub" id="main"><span class="kick">Casos de éxito</span><h1>Proyectos reales, resultados medibles</h1>
+<p class="lead" style="max-width:760px">Nada de maquetas ni demos: son proyectos que ya funcionan, desde sistemas de automatización con IA hasta marcas y webs completas. Qué necesitaban, qué construimos y qué resultado tienen hoy.</p>
 <div class="grid">${cases.map(caseCardHtml).join('')}</div>
 ${ctaBox('sectores', 'casos-hub', '', 'hub')}
 </main>${footer()}`;
@@ -586,6 +602,7 @@ ${p.fm.lead ? `<p class="lead">${esc(p.fm.lead)}</p>` : ''}
 ${p.fm.client ? `<p class="case-client">${esc(p.fm.client)}</p>` : ''}
 ${chips.length ? `<div class="case-chips">${chips.map((c) => `<span class="case-chip">${esc(c)}</span>`).join('')}</div>` : ''}
 </div></div>
+${p.fm.cover ? `<div class="case-cover-wrap"><figure class="case-cover"><img src="${esc(p.fm.cover)}" alt="${esc(p.fm.coverAlt || p.fm.title)}" width="1600" height="900" fetchpriority="high" decoding="async"></figure></div>` : ''}
 <div class="wrap one" id="main"><article>
 ${body}
 ${ctaBox(cluster, p.slug, p.fm.sector, 'final')}

@@ -1,5 +1,5 @@
 # Genera las imágenes Open Graph (1200x630) de cada página + og-image.jpg. Uso: python tools/og.py (tras node tools/build.mjs)
-import glob, io, json, os, re
+import glob, io, json, os, re, shutil
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -109,6 +109,12 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'content/recursos/*.md'))):
 for f in sorted(glob.glob(os.path.join(ROOT, 'content/casos/*.md'))):
     fm = front(f)
     slug = fm.get('slug') or os.path.basename(f)[:-3]
-    make(fm['title'], 'Caso de éxito', os.path.join(ROOT, 'casos', slug, 'og.jpg'))
+    dst = os.path.join(ROOT, 'casos', slug, 'og.jpg')
+    custom = os.path.join(ROOT, (fm.get('ogSource') or '').lstrip('/')) if fm.get('ogSource') else None
+    if custom and os.path.isfile(custom):
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        shutil.copyfile(custom, dst)   # imagen social propia del caso (portada con capturas)
+    else:
+        make(fm['title'], 'Caso de éxito', dst)
     count += 1
 print('OG generadas:', count)

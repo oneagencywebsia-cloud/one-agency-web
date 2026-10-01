@@ -1275,6 +1275,49 @@ ul {
   box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.25);
 }
 
+.case-wrapper + .case-wrapper {
+  margin-top: 40px;
+}
+
+.case-wrapper.is-flip {
+  grid-template-columns: 1fr 260px;
+}
+
+.case-wrapper.is-flip .case-logo-card {
+  order: 2;
+}
+
+.case-logo-card.is-dark {
+  background: linear-gradient(160deg, #0d1828, #060c18);
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+.case-logo-card.is-dark img {
+  width: 96px;
+  height: 96px;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.case-logo-card.is-dark strong {
+  color: #fff;
+}
+
+.case-logo-card.is-dark small {
+  color: #c9a84c;
+}
+
+.case-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  margin: 0 0 22px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
 .case-logo-text {
   display: flex;
   flex-direction: column;
@@ -2455,6 +2498,8 @@ ul {
     gap: 20px;
   }
   .case-logo-text { text-align: left; }
+  .case-wrapper.is-flip { grid-template-columns: 1fr; }
+  .case-wrapper.is-flip .case-logo-card { order: 0; }
   .case-content { padding: 28px 24px; }
   .case-features { justify-content: center; }
 
@@ -5002,7 +5047,7 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
       <div class="section-header reveal">
         <span class="section-tag">🏆 CASOS DE ÉXITO</span>
         <h2 class="section-title">Esto no es una maqueta. <span class="gradient-text">Ya funciona cada día</span></h2>
-        <p class="section-subtitle">Un vistazo a un sistema real que construimos para un cliente real — sin humo, con su marca.</p>
+        <p class="section-subtitle">Proyectos reales que hemos construido para clientes reales — sin humo, con su marca.</p>
       </div>
       <div class="case-wrapper reveal reveal-delay-1">
         <div class="case-logo-card">
@@ -5023,6 +5068,29 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
             <span class="case-feature">🧾 IA que lee facturas y calcula la ganancia</span>
           </div>
           <a href="/casos/automatizacion-empresa-electricidad-ia/" class="btn-primary">Ver el caso completo →</a>
+        </div>
+      </div>
+
+      <div class="case-wrapper is-flip reveal reveal-delay-1">
+        <div class="case-logo-card is-dark">
+          <img src="/media/casos/fishzone/logo-fishzone.png" width="96" height="96" loading="lazy" decoding="async" alt="Logo de FishZone, medallón dorado" />
+          <div class="case-logo-text">
+            <strong>FishZone</strong>
+            <small>Córdoba · fishzone.es</small>
+          </div>
+        </div>
+        <div class="case-content glass-card">
+          <span class="section-tag">🎣 Marca + web + SEO</span>
+          <h3>De tres aficionados a una marca de pesca que aparece unas 8.000 veces al mes en Google</h3>
+          <img class="case-shot" src="/media/casos/fishzone/portada-fishzone.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Web de FishZone en escritorio y móvil, con el logo de FishZone junto al de O.N.E Agency" />
+          <p>FishZone es un proyecto de pesca de Córdoba creado por tres aficionados sin actividad empresarial. Les creamos la <strong>marca desde cero</strong> y una <strong>web profesional adaptada a todo tipo de pescadores y dispositivos</strong>, con 22 guías, herramientas propias y SEO técnico: <strong>100 en SEO en Lighthouse</strong> y carga en 1,4 s en un móvil lento.</p>
+          <div class="case-features">
+            <span class="case-feature">🎨 Logo, colores y tipografías</span>
+            <span class="case-feature">📱 Móvil, tableta y escritorio</span>
+            <span class="case-feature">🧭 Buscador de embalses a medida</span>
+            <span class="case-feature">🔎 SEO técnico y 22 guías</span>
+          </div>
+          <a href="/casos/marca-y-web-de-pesca-fishzone/" class="btn-primary">Ver el caso completo →</a>
         </div>
       </div>
     </div>
