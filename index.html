@@ -3702,6 +3702,7 @@ body{ background: transparent !important; }
     #ffffff;
 }
 .fx-aurora{ z-index: -1; }
+.is-scrolling .fx-aurora span{ animation-play-state: paused !important; }
 .fx-aurora span{ opacity: .38 !important; }
 .fx-aurora span:nth-child(1){ background: radial-gradient(circle, rgba(var(--bBlue),.60), transparent 70%); }
 .fx-aurora span:nth-child(2){ background: radial-gradient(circle, rgba(var(--bOrange),.52), transparent 70%); }
@@ -4079,7 +4080,7 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 }
 /* al llevar 3D, el reveal SOLO toca la opacidad */
 .js-loaded .s3d.reveal{ opacity: 0; filter: none; }
-.js-loaded .s3d.reveal.visible{ opacity: 1; transition: opacity .32s ease, transform .12s linear; }
+.js-loaded .s3d.reveal.visible{ opacity: 1; transition: opacity .32s ease; }
 /* sombra de marca que "cae" con la inclinacion -> se nota que despega del papel (solo escritorio) */
 @media (min-width: 981px){
   .js-loaded .s3d{
@@ -4090,9 +4091,9 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 }
 @media (max-width: 980px){
   /* movil: mismo 3D en vivo que escritorio (ligado al scroll, ver JS), sin box-shadow animado -> barato */
-  .js-loaded .s3d{ transition: transform .12s linear; }
+  .js-loaded .s3d{ transition: none; }
   .js-loaded .s3d.reveal{ opacity: 0; }
-  .js-loaded .s3d.reveal.visible{ opacity: 1; transition: opacity .32s ease, transform .12s linear; }
+  .js-loaded .s3d.reveal.visible{ opacity: 1; transition: opacity .32s ease; }
 }
 @media (prefers-reduced-motion: reduce){
   .js-loaded .s3d{ transform: none !important; }
@@ -5419,20 +5420,41 @@ function debounce(fn, wait) {
   }
 })();
 
+/* ── BUS DE SCROLL ──
+   Un solo listener y un solo requestAnimationFrame por fotograma. Antes había 5 manejadores
+   independientes (barra, menú, parallax, dirección, tarjetas 3D) que leían y escribían estilos
+   intercalados: cada lectura (scrollY, getBoundingClientRect) obligaba al navegador a recalcular
+   estilos con las escrituras anteriores aún pendientes -> 3-4 recálculos por fotograma y tirones
+   intermitentes cuando había varias tarjetas en pantalla. Ahora: se LEE todo y después se ESCRIBE todo. */
+window.__sb = (function () {
+  var subs = [], queued = false;
+  function run() {
+    queued = false;
+    var y = window.pageYOffset || 0, n = subs.length, st = new Array(n), i;
+    for (i = 0; i < n; i++) { if (subs[i].read) { try { st[i] = subs[i].read(y); } catch (e) {} } }
+    for (i = 0; i < n; i++) { if (subs[i].write) { try { subs[i].write(st[i], y); } catch (e) {} } }
+  }
+  function kick() { if (!queued) { queued = true; requestAnimationFrame(run); } }
+  var scrT = 0, rootEl = document.documentElement;
+  function onScr() {
+    /* mientras se desplaza, las auroras de fondo (blur enorme, infinitas) se pausan: no se nota y libera la GPU */
+    if (!scrT) rootEl.classList.add('is-scrolling'); else clearTimeout(scrT);
+    scrT = setTimeout(function () { scrT = 0; rootEl.classList.remove('is-scrolling'); }, 160);
+    kick();
+  }
+  window.addEventListener('scroll', onScr, { passive: true });
+  return { add: function (s) { subs.push(s); return s; }, kick: kick };
+})();
+
 /* ── NAVBAR SCROLL ── */
 var navbar = document.getElementById('navbar');
 if (navbar) {
-  var navTicking = false;
-  window.addEventListener('scroll', function() {
-    if (!navTicking) {
-      navTicking = true;
-      requestAnimationFrame(function() {
-        if (window.scrollY > 40) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
-        navTicking = false;
-      });
-    }
-  }, { passive: true });
+  var navOn = null;
+  window.__sb.add({ write: function (_, y) {
+    var on = y > 40;
+    if (on !== navOn) { navOn = on; navbar.classList.toggle('scrolled', on); }
+  } });
+  window.__sb.kick();
 }
 
 /* ── MOBILE MENU ── */
@@ -5606,14 +5628,15 @@ document.addEventListener('click', function(e) {
     return Math.min(i * 35, 160);
   }
 
+  /* la dirección del scroll se deduce aquí, en el callback del IntersectionObserver (el layout ya está
+     limpio), en vez de en un listener de scroll que leía pageYOffset en CADA evento y forzaba un
+     recálculo de estilos por fotograma */
   var lastY = window.pageYOffset || 0, dir = 1;
-  window.addEventListener('scroll', function () {
-    var y = window.pageYOffset || 0;
-    if (y > lastY + 2) dir = 1; else if (y < lastY - 2) dir = -1;
-    lastY = y;
-  }, { passive: true });
 
   var io = new IntersectionObserver(function (entries) {
+    var yNow = window.pageYOffset || 0;
+    if (yNow > lastY + 2) dir = 1; else if (yNow < lastY - 2) dir = -1;
+    lastY = yNow;
     for (var i = 0; i < entries.length; i++) {
       var t = entries[i].target;
       var vis = entries[i].isIntersecting;
@@ -5903,18 +5926,14 @@ if ('IntersectionObserver' in window) {
   var heroBg = document.querySelector('.hero-bg-glow');
   var heroEl = document.querySelector('.hero');
   if (!heroBg || !heroEl) return;
-  var ticking = false, active = true;
+  var active = true;
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) { active = es[0].isIntersecting; }, { threshold: 0 }).observe(heroEl);
   }
-  window.addEventListener('scroll', function() {
-    if (!active || ticking) return;
-    ticking = true;
-    requestAnimationFrame(function() {
-      heroBg.style.transform = 'translateX(-50%) translateY(' + (window.scrollY * 0.25) + 'px)';
-      ticking = false;
-    });
-  }, { passive: true });
+  window.__sb.add({ write: function (_, y) {
+    if (!active) return;
+    heroBg.style.transform = 'translateX(-50%) translateY(' + (y * 0.25) + 'px)';
+  } });
 })();
 
 /* ── CURSOR GLOW (desktop only, stops when idle) ── */
@@ -6328,12 +6347,12 @@ if (window.innerWidth > 900) {
   /* el alto del documento se mide aparte (carga, resize, cambios de tamaño), NO en cada scroll:
      leer scrollHeight en cada fotograma obliga al navegador a recalcular el layout */
   function measure() { maxScroll = docEl.scrollHeight - docEl.clientHeight; }
-  function updBar() {
-    var y = window.pageYOffset || docEl.scrollTop || 0;
+  function updBar(y) {
+    if (typeof y !== 'number') y = window.pageYOffset || docEl.scrollTop || 0;
     bar.style.transform = 'scaleX(' + (maxScroll > 0 ? Math.min(1, y / maxScroll) : 0).toFixed(4) + ')';
     tick = false;
   }
-  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(updBar); } }, { passive: true });
+  window.__sb.add({ write: function (_, y) { updBar(y); } });
   window.addEventListener('resize', function () { measure(); updBar(); }, { passive: true });
   window.addEventListener('load', function () { measure(); updBar(); });
   if ('ResizeObserver' in window) { try { new ResizeObserver(function () { measure(); }).observe(document.body); } catch (e) {} }
@@ -6536,35 +6555,26 @@ if (window.innerWidth > 900) {
     MAXX = mobile ? 13 : 15; MAXY = mobile ? 8 : 6; MAXZ = mobile ? 20 : 40;
   }, { passive: true });
 
-  var active = [], rects = [], ticking = false;
+  var active = [];
 
-  /* Adaptación al dispositivo SIN quitar la animación: en móviles flojos (poca RAM/núcleos) o que
-     empiezan a dar tirones al hacer scroll, se actualiza cada 2.º/3.er evento de scroll (más una
-     actualización final al parar). La transición CSS de 120 ms rellena los huecos, así que se ve igual. */
-  var lvl = 0, skipN = 0, tail = 0, lastScrollAt = -1e9;
-  if ((navigator.deviceMemory && navigator.deviceMemory <= 2) ||
-      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)) lvl = 1;
-  try {
-    var jank = 0, jankT = 0;
-    new PerformanceObserver(function (list) {
-      var es = list.getEntries();
-      for (var q = 0; q < es.length; q++) {
-        if (Math.abs(es[q].startTime - lastScrollAt) > 400) continue;   // solo tirones DURANTE el scroll (no la carga)
-        if (es[q].startTime - jankT > 3000) jank = 0;
-        jankT = es[q].startTime; jank++;
-        if (jank >= 4 && lvl < 2) { lvl++; jank = 0; }
-      }
-    }).observe({ entryTypes: ['longtask'] });
-  } catch (e) {}
+  /* Aquí había una "adaptación" que se saltaba eventos de scroll en equipos de pocos núcleos o tras
+     tareas largas (y nunca volvía atrás): el 3D iba a escalones solo en algunas visitas, justo el
+     "a veces va a tirones". Eliminada: el bus de scroll ya limita el trabajo a UNA actualización por
+     fotograma, con lecturas primero y escrituras después. */
 
-  function frame() {
-    ticking = false;
+  function measure() {                                  // 1) LEER (una sola vez por fotograma)
     var n = active.length;
-    if (!n) return;
+    if (!n) return null;
+    var rs = new Array(n);
+    for (var i = 0; i < n; i++) rs[i] = active[i].getBoundingClientRect();
+    return rs;
+  }
+  function apply(rs) {                                  // 2) ESCRIBIR
+    var n = active.length;
+    if (!rs || rs.length !== n) return;
     var cy = vh / 2, cx = vw / 2;
-    for (var i = 0; i < n; i++) rects[i] = active[i].getBoundingClientRect();   // 1) leer todo
-    for (i = 0; i < n; i++) {                                                   // 2) escribir todo
-      var r = rects[i], c = active[i];
+    for (var i = 0; i < n; i++) {
+      var r = rs[i], c = active[i];
       var p = (r.top + r.height / 2 - cy) / vh;        // <0 encima del centro, >0 debajo
       if (p > 1) p = 1; else if (p < -1) p = -1;
       var ph = (r.left + r.width / 2 - cx) / vw;
@@ -6576,8 +6586,6 @@ if (window.innerWidth > 900) {
         var line = vh * 0.45;
         var curY = (line - r.top) / r.height; if (curY < 0) curY = 0; else if (curY > 1) curY = 1;
         var curX = (cx - r.left) / r.width;   if (curX < 0) curX = 0; else if (curX > 1) curX = 1;
-        /* transform directo (mismo resultado que las variables --s3*): las variables CSS se heredan y
-           obligaban a recalcular el estilo de TODO el contenido de cada tarjeta en cada fotograma */
         c.style.transform = 'perspective(1150px) translate3d(0,0,' + (-d * MAXZ).toFixed(1) + 'px) rotateX(' +
           ((0.5 - curY) * MAXX).toFixed(2) + 'deg) rotateY(' + ((curX - 0.5) * MAXY).toFixed(2) + 'deg) scale(' +
           (1 - d * 0.04).toFixed(3) + ')';
@@ -6585,20 +6593,22 @@ if (window.innerWidth > 900) {
         c.style.transform = 'perspective(1150px) translate3d(0,0,' + (-d * MAXZ).toFixed(1) + 'px) rotateX(' +
           (-p * MAXX).toFixed(2) + 'deg) rotateY(' + (-ph * MAXY).toFixed(2) + 'deg) scale(' +
           (1 - d * 0.05).toFixed(3) + ')';
-        c.style.setProperty('--s3lift', (d * 20).toFixed(1) + 'px');   // solo escritorio: sombra que cae
-        c.style.setProperty('--s3glow', (1 - d).toFixed(2));
+        /* sombra que "cae" (solo escritorio): cada cambio de estas variables re-pinta un box-shadow de 52px de
+           blur y recalcula el estilo de todo el contenido de la tarjeta -> se actualiza solo al cambiar de
+           escalón (11 pasos de 2px), imperceptible, en vez de en cada fotograma */
+        var qd = Math.round(d * 10);
+        if (c.__q !== qd) {
+          c.__q = qd;
+          c.style.setProperty('--s3lift', (qd * 2) + 'px');
+          c.style.setProperty('--s3glow', (1 - qd / 10).toFixed(1));
+        }
       }
     }
   }
-  function onScroll() {
-    lastScrollAt = performance.now();
-    clearTimeout(tail);
-    tail = setTimeout(function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, 110);  // posición final exacta al parar
-    if (lvl && (skipN++ % (lvl + 1))) return;
-    if (!ticking) { ticking = true; requestAnimationFrame(frame); }
-  }
 
-  window.__s3dRefresh = function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  window.__sb.add({ read: measure, write: apply });
+  window.__s3dRefresh = function () { window.__sb.kick(); };
+  window.addEventListener('resize', function () { window.__sb.kick(); }, { passive: true });
 
   var io = new IntersectionObserver(function (es) {
     for (var i = 0; i < es.length; i++) {
@@ -6607,17 +6617,16 @@ if (window.innerWidth > 900) {
         if (k < 0) { active.push(c); }
       } else if (k >= 0) {
         active.splice(k, 1);
+        c.__q = -1;
         c.style.transform = '';
         c.style.removeProperty('--s3lift'); c.style.removeProperty('--s3glow');
       }
     }
-    frame();
-  }, { rootMargin: '35% 0px 35% 0px' });
+    window.__sb.kick();      // antes frame() síncrono: leía layout en pleno callback del observer
+  }, { rootMargin: '15% 0px 15% 0px' });
   for (var j = 0; j < cards.length; j++) io.observe(cards[j]);
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  requestAnimationFrame(frame);
+  window.__sb.kick();
 })();
 </script>
 
