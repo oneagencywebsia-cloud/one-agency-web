@@ -3,7 +3,6 @@
 
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -18,6 +17,25 @@
     });
     gtag('js', new Date());
     gtag('config', 'G-H3Y3WFCTL6');
+    /* gtag.js pesa ~300 ms de CPU al ejecutarse (tarea larga en el hilo principal). Se carga cuando la página
+       ya está pintada, el navegador está libre Y el usuario NO está haciendo scroll (si lo hace, se espera):
+       así nunca compite con el desplazamiento. Los eventos quedan en dataLayer y se envían igual. */
+    (function () {
+      var done = false, t0 = Date.now();
+      function loadGA() {
+        if (done) return; done = true;
+        var g = document.createElement('script'); g.async = true;
+        g.src = 'https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6';
+        document.head.appendChild(g);
+      }
+      function attempt() {
+        var busy = document.documentElement.classList.contains('is-scrolling');
+        if (busy && Date.now() - t0 < 20000) { setTimeout(attempt, 900); return; }
+        if (window.requestIdleCallback) requestIdleCallback(loadGA, { timeout: 3000 }); else loadGA();
+      }
+      function start() { setTimeout(attempt, 1500); }
+      if (document.readyState === 'complete') start(); else window.addEventListener('load', start);
+    })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -3703,6 +3721,15 @@ body{ background: transparent !important; }
 }
 .fx-aurora{ z-index: -1; }
 .is-scrolling .fx-aurora span{ animation-play-state: paused !important; }
+/* scroll rápido: aparición casi inmediata, limpia y barata (sin blur, sin retardos, sin pulsos de sombra) */
+.is-fast .reveal, .is-fast .reveal.visible{
+  filter: none !important;
+  transition: opacity .14s linear 0s, transform .2s ease-out 0s !important;
+}
+.is-fast .s3d.reveal.visible{ transition: opacity .14s linear 0s !important; }
+.is-fast .reveal.visible .rv-w-i, .is-fast .reveal.visible .rv-gt > *, .is-fast .reveal.visible .rv-l,
+.is-fast .rv-w-i, .is-fast .rv-gt > *, .is-fast .rv-l{ transition-duration: .16s !important; transition-delay: 0s !important; }
+.is-fast .rv-pop{ animation: none !important; }
 .fx-aurora span{ opacity: .38 !important; }
 .fx-aurora span:nth-child(1){ background: radial-gradient(circle, rgba(var(--bBlue),.60), transparent 70%); }
 .fx-aurora span:nth-child(2){ background: radial-gradient(circle, rgba(var(--bOrange),.52), transparent 70%); }
@@ -5427,15 +5454,24 @@ function debounce(fn, wait) {
    estilos con las escrituras anteriores aún pendientes -> 3-4 recálculos por fotograma y tirones
    intermitentes cuando había varias tarjetas en pantalla. Ahora: se LEE todo y después se ESCRIBE todo. */
 window.__sb = (function () {
-  var subs = [], queued = false;
-  function run() {
+  var subs = [], queued = false, rootEl = document.documentElement;
+  var lastY = window.pageYOffset || 0, lastT = 0, isFast = false, calmT = 0;
+  function run(now) {
     queued = false;
     var y = window.pageYOffset || 0, n = subs.length, st = new Array(n), i;
+    /* scroll rápido (>1,8 px/ms ≈ 1800 px/s): modo "fast" -> las revelaciones pasan a ser casi instantáneas,
+       sin blur ni escalonado, y no se ocultan al salir; así no se ven huecos ni parpadeos al ir muy rápido */
+    var dt = lastT ? now - lastT : 16; if (dt < 1) dt = 1;
+    var v = Math.abs(y - lastY) / dt; lastY = y; lastT = now;
+    if (v > 1.8) {
+      if (!isFast) { isFast = true; rootEl.classList.add('is-fast'); }
+      clearTimeout(calmT); calmT = setTimeout(function () { isFast = false; rootEl.classList.remove('is-fast'); }, 260);
+    }
     for (i = 0; i < n; i++) { if (subs[i].read) { try { st[i] = subs[i].read(y); } catch (e) {} } }
     for (i = 0; i < n; i++) { if (subs[i].write) { try { subs[i].write(st[i], y); } catch (e) {} } }
   }
   function kick() { if (!queued) { queued = true; requestAnimationFrame(run); } }
-  var scrT = 0, rootEl = document.documentElement;
+  var scrT = 0;
   function onScr() {
     /* mientras se desplaza, las auroras de fondo (blur enorme, infinitas) se pausan: no se nota y libera la GPU */
     if (!scrT) rootEl.classList.add('is-scrolling'); else clearTimeout(scrT);
@@ -5637,17 +5673,18 @@ document.addEventListener('click', function(e) {
     var yNow = window.pageYOffset || 0;
     if (yNow > lastY + 2) dir = 1; else if (yNow < lastY - 2) dir = -1;
     lastY = yNow;
+    var fastNow = document.documentElement.classList.contains('is-fast');
     for (var i = 0; i < entries.length; i++) {
       var t = entries[i].target;
       var vis = entries[i].isIntersecting;
       if (vis) {
         if (!reduce && window.innerWidth > 980) {
           t.style.setProperty('--rev-y', (dir < 0 ? -24 : 24) + 'px');
-          t.style.setProperty('--rev-d', staggerFor(t) + 'ms');
+          t.style.setProperty('--rev-d', (fastNow ? 0 : staggerFor(t)) + 'ms');
           if (t.classList.contains('s3d')) t.style.setProperty('--rev-rx', (dir < 0 ? -9 : 11) + 'deg');
         }
         t.classList.add('visible');
-      } else if (!t.hasAttribute('data-reveal-once')) {
+      } else if (!t.hasAttribute('data-reveal-once') && !fastNow) {   // en scroll rápido NO se oculta al salir (evita parpadeos y trabajo)
         var below = entries[i].boundingClientRect.top > 0;
         if (!reduce) {
           t.style.setProperty('--rev-y', (below ? 40 : -40) + 'px');
@@ -5656,7 +5693,7 @@ document.addEventListener('click', function(e) {
         t.classList.remove('visible');
       }
     }
-  }, { threshold: 0, rootMargin: '0px 0px 18% 0px' });
+  }, { threshold: 0, rootMargin: '10% 0px 24% 0px' });
 
   var els = document.querySelectorAll('.reveal');
   for (var r = 0; r < els.length; r++) io.observe(els[r]);
@@ -6464,6 +6501,7 @@ if (window.innerWidth > 900) {
         runCounters(t); runBars(t);
       } else {
         t._rvSeen = false;
+        if (document.documentElement.classList.contains('is-fast')) continue;   // sin parpadeo a 0 al pasar rápido
         t.classList.remove('rv-pop');
         resetCounters(t);
       }
