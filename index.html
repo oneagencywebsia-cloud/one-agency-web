@@ -522,6 +522,15 @@ ul {
   .nav-links { display: none !important; }
   .btn-nav { display: none !important; }
 }
+/* 901-1180px (iPad horizontal, portátiles pequeños): 9 enlaces + botón no caben en una línea
+   (se partían en dos y el botón quedaba recortado) -> menú hamburguesa, que cabe siempre */
+@media(min-width:901px) and (max-width:1180px) {
+  .nav-container { justify-content: space-between; gap: 0; }
+  .nav-links { display: none !important; }
+  .btn-nav { display: none !important; }
+  .nav-container .mobile-menu-toggle { display: flex; }
+}
+.logo-text { white-space: nowrap; }
 @media(max-width:420px) {
   .logo-text { font-size: .92rem; }
 }
@@ -1015,6 +1024,13 @@ ul {
   bottom: 5%;
   left: -10%;
   animation-delay: 4s;
+}
+
+/* sin margen lateral suficiente (981-1279px) las tarjetas que sobresalen se recortaban en el borde */
+@media (min-width: 901px) and (max-width: 1279px) {
+  .fc-1 { right: 0; }
+  .fc-2 { right: 0; }
+  .fc-3 { left: 0; }
 }
 
 /* SCROLL HINT */
@@ -3852,11 +3868,12 @@ input:focus, select:focus, textarea:focus{
 
 /* barra de progreso de lectura */
 .rv-progress{
-  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-  z-index: 100050; pointer-events: none; border-radius: 0 3px 3px 0;
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  transform: scaleX(0); transform-origin: 0 50%; will-change: transform;
+  z-index: 100050; pointer-events: none;
   background: linear-gradient(90deg, rgba(var(--bBlue),1), rgba(var(--bOrange),1) 68%, rgba(var(--bViolet),1));
   box-shadow: 0 0 14px rgba(var(--bBlue),.6), 0 0 30px rgba(var(--bOrange),.35);
-  transition: width .12s linear;
+  transition: transform .12s linear;
 }
 
 /* titulos: palabra por palabra */
@@ -4157,6 +4174,14 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 .guias-all{ text-align:center; margin:28px 0 0; }
 .guias-all a{ font-weight:700; color:var(--blue-dark, #1D4ED8); text-decoration:none; }
 .guias-all a:hover{ text-decoration:underline; }
+/* dedo: zonas táctiles de 44px (antes 15-23px, difíciles de acertar) sin cambiar el aspecto en escritorio */
+@media (pointer: coarse) {
+  .footer-col a { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; }
+  .guias-all a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
+  .privacy-inline-link { padding: 12px 4px; margin: -12px -4px; }
+  .footer-privacy-link { display: inline-flex; align-items: center; min-height: 44px; }
+  #diag-float { min-height: 44px; display: inline-flex; align-items: center; }
+}
 @media (max-width: 980px){ .guias-grid{ grid-template-columns:1fr 1fr; } .guias-section{ padding:64px 0; } }
 @media (max-width: 620px){ .guias-grid{ grid-template-columns:1fr; gap:14px; } }
 </style>
@@ -6299,15 +6324,20 @@ if (window.innerWidth > 900) {
   var bar = document.createElement('div');
   bar.className = 'rv-progress'; bar.setAttribute('aria-hidden', 'true');
   document.body.appendChild(bar);
-  var tick = false;
+  var tick = false, maxScroll = 0;
+  /* el alto del documento se mide aparte (carga, resize, cambios de tamaño), NO en cada scroll:
+     leer scrollHeight en cada fotograma obliga al navegador a recalcular el layout */
+  function measure() { maxScroll = docEl.scrollHeight - docEl.clientHeight; }
   function updBar() {
-    var max = docEl.scrollHeight - docEl.clientHeight;
-    var y = docEl.scrollTop || window.pageYOffset || 0;
-    bar.style.width = (max > 0 ? (y / max) * 100 : 0).toFixed(2) + '%';
+    var y = window.pageYOffset || docEl.scrollTop || 0;
+    bar.style.transform = 'scaleX(' + (maxScroll > 0 ? Math.min(1, y / maxScroll) : 0).toFixed(4) + ')';
     tick = false;
   }
   window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(updBar); } }, { passive: true });
-  updBar();
+  window.addEventListener('resize', function () { measure(); updBar(); }, { passive: true });
+  window.addEventListener('load', function () { measure(); updBar(); });
+  if ('ResizeObserver' in window) { try { new ResizeObserver(function () { measure(); }).observe(document.body); } catch (e) {} }
+  measure(); updBar();
 
   if (reduce || !('IntersectionObserver' in window)) return;
 

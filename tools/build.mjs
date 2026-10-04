@@ -254,7 +254,7 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .faq details[open] summary:after{content:"–"}.faq details p{margin:10px 0 0;color:var(--mut)}
 .ft{background:#0B1226;color:#CBD5E1;padding:46px 20px 26px;margin-top:20px;font-size:.9rem}
 .ft-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
-@media(max-width:820px){.ft-in{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.ft-in{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:460px){.ft-in{grid-template-columns:minmax(0,1fr)}}.ft a{overflow-wrap:anywhere}@media(pointer:coarse){.ft a{padding:11px 0;margin:0}}
 .ft h4{color:#fff;margin:0 0 10px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}.ft a{display:block;color:#CBD5E1;text-decoration:none;margin:6px 0}.ft a:hover{color:#FDBA74}
 .ft .brand{color:#fff}.ft p{margin:10px 0 0;color:#94A3B8;max-width:300px;line-height:1.55}
 .ft-b{max-width:1180px;margin:30px auto 0;padding-top:18px;border-top:1px solid #1E293B;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;color:#94A3B8;font-size:.82rem}.ft-b a{display:inline;margin:0}
