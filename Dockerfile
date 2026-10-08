@@ -17,6 +17,7 @@ COPY servicios/ /usr/share/nginx/html/servicios/
 COPY recursos/ /usr/share/nginx/html/recursos/
 COPY privacidad/ /usr/share/nginx/html/privacidad/
 COPY casos/ /usr/share/nginx/html/casos/
+COPY soluciones-para-instaladores/ /usr/share/nginx/html/soluciones-para-instaladores/
 COPY media/ /usr/share/nginx/html/media/
 
 EXPOSE 80
