@@ -10,6 +10,7 @@ COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY llms.txt /usr/share/nginx/html/llms.txt
 COPY logo.png /usr/share/nginx/html/logo.png
+COPY favicon.ico favicon-48.png favicon-96.png apple-touch-icon.png /usr/share/nginx/html/
 COPY carrillo-logo.png /usr/share/nginx/html/carrillo-logo.png
 COPY og-image.jpg /usr/share/nginx/html/og-image.jpg
 COPY 404.html /usr/share/nginx/html/404.html
