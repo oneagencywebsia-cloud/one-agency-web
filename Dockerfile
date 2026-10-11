@@ -8,6 +8,7 @@ COPY security-headers.conf /etc/nginx/security-headers.conf
 COPY index.html /usr/share/nginx/html/index.html
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
+COPY llms.txt /usr/share/nginx/html/llms.txt
 COPY logo.png /usr/share/nginx/html/logo.png
 COPY carrillo-logo.png /usr/share/nginx/html/carrillo-logo.png
 COPY og-image.jpg /usr/share/nginx/html/og-image.jpg

@@ -1,0 +1,23 @@
+# O.N.E Agency
+
+> Agencia de soluciones digitales de Santaella (Córdoba, España), fundada por Ángel Carrillo. Crea webs profesionales, organiza procesos y desarrolla automatizaciones con IA y chatbots de WhatsApp para pymes y empresas de oficios en toda España. Diagnóstico inicial gratuito.
+
+## Servicios
+- [Automatización con IA](https://one-agency.es/servicios/automatizacion-con-ia/): flujos que eliminan tareas repetitivas y conectan las herramientas de la empresa.
+- [Chatbots y WhatsApp](https://one-agency.es/servicios/chatbots-whatsapp/): asistentes que atienden a clientes y gestionan citas.
+- [Webs para empresas](https://one-agency.es/servicios/webs-para-empresas/): webs rápidas pensadas para captar clientes.
+- [Soluciones para instaladores](https://one-agency.es/soluciones-para-instaladores/): web, presupuestos, documentación y captación para empresas de oficios.
+
+## Casos reales
+- [Instalaciones Eléctricas Carrillo](https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/): agente de IA en Telegram y app para partes de obra.
+- [FishZone](https://one-agency.es/casos/marca-y-web-de-pesca-fishzone/): marca, web y SEO de un proyecto de pesca de Córdoba.
+
+## Guías
+- [Blog](https://one-agency.es/blog/): guías sobre costes, plazos, ROI, chatbots, n8n y automatización por sectores.
+- [Cuánto cuesta automatizar una empresa](https://one-agency.es/blog/cuanto-cuesta-automatizar-una-empresa/)
+- [Calculadora de ahorro](https://one-agency.es/recursos/calculadora-ahorro-automatizacion/)
+
+## Contacto
+- Web: https://one-agency.es/
+- Email: oneagencywebsia@gmail.com
+- WhatsApp: +34 684 78 77 01
