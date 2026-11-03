@@ -352,14 +352,13 @@ function head({ title, desc, url, ogImage, jsonld = [], noindex = false, type = 
 <html lang="es"><head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}var po=false;try{po=localStorage.getItem('priv_ok')==='1'}catch(e){}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:po?'granted':'denied'});gtag('js',new Date());gtag('config','G-H3Y3WFCTL6');</script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png"><link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canon}">
 <meta name="robots" content="${noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1'}">
 <meta name="author" content="${esc(site.author.name)}">
-<link rel="icon" type="image/png" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png">
 <link rel="alternate" type="application/rss+xml" title="Blog de ${esc(site.name)}" href="/blog/feed.xml">
 <meta property="og:type" content="${type}"><meta property="og:site_name" content="${esc(site.name)}"><meta property="og:locale" content="es_ES">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canon}">
@@ -385,7 +384,7 @@ const header = () => `<a class="skip" href="#main">Saltar al contenido</a>
 const footer = () => `<footer class="ft"><div class="ft-in">
 <div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
 <div><h4>Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
-<div><h4>Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
+<div><h4>Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/soluciones-para-instaladores/">Para instaladores</a><a href="/servicios/automatizacion-ia-cordoba/">Automatización IA en Córdoba</a><a href="/servicios/chatbots-whatsapp-cordoba/">Chatbots WhatsApp en Córdoba</a><a href="/servicios/diseno-web-cordoba/">Diseño web en Córdoba</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
 <div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
 </div><div class="ft-b"><span>© ${new Date().getFullYear()} O.N.E Agency. Todos los derechos reservados.</span><span><a href="/privacidad/">Política de privacidad y cookies</a> · <a href="/blog/feed.xml">RSS</a></span></div></footer>
 <div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
@@ -625,7 +624,7 @@ function simplePage(p, { serviceLd = false } = {}) {
   if (p.kind === 'service') {
     ld.push({
       '@context': 'https://schema.org', '@type': 'Service', name: p.fm.title, description: p.fm.description, url: SITE + url,
-      provider: orgRef, areaServed: { '@type': 'Country', name: 'España' }, serviceType: p.fm.serviceType || p.fm.title,
+      provider: orgRef, areaServed: p.fm.areaServed ? [{ '@type': 'AdministrativeArea', name: p.fm.areaServed }, { '@type': 'AdministrativeArea', name: 'Andalucía' }] : { '@type': 'Country', name: 'España' }, serviceType: p.fm.serviceType || p.fm.title,
     });
   }
   if (p.kind === 'resource') ld.push({ '@context': 'https://schema.org', '@type': 'WebApplication', name: p.fm.title, description: p.fm.description, url: SITE + url, applicationCategory: 'BusinessApplication', operatingSystem: 'Web' });
@@ -690,6 +689,7 @@ for (const s of services) {
   writeOut(`servicios/${s.slug}/index.html`, simplePage(s));
   sitemap.push({ url: s.url, lastmod: s.modified, cf: 'monthly', pr: '0.9' });
 }
+sitemap.push({ url: '/soluciones-para-instaladores/', lastmod: TODAY, cf: 'monthly', pr: '0.9' });
 for (const r of resources) {
   writeOut(`recursos/${r.slug}/index.html`, simplePage(r));
   sitemap.push({ url: r.url, lastmod: r.modified, cf: 'monthly', pr: '0.8' });
@@ -717,6 +717,31 @@ writeOut('404.html', `${head({ title: 'Página no encontrada | O.N.E Agency', de
 
 // sitemap
 writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map((s) => `  <url>\n    <loc>${SITE}${s.url}</loc>\n    <lastmod>${s.lastmod}</lastmod>\n    <changefreq>${s.cf}</changefreq>\n    <priority>${s.pr}</priority>\n  </url>`).join('\n')}\n</urlset>\n`);
+
+
+// llms.txt: índice para asistentes de IA, generado desde el contenido para que nunca quede desfasado
+{
+  const link = (u, t, d) => `- [${t}](${SITE}${u})${d ? ': ' + d : ''}`;
+  const lines = [
+    '# O.N.E Agency', '',
+    '> Agencia de soluciones digitales de Santaella (Córdoba, España), fundada por Ángel Carrillo. Crea webs profesionales, organiza procesos y desarrolla automatizaciones con IA y chatbots de WhatsApp para pymes y empresas de oficios en Córdoba, Andalucía y toda España. Diagnóstico inicial gratuito.', '',
+    '## Servicios',
+    ...services.map((s) => link(s.url, s.fm.title, s.fm.lead ? s.fm.lead.split('. ')[0].replace(/\.$/, '') + '.' : '')),
+    link('/soluciones-para-instaladores/', 'Soluciones para instaladores', 'web, presupuestos, documentación y captación para empresas de oficios.'), '',
+    '## Casos reales',
+    ...cases.map((c) => link(c.url, c.fm.title, c.fm.description)), '',
+    '## Guías (blog)',
+    link('/blog/', 'Blog', 'guías sobre costes, plazos, ROI, chatbots, n8n y automatización por sectores.'),
+  ];
+  for (const c of site.clusters) {
+    lines.push('', `### ${c.name}`);
+    articles.filter((a) => a.fm.cluster === c.id).sort((x, y) => (x.fm.type === 'pillar' ? -1 : 1) - (y.fm.type === 'pillar' ? -1 : 1) || x.fm.title.localeCompare(y.fm.title))
+      .forEach((a) => lines.push(link(a.url, a.fm.title, a.fm.description)));
+  }
+  lines.push('', '## Herramientas', link('/recursos/calculadora-ahorro-automatizacion/', 'Calculadora de ahorro', 'estima el ahorro anual y la amortización de automatizar tareas repetitivas.'),
+    '', '## Contacto', `- Web: ${SITE}/`, '- Email: oneagencywebsia@gmail.com', '- WhatsApp: +34 684 78 77 01', '- Ubicación: Santaella, Córdoba (España)', '');
+  writeOut('llms.txt', lines.join('\n'));
+}
 
 // rss
 const rssItems = [...articles].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug)).slice(0, 30);

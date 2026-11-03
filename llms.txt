@@ -1,23 +1,69 @@
 # O.N.E Agency
 
-> Agencia de soluciones digitales de Santaella (Córdoba, España), fundada por Ángel Carrillo. Crea webs profesionales, organiza procesos y desarrolla automatizaciones con IA y chatbots de WhatsApp para pymes y empresas de oficios en toda España. Diagnóstico inicial gratuito.
+> Agencia de soluciones digitales de Santaella (Córdoba, España), fundada por Ángel Carrillo. Crea webs profesionales, organiza procesos y desarrolla automatizaciones con IA y chatbots de WhatsApp para pymes y empresas de oficios en Córdoba, Andalucía y toda España. Diagnóstico inicial gratuito.
 
 ## Servicios
-- [Automatización con IA](https://one-agency.es/servicios/automatizacion-con-ia/): flujos que eliminan tareas repetitivas y conectan las herramientas de la empresa.
-- [Chatbots y WhatsApp](https://one-agency.es/servicios/chatbots-whatsapp/): asistentes que atienden a clientes y gestionan citas.
-- [Webs para empresas](https://one-agency.es/servicios/webs-para-empresas/): webs rápidas pensadas para captar clientes.
+- [Automatización con IA para empresas](https://one-agency.es/servicios/automatizacion-con-ia/): Conectamos las herramientas que ya usas y ponemos a trabajar a la inteligencia artificial en los procesos repetitivos, para que tu equipo dedique su tiempo a lo que de verdad aporta valor.
+- [Automatización con IA en Córdoba](https://one-agency.es/servicios/automatizacion-ia-cordoba/): Somos una agencia de Santaella y trabajamos con empresas de Córdoba y Andalucía que quieren quitarse de encima las tareas repetitivas con inteligencia artificial, sin complicarse con la tecnología.
+- [Chatbots de WhatsApp con IA en Córdoba](https://one-agency.es/servicios/chatbots-whatsapp-cordoba/): Un asistente que responde por WhatsApp a tus clientes de Córdoba a cualquier hora, recoge lo que necesitas saber y avisa a tu equipo cuando hace falta una persona.
+- [Chatbots y asistentes de IA para WhatsApp](https://one-agency.es/servicios/chatbots-whatsapp/): Atiende a tus clientes por WhatsApp a cualquier hora, con respuestas fiables basadas en la información de tu negocio y con paso a una persona cuando hace falta.
+- [Diseño web para empresas en Córdoba](https://one-agency.es/servicios/diseno-web-cordoba/): Webs rápidas, claras y optimizadas para Google que llevan cada contacto directo a tus sistemas.
+- [Diseño de webs profesionales para empresas](https://one-agency.es/servicios/webs-para-empresas/): Una web que carga rápido, se entiende en segundos y lleva cada contacto directo a tus sistemas.
 - [Soluciones para instaladores](https://one-agency.es/soluciones-para-instaladores/): web, presupuestos, documentación y captación para empresas de oficios.
 
 ## Casos reales
-- [Instalaciones Eléctricas Carrillo](https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/): agente de IA en Telegram y app para partes de obra.
-- [FishZone](https://one-agency.es/casos/marca-y-web-de-pesca-fishzone/): marca, web y SEO de un proyecto de pesca de Córdoba.
+- [Le construimos una app instalable con IA a una empresa de electricidad](https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/): App instalable, agente de IA en Telegram, notificaciones push reales e IA que lee facturas y calcula ganancias, para una empresa de electricidad real.
+- [Creamos la marca y la web de FishZone, la guía de pesca de Córdoba y Andalucía](https://one-agency.es/casos/marca-y-web-de-pesca-fishzone/): Cómo creamos la marca, la web y 22 guías de FishZone, un proyecto de pesca de Córdoba hecho por 3 aficionados: SEO 100, rápida en móvil y con herramientas propias.
 
-## Guías
+## Guías (blog)
 - [Blog](https://one-agency.es/blog/): guías sobre costes, plazos, ROI, chatbots, n8n y automatización por sectores.
-- [Cuánto cuesta automatizar una empresa](https://one-agency.es/blog/cuanto-cuesta-automatizar-una-empresa/)
-- [Calculadora de ahorro](https://one-agency.es/recursos/calculadora-ahorro-automatizacion/)
+
+### Automatización con IA
+- [Automatización de procesos con IA para pymes: guía completa](https://one-agency.es/blog/automatizacion-de-procesos-con-ia-pymes/): Qué es la automatización de procesos con IA, qué tareas de una pyme puedes automatizar, cómo implantarla paso a paso y qué errores evitar.
+- [10 errores al automatizar una empresa (y cómo evitarlos)](https://one-agency.es/blog/errores-al-automatizar-una-empresa/): Los errores más frecuentes al automatizar procesos con IA en una pyme: desde elegir mal el primer proceso hasta olvidar el mantenimiento. Y cómo evitarlos.
+
+### Chatbots y WhatsApp
+- [Chatbot de WhatsApp para empresas: guía completa](https://one-agency.es/blog/chatbot-whatsapp-empresas/): Qué es un chatbot de WhatsApp con IA, qué puede y no puede hacer, cómo funciona por dentro, qué exige la ley y cómo implantarlo paso a paso en tu empresa.
+
+### Herramientas: n8n, Make y Zapier
+- [n8n en español: qué es y cómo usarlo en tu empresa](https://one-agency.es/blog/n8n-que-es-y-como-usarlo-en-tu-empresa/): Qué es n8n, cómo funciona, qué puedes automatizar con él, cómo se compara con Make y Zapier y cuándo conviene alojarlo tú mismo. Guía para empresas.
+
+### Automatización por sectores
+- [Automatización con IA por sectores: qué automatizar en cada negocio](https://one-agency.es/blog/automatizacion-con-ia-por-sectores/): Guía de automatización con IA por sectores: obra, comercio, clínicas, despachos, logística, agencias e inmobiliarias. Qué automatizar primero en cada uno.
+- [Automatizar presupuestos y partes de obra paso a paso](https://one-agency.es/blog/automatizar-presupuestos-y-partes-de-obra/): Cómo automatizar presupuestos y partes de obra en una constructora o empresa de reformas: flujo, datos necesarios, controles y errores a evitar.
+- [Cómo automatizar un comercio: pedidos, stock y clientes](https://one-agency.es/blog/automatizar-un-comercio-pedidos-stock-y-clientes/): Qué automatizar en una tienda o comercio local: consultas por WhatsApp, pedidos, stock, reposición y fidelización de clientes. Ejemplos y primeros pasos.
+- [Cómo automatizar un despacho de abogados o una gestoría](https://one-agency.es/blog/automatizar-un-despacho-de-abogados-o-gestoria/): Qué automatizar en un despacho o gestoría: recepción de clientes, documentación, plazos, clasificación de correos y facturación, cuidando la confidencialidad.
+- [Cómo automatizar una academia o centro de formación](https://one-agency.es/blog/automatizar-una-academia-o-centro-de-formacion/): Qué automatizar en una academia o centro de formación: información de cursos, captación, matrícula, recordatorios de pago y clases, y encuestas.
+- [Cómo automatizar una agencia de marketing y publicidad](https://one-agency.es/blog/automatizar-una-agencia-de-marketing/): Qué automatizar en una agencia de marketing: informes para clientes, onboarding, aprobaciones, gestión de leads y facturación, y los límites de la IA creativa.
+- [Cómo automatizar una clínica: citas y recordatorios](https://one-agency.es/blog/automatizar-una-clinica-citas-y-recordatorios/): Cómo automatizar citas, recordatorios y consultas en una clínica o consulta privada, reduciendo ausencias y cuidando la protección de datos de salud.
+- [Cómo automatizar una empresa de construcción y obra con IA](https://one-agency.es/blog/automatizar-una-empresa-de-construccion-y-obra/): Qué automatizar en una constructora o empresa de reformas: presupuestos, partes de obra, proveedores, subcontratas, plazos y cobros. Ejemplos y primeros pasos.
+- [Cómo automatizar una empresa de logística y transporte](https://one-agency.es/blog/automatizar-una-empresa-de-logistica-y-transporte/): Qué automatizar en logística y transporte: avisos de estado de envío, lectura de albaranes, gestión de incidencias, planificación y facturación.
+- [Cómo automatizar una inmobiliaria: leads, visitas y seguimiento](https://one-agency.es/blog/automatizar-una-inmobiliaria/): Qué automatizar en una inmobiliaria: respuesta inmediata a consultas de portales, filtrado de interesados, visitas, avisos a compradores y seguimiento.
+- [Cómo automatizar una tienda online con IA](https://one-agency.es/blog/automatizar-una-tienda-online/): Qué automatizar en un e-commerce: atención al cliente, seguimiento de pedidos, devoluciones, carritos abandonados, stock y facturación.
+
+### Administración y facturación
+- [Cómo automatizar la facturación y la administración de tu empresa](https://one-agency.es/blog/automatizar-facturacion-y-administracion/): Cómo automatizar facturas, cobros, conciliación bancaria e informes con IA: qué se puede hacer, qué controles poner y qué normativa tener en cuenta.
+
+### IA en la empresa
+- [ChatGPT y agentes de IA para empresas: usos, límites y RGPD](https://one-agency.es/blog/chatgpt-y-agentes-de-ia-para-empresas/): Cómo usar ChatGPT y agentes de IA en una empresa con criterio: usos con valor real, límites, qué datos no compartir, RGPD y Reglamento europeo de IA.
+
+### Coste y retorno
+- [Cuánto cuesta automatizar una empresa con IA: guía de costes](https://one-agency.es/blog/cuanto-cuesta-automatizar-una-empresa/): De qué se compone el coste de automatizar una empresa con IA, qué lo sube o lo baja, cómo comparar presupuestos y cómo calcular en cuánto tiempo se amortiza.
+- [Automatización a medida o herramientas ya hechas: cuál elegir](https://one-agency.es/blog/automatizacion-a-medida-o-herramientas-listas/): Comparativa entre automatizar con software ya hecho (SaaS) y con flujos a medida. Ventajas, límites, costes y cuándo conviene cada opción en una pyme.
+- [Automatizar o contratar a alguien: cómo decidir con números](https://one-agency.es/blog/automatizar-o-contratar-a-alguien/): ¿Compensa más automatizar una tarea o contratar a una persona? Criterios, comparativa de costes y casos en los que cada opción tiene más sentido en una pyme.
+- [Ayudas y subvenciones para digitalizar una pyme en España](https://one-agency.es/blog/ayudas-y-subvenciones-para-digitalizar-una-pyme/): Tipos de ayudas para digitalizar y automatizar una pyme en España, dónde buscarlas, requisitos habituales y errores que evitar al solicitarlas.
+- [Cómo elegir una agencia de automatización con IA](https://one-agency.es/blog/como-elegir-una-agencia-de-automatizacion-con-ia/): Criterios prácticos para elegir una agencia o consultor de automatización con IA: qué preguntar, qué pedir por escrito y qué señales de alerta evitar.
+- [Cuánto cuesta un chatbot de WhatsApp para empresas](https://one-agency.es/blog/cuanto-cuesta-un-chatbot-de-whatsapp-para-empresas/): Qué costes tiene un chatbot de WhatsApp con IA: implantación, mensajes de Meta, modelo de IA, herramientas y mantenimiento, y cómo saber si compensa.
+- [Cuánto tarda en implantarse una automatización](https://one-agency.es/blog/cuanto-tarda-en-implantarse-una-automatizacion/): Plazos realistas para implantar una automatización con IA: fases del proyecto, qué los alarga o acorta y cómo evitar retrasos. Guía para pymes.
+- [Qué debe incluir un presupuesto de automatización](https://one-agency.es/blog/que-incluye-un-presupuesto-de-automatizacion/): Lista de control para revisar un presupuesto de automatización con IA: alcance, costes recurrentes, plazos, propiedad, soporte y protección de datos.
+- [Qué procesos automatizar primero en tu empresa](https://one-agency.es/blog/que-procesos-automatizar-primero/): Cómo elegir el primer proceso a automatizar: criterios, matriz de impacto y esfuerzo, ejemplos de buenos candidatos y señales de que todavía no toca.
+- [ROI de la automatización: cómo calcularlo paso a paso](https://one-agency.es/blog/roi-de-la-automatizacion-como-calcularlo/): Cómo calcular el retorno de invertir en automatización: fórmula, qué costes y ahorros contar, ejemplo con números y errores habituales al hacer la cuenta.
+
+## Herramientas
+- [Calculadora de ahorro](https://one-agency.es/recursos/calculadora-ahorro-automatizacion/): estima el ahorro anual y la amortización de automatizar tareas repetitivas.
 
 ## Contacto
 - Web: https://one-agency.es/
 - Email: oneagencywebsia@gmail.com
 - WhatsApp: +34 684 78 77 01
+- Ubicación: Santaella, Córdoba (España)
