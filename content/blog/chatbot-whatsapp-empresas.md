@@ -1,6 +1,6 @@
 ---
 title: Chatbot de WhatsApp para empresas: guía completa
-seoTitle: Chatbot de WhatsApp para empresas: guía completa
+seoTitle: Chatbot para empresas con WhatsApp e IA: guía completa
 description: Qué es un chatbot de WhatsApp con IA, qué puede y no puede hacer, cómo funciona por dentro, qué exige la ley y cómo implantarlo paso a paso en tu empresa.
 lead: Cómo funciona un asistente de IA en WhatsApp, qué necesitas para ponerlo en marcha, qué exige la normativa y cómo evitar que dé mala imagen a tu marca.
 cluster: chatbots-whatsapp
