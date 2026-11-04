@@ -7,6 +7,7 @@ cluster: automatizacion-ia
 type: pillar
 keyword: automatización de procesos con IA
 date: 2026-09-21
+modified: 2026-11-04
 ---
 
 Casi todas las pymes tienen el mismo problema: personas cualificadas dedicando horas a tareas que no requieren su criterio. Copiar datos de un correo a una hoja de cálculo, responder por décima vez la misma pregunta, pasar facturas al programa de contabilidad, recordar a un cliente que tiene una cita. Nada de eso da ventaja competitiva, pero se come la semana.
@@ -95,6 +96,20 @@ Aunque parezca magia, casi todas las automatizaciones tienen la misma anatomía:
 Llega un correo de un cliente potencial pidiendo presupuesto. El sistema lo lee, identifica qué servicio solicita y qué datos faltan, crea el contacto en el CRM, prepara un borrador de respuesta con tu plantilla y avisa por Telegram al comercial con un resumen. El comercial revisa, ajusta si quiere y envía. Antes eran diez minutos por petición; ahora son dos.
 :::
 
+## Ejemplos de automatización de procesos con IA
+
+La **automatización de procesos con IA** consiste en que un sistema ejecute tareas repetitivas de una empresa (leer documentos, clasificar mensajes, registrar datos, redactar borradores) y deje a las personas las decisiones. Estos son ejemplos habituales:
+
+| Proceso | Qué hace el sistema | Revisión humana |
+|---|---|---|
+| Solicitudes de presupuesto | Lee el correo o mensaje, extrae los datos y prepara un borrador | Se revisa antes de enviar |
+| Facturas de proveedores | Lee la factura, la registra y avisa de los vencimientos | Se revisan las excepciones |
+| Mensajes de clientes | Clasifica, responde dudas frecuentes y avisa al equipo | Casos complejos o sensibles |
+| Informes semanales | Reúne datos de varias herramientas y resume lo importante | Lectura final |
+| Altas y seguimiento | Registra el contacto en el CRM y programa recordatorios | Seguimiento comercial |
+
+Si tu empresa está en Córdoba o Andalucía, mira cómo lo aplicamos en [automatización con IA en Córdoba](/servicios/automatizacion-ia-cordoba/), o consulta el [servicio de automatización con IA](/servicios/automatizacion-con-ia/).
+
 ## Qué herramientas se utilizan
 
 Las automatizaciones se construyen con plataformas que conectan aplicaciones entre sí y con modelos de IA. Las más usadas son n8n, Make y Zapier, además de las APIs de los propios servicios (WhatsApp, Google, tu CRM) y de los modelos de lenguaje como los de OpenAI o Google.
@@ -138,6 +153,10 @@ Tienes el desglose completo en [cuánto cuesta automatizar una empresa](/blog/cu
 - Cualquier cosa con datos personales sensibles sin las garantías legales necesarias. Más en [ChatGPT y agentes de IA para empresas](/blog/chatgpt-y-agentes-de-ia-para-empresas/).
 
 ## Preguntas frecuentes
+
+### ¿Qué es la automatización de procesos con IA?
+
+Es el uso de inteligencia artificial y herramientas de automatización para que un sistema haga por ti tareas repetitivas, como leer documentos, clasificar mensajes o registrar datos, mientras las personas se centran en las decisiones y en el trato con el cliente.
 
 ### ¿Necesito saber programar para automatizar procesos?
 

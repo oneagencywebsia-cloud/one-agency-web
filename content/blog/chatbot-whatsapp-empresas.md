@@ -7,6 +7,7 @@ cluster: chatbots-whatsapp
 type: pillar
 keyword: chatbot whatsapp empresas
 date: 2026-09-21
+modified: 2026-11-04
 ---
 
 En España WhatsApp es el canal donde tus clientes ya están. Preguntan horarios, piden cita, consultan el estado de un pedido o solicitan presupuesto. El problema es que un mensaje sin respuesta durante horas suele ser un cliente perdido, y atender el móvil fuera de horario no es sostenible.
@@ -93,6 +94,18 @@ Esto no es asesoramiento jurídico, pero estos puntos aparecen siempre:
 
 Hablamos más de esto en [ChatGPT y agentes de IA para empresas](/blog/chatgpt-y-agentes-de-ia-para-empresas/).
 
+## Chatbot para empresas: tipos y cuál elegir
+
+Un **chatbot para empresas** es un programa que atiende conversaciones con clientes de forma automática por WhatsApp, web u otros canales. Según cómo esté construido, cambia lo que puede hacer y lo que cuesta mantenerlo:
+
+| Tipo | Cómo responde | Mejor para | Límite principal |
+|---|---|---|---|
+| Bot de menú | Opciones cerradas con botones | Procesos muy simples y repetitivos | Se pierde si el cliente escribe fuera del guion |
+| Asistente con IA | Lenguaje natural basado en la información de tu negocio | Dudas abiertas y atención general | Hay que limitar lo que puede afirmar y revisar conversaciones |
+| Híbrido | Flujos guiados para lo crítico e IA para entender la intención | La mayoría de pymes y empresas de oficios | Requiere diseñar bien el traspaso a una persona |
+
+Para una pyme, lo habitual es empezar por un caso de uso acotado (citas, solicitudes de presupuesto o preguntas frecuentes) y ampliar después con datos reales. Si estás en Andalucía, mira cómo lo planteamos en [chatbots de WhatsApp con IA en Córdoba](/servicios/chatbots-whatsapp-cordoba/) o consulta el [servicio de chatbots y WhatsApp](/servicios/chatbots-whatsapp/).
+
 ## Cuánto cuesta
 
 El coste se compone de varias partes: la implantación (diseño, base de conocimiento, integraciones), el coste recurrente de mensajes de WhatsApp y de uso del modelo de IA, y el mantenimiento. Tienes el desglose en [cuánto cuesta un chatbot de WhatsApp para empresas](/blog/cuanto-cuesta-un-chatbot-de-whatsapp-para-empresas/) y una visión más amplia en [cuánto cuesta automatizar una empresa](/blog/cuanto-cuesta-automatizar-una-empresa/).
@@ -116,6 +129,14 @@ El coste se compone de varias partes: la implantación (diseño, base de conocim
 - Horas del equipo liberadas. Puedes estimar el retorno con la [calculadora de ahorro](/recursos/calculadora-ahorro-automatizacion/).
 
 ## Preguntas frecuentes
+
+### ¿Qué es un chatbot para empresas?
+
+Es un asistente automático que responde a tus clientes por WhatsApp, web u otros canales, a cualquier hora y con la información de tu negocio. Resuelve las consultas repetitivas y pasa la conversación a una persona cuando hace falta criterio o trato personal.
+
+### ¿Qué chatbot es mejor para una pyme?
+
+Suele funcionar mejor uno híbrido: flujos guiados para acciones críticas como reservar una cita o tomar los datos de un presupuesto, e IA para entender mensajes libres. Lo importante es empezar con un caso de uso acotado y medir antes de ampliar.
 
 ### ¿Puedo usar mi número de WhatsApp actual?
 
