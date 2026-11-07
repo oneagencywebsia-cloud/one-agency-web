@@ -89,7 +89,7 @@ function parseBlocks(src, pageUrl) {
       const head = cells(rows[0]);
       const body = rows.slice(2).map(cells);
       const th = head.map((c) => `<th>${inline(c, pageUrl)}</th>`).join('');
-      const tb = body.map((r) => `<tr>${r.map((c) => `<td>${inline(c, pageUrl)}</td>`).join('')}</tr>`).join('');
+      const tb = body.map((r) => `<tr>${r.map((c, k) => (k === 0 ? `<th scope="row">${inline(c, pageUrl)}</th>` : `<td>${inline(c, pageUrl)}</td>`)).join('')}</tr>`).join('');
       blocks.push({ t: 'table', html: `<div class="tw"><table><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div>` });
       continue;
     }
@@ -216,7 +216,7 @@ blockquote{margin:1.4em 0;padding:16px 20px;border-left:5px solid var(--blue);ba
 .note-tip{border-left-color:#22C55E}.note-warn{border-left-color:var(--orange);background:#FFF7ED}.note-example{border-left-color:var(--violet);background:#F5F3FF}
 .tw{overflow-x:auto;margin:1.4em 0;border:1px solid var(--line);border-radius:var(--r);background:#fff}
 table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:520px}th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-spacing:.02em}tr:last-child td{border-bottom:0}
+th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-spacing:.02em}tbody th{background:none;font-size:inherit;letter-spacing:0;font-weight:700;text-align:left}tr:last-child td{border-bottom:0}
 .side{position:sticky;top:84px;display:flex;flex-direction:column;gap:18px}
 @media(max-width:1020px){.side{position:static}}
 .toc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;font-size:.88rem;box-shadow:0 14px 34px -26px rgba(15,23,42,.5)}
@@ -383,9 +383,9 @@ const header = () => `<a class="skip" href="#main">Saltar al contenido</a>
 
 const footer = () => `<footer class="ft"><div class="ft-in">
 <div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
-<div><h4>Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
-<div><h4>Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/soluciones-para-instaladores/">Para instaladores</a><a href="/servicios/automatizacion-ia-cordoba/">Automatización IA en Córdoba</a><a href="/servicios/chatbots-whatsapp-cordoba/">Chatbots WhatsApp en Córdoba</a><a href="/servicios/diseno-web-cordoba/">Diseño web en Córdoba</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
-<div><h4>Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
+<div><h4 role="heading" aria-level="2">Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
+<div><h4 role="heading" aria-level="2">Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/soluciones-para-instaladores/">Para instaladores</a><a href="/servicios/automatizacion-ia-cordoba/">Automatización IA en Córdoba</a><a href="/servicios/chatbots-whatsapp-cordoba/">Chatbots WhatsApp en Córdoba</a><a href="/servicios/diseno-web-cordoba/">Diseño web en Córdoba</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
+<div><h4 role="heading" aria-level="2">Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
 </div><div class="ft-b"><span>© ${new Date().getFullYear()} O.N.E Agency. Todos los derechos reservados.</span><span><a href="/privacidad/">Política de privacidad y cookies</a> · <a href="/blog/feed.xml">RSS</a></span></div></footer>
 <div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
 <div class="r"><button class="ok" id="ck-ok" type="button">Aceptar</button><button class="no" id="ck-no" type="button">Rechazar</button></div></div>
@@ -489,7 +489,7 @@ function articlePage(a) {
   const sideCta = `<div class="sc"><b>${esc(c.cta.title)}</b><p>${esc(c.cta.text)}</p><a class="btn" data-cta="sidebar" href="${ctaUrl(a.slug, a.fm.sector, a.fm.cluster, 'sidebar')}">Diagnóstico gratuito</a><small>30 minutos · sin compromiso</small></div>`;
   const html = `${head({ title: seoTitle, desc, url, ogImage: og, jsonld: ld, type: 'article' })}<body>${header()}
 ${crumbsHtml(crumbItems)}
-<div class="wrap" id="main"><article>
+<div class="wrap" id="main" role="main"><article>
 <a class="kick" href="/blog/${c.id}/">${esc(c.name)}</a>
 <h1>${esc(a.fm.title)}</h1>
 <p class="lead">${esc(a.fm.lead || desc)}</p>
@@ -602,7 +602,7 @@ ${p.fm.client ? `<p class="case-client">${esc(p.fm.client)}</p>` : ''}
 ${chips.length ? `<div class="case-chips">${chips.map((c) => `<span class="case-chip">${esc(c)}</span>`).join('')}</div>` : ''}
 </div></div>
 ${p.fm.cover ? `<div class="case-cover-wrap"><figure class="case-cover"><img src="${esc(p.fm.cover)}" alt="${esc(p.fm.coverAlt || p.fm.title)}" width="1600" height="900" fetchpriority="high" decoding="async"></figure></div>` : ''}
-<div class="wrap one" id="main"><article>
+<div class="wrap one" id="main" role="main"><article>
 ${body}
 ${ctaBox(cluster, p.slug, p.fm.sector, 'final')}
 </article></div>${sticky}
@@ -635,7 +635,7 @@ function simplePage(p, { serviceLd = false } = {}) {
   const sticky = showCta ? `<div class="sticky" id="sticky"><a class="btn" data-cta="sticky" href="${ctaUrl(p.slug, p.fm.sector, cluster, 'sticky')}">⚡ Reservar diagnóstico gratuito</a></div>` : '';
   return `${head({ title: seoTitle, desc: p.fm.description, url, ogImage: og, jsonld: ld })}<body>${header()}
 ${p.kind === 'legal' ? '' : crumbsHtml(crumbs)}
-<div class="wrap one" id="main"><article>
+<div class="wrap one" id="main" role="main"><article>
 <h1>${esc(p.fm.title)}</h1>
 ${p.fm.lead ? `<p class="lead">${esc(p.fm.lead)}</p>` : ''}
 ${body}
