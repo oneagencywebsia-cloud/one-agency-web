@@ -298,7 +298,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   font-size: 16px;
   overflow-x: hidden;
 }
@@ -2224,6 +2224,16 @@ ul {
 
 /* --- REVEAL ANIMATIONS -------------------------------- */
 /* Only hide elements when JS is ready to show them (prevents blank page on iOS file://) */
+/* ── TRANSICION ENTRE SECCIONES (accesos directos) ── */
+#nav-transition{position:fixed;inset:0;z-index:10050;pointer-events:none;opacity:0;
+  background:linear-gradient(135deg,rgba(59,130,246,.96),rgba(139,92,246,.94) 55%,rgba(249,115,22,.94));
+  clip-path:circle(0% at 50% 50%);will-change:opacity,clip-path}
+#nav-transition.in{opacity:1;clip-path:circle(150% at 50% 50%);transition:clip-path .22s cubic-bezier(.65,0,.35,1),opacity .12s ease}
+#nav-transition.out{opacity:0;clip-path:circle(150% at 50% 50%);transition:opacity .38s ease .02s}
+.anchor-enter{animation:anchor-enter .6s cubic-bezier(.22,1,.36,1) both}
+@keyframes anchor-enter{from{opacity:.0;transform:translateY(28px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){#nav-transition{display:none}.anchor-enter{animation:none}}
+
 .js-loaded .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -5525,14 +5535,20 @@ if (navbar) {
     }
     kill();
     function doScroll() {
-      var topPos = t.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({top: topPos, behavior: 'smooth'});
-      var t0 = performance.now();
-      function poll(now) {
-        if (Math.abs(window.scrollY - topPos) < 5 || now - t0 > 1500) show(t);
-        else raf = requestAnimationFrame(poll);
-      }
-      raf = requestAnimationFrame(poll);
+      var topPos = Math.max(0, t.getBoundingClientRect().top + window.scrollY - 80);
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function jump() { window.scrollTo({top: topPos, behavior: 'instant'}); }
+      if (reduce) { jump(); return; }
+      /* Transicion en lugar de desplazamiento: cortinilla de marca -> salto -> la seccion entra */
+      var ov = document.getElementById('nav-transition');
+      if (!ov) { ov = document.createElement('div'); ov.id = 'nav-transition'; ov.setAttribute('aria-hidden', 'true'); document.body.appendChild(ov); }
+      ov.classList.remove('out'); void ov.offsetWidth; ov.classList.add('in');
+      setTimeout(function () {
+        jump();
+        t.classList.remove('anchor-enter'); void t.offsetWidth; t.classList.add('anchor-enter');
+        ov.classList.remove('in'); ov.classList.add('out');
+        setTimeout(function () { show(t); t.classList.remove('anchor-enter'); }, 650);
+      }, 220);
     }
     if (wasOpen) setTimeout(doScroll, 100); else doScroll();
   });
