@@ -9,7 +9,7 @@ client: Instalaciones Eléctricas Carrillo (Juan Carrillo Nieto), electricista e
 clientName: Carrillo Electricidad
 clientLocation: Santaella, Córdoba, España
 clientLogo: /carrillo-logo.png
-chips: ⚡ Electricidad, 📱 App instalable, 🔔 Push real, 🧾 IA lee facturas
+chips: Electricidad, App instalable, Push real, IA lee facturas
 date: 2026-09-29
 ---
 
@@ -76,7 +76,7 @@ Para el día a día en obra, el electricista no abre ninguna app: le escribe a u
 <div class="chat-mock reveal-io">
 <span class="cm-tag">Telegram — chat con el bot de partes</span>
 <div class="cm-row in"><span class="cm-av in">JC</span><span class="cm-bub in">Joaquín debajo museo, angel y pino, de 9 a 11, 2 marcos</span></div>
-<div class="cm-row out"><span class="cm-av out">IA</span><span class="cm-bub out">✅ Parte registrado<br>Cliente: Joaquín (debajo museo)<br>Trabajadores: Ángel, Pino<br>Horas: 2h (9:00–11:00)<br>Material: 2 marcos</span></div>
+<div class="cm-row out"><span class="cm-av out">IA</span><span class="cm-bub out">Parte registrado<br>Cliente: Joaquín (debajo museo)<br>Trabajadores: Ángel, Pino<br>Horas: 2h (9:00–11:00)<br>Material: 2 marcos</span></div>
 </div>
 
 El agente interpreta ese mensaje entero solo: identifica que "Joaquín debajo museo" es el cliente (así es como lo tienen registrado, con el lugar incluido en el nombre), que Ángel y Pino son los dos trabajadores, que "de 9 a 11" son 2 horas, y que se han usado 2 marcos como material. Si falta un dato realmente imprescindible, pregunta; si no, no interrumpe, solo confirma.
