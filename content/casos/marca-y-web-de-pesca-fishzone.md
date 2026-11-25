@@ -9,7 +9,7 @@ client: FishZone, un proyecto de pesca de Córdoba creado por un equipo de 3 afi
 clientName: FishZone
 clientLocation: Córdoba, España
 clientLogo: /media/casos/fishzone/logo-fishzone.png
-chips: 🎣 Pesca, 🎨 Marca desde cero, 📱 Web para todos los dispositivos, 🔎 SEO técnico
+chips: Pesca, Marca desde cero, Web para todos los dispositivos, SEO técnico
 date: 2026-10-01
 cover: /media/casos/fishzone/portada-fishzone.webp
 coverAlt: Web de FishZone en escritorio y en móvil, con el logo de FishZone junto al de O.N.E Agency
