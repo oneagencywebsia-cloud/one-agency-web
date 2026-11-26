@@ -4144,6 +4144,25 @@ main > section:not(#hero){content-visibility:auto;contain-intrinsic-size:auto 10
 .live-dot{position:relative;box-shadow:none!important;animation:none!important}
 .live-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#22C55E;opacity:.55;animation:live-ping 2s ease-out infinite}
 @keyframes live-ping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.6);opacity:0}}
+
+/* ── MOVIL: animaciones devueltas (solo transform/opacity/sombra) ── */
+@media (hover:none),(max-width:980px){
+  .js-loaded .reveal:not(.s3d){--rev-y:30px;transform:translate3d(0,var(--rev-y),0) scale(.975)!important;transition:opacity .6s ease var(--rev-d,0ms),transform .7s cubic-bezier(.16,1,.3,1) var(--rev-d,0ms)!important}
+  .js-loaded .reveal:not(.s3d).visible{transform:none!important}
+  .is-fast .reveal:not(.s3d){transition:opacity .16s linear,transform .2s ease!important}
+  /* respuesta al tocar */
+  .btn-primary:active,.btn-outline:active,.mnav-btn:active,.mnav-wa:active,.tool-chip:active,.faq-question:active{transform:scale(.97);transition:transform .12s ease}
+  .step-card,.result-card,.service-card-flip,.case-content,.ia-card,.guias-grid a,.tool-chip{transition:box-shadow .45s ease,border-color .45s ease,opacity .6s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+  .in-focus{box-shadow:0 26px 50px -24px rgba(37,99,235,.5),0 10px 22px -12px rgba(249,115,22,.32)!important;border-color:rgba(59,130,246,.42)!important}
+  /* chips de la orbita: pulso suave escalonado */
+  .oi{animation:oi-pulse 3.2s ease-in-out infinite}
+  .ochip:nth-child(2n) .oi{animation-delay:-1.1s}.ochip:nth-child(3n) .oi{animation-delay:-2.2s}
+  @keyframes oi-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+}
+/* titular del hero: entra con movimiento (sin tocar la opacidad, para no retrasar el LCP) */
+.js-loaded .hero .hero-title.reveal{animation:title-rise .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes title-rise{from{transform:translate3d(0,22px,0)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.js-loaded .hero .hero-title.reveal{animation:none}.oi{animation:none!important}.in-focus{transition:none}}
 </style>
 
   <meta name="mobile-web-app-capable" content="yes" />
@@ -5376,7 +5395,8 @@ window.__sb = (function () {
        sin blur ni escalonado, y no se ocultan al salir; así no se ven huecos ni parpadeos al ir muy rápido */
     var dt = lastT ? now - lastT : 16; if (dt < 1) dt = 1;
     var v = Math.abs(y - lastY) / dt; lastY = y; lastT = now;
-    if (v > 1.8) {
+    var fastV = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ? 4.2 : 1.8;
+    if (v > fastV) {
       if (!isFast) { isFast = true; rootEl.classList.add('is-fast'); }
       clearTimeout(calmT); calmT = setTimeout(function () { isFast = false; rootEl.classList.remove('is-fast'); }, 260);
     }
@@ -5579,10 +5599,11 @@ document.addEventListener('click', function(e) {
       var t = entries[i].target;
       var vis = entries[i].isIntersecting;
       if (vis) {
-        if (!reduce && window.innerWidth > 980) {
-          t.style.setProperty('--rev-y', (dir < 0 ? -24 : 24) + 'px');
+        if (!reduce) {
+          var mob = window.innerWidth <= 980;
+          t.style.setProperty('--rev-y', (dir < 0 ? -1 : 1) * (mob ? 28 : 24) + 'px');
           t.style.setProperty('--rev-d', (fastNow ? 0 : staggerFor(t)) + 'ms');
-          if (t.classList.contains('s3d')) t.style.setProperty('--rev-rx', (dir < 0 ? -9 : 11) + 'deg');
+          if (!mob && t.classList.contains('s3d')) t.style.setProperty('--rev-rx', (dir < 0 ? -9 : 11) + 'deg');
         }
         t.classList.add('visible');
       } else if (!t.hasAttribute('data-reveal-once') && !fastNow) {   // en scroll rápido NO se oculta al salir (evita parpadeos y trabajo)
@@ -6059,6 +6080,16 @@ if (window.innerWidth > 900) {
 </script>
 
 
+<script>
+/* En pantallas tactiles no hay hover: la tarjeta que esta en el centro de la pantalla se ilumina (solo sombra y borde: barato) */
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  var els=document.querySelectorAll('.step-card,.result-card,.service-card-flip,.case-content,.ia-card,.guias-grid a,.tool-chip');
+  if(!els.length) return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('in-focus',e.isIntersecting)})},{rootMargin:'-38% 0px -38% 0px',threshold:0});
+  els.forEach(function(el){io.observe(el)});
+})();
+</script>
 <!-- WhatsApp directo con el fundador - IZQUIERDA -->
 <a id="wa-direct" href="https://wa.me/34684787701?text=Hola%20%C3%81ngel%2C%20vengo%20de%20one-agency.es%20y%20quiero%20hablar%20contigo%20sobre%20mi%20negocio.&amp;utm_source=web&amp;utm_medium=whatsapp&amp;utm_campaign=flotante" target="_blank" rel="noopener" data-wa="flotante" aria-label="Hablar con Ángel, fundador, por WhatsApp">
   <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="currentColor"><path d="M20.5 3.5A11.8 11.8 0 0 0 .2 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.8 11.8 0 0 0 5.6 1.4h.1A11.9 11.9 0 0 0 20.5 3.5zM12 21.7a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.4 4.7zm5.4-7.3c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.1-.8.9-.9 1.1-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.4-.7-.4h-.6a1.2 1.2 0 0 0-.9.4 3.700 3.700 0 0 0-1.100 2.700 6.400 6.400 0 0 0 1.300 3.400 14.600 14.600 0 0 0 5.600 5c2 .8 2.800.9 3.800.7a3.200 3.200 0 0 0 2.100-1.500 2.600 2.600 0 0 0 .2-1.500c-.1-.1-.3-.2-.6-.3z"/></svg>
