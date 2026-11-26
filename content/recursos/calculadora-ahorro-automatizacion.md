@@ -1,6 +1,6 @@
 ---
 title: Calculadora de ahorro por automatización
-seoTitle: Calculadora de ahorro por automatización de tareas | O.N.E Agency
+seoTitle: Calculadora de ahorro por automatización | O.N.E Agency
 description: Calcula cuántas horas y cuánto dinero al año podría ahorrar tu empresa automatizando tareas repetitivas, y en cuántos meses se amortizaría la inversión.
 lead: Introduce cuánto tiempo se va hoy en tareas repetitivas y obtén una estimación de las horas y el dinero que podrías recuperar al año. Es orientativa, pero te sirve para decidir con números.
 cluster: coste-roi

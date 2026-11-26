@@ -8,7 +8,7 @@ COPY security-headers.conf /etc/nginx/security-headers.conf
 COPY index.html /usr/share/nginx/html/index.html
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
-COPY llms.txt /usr/share/nginx/html/llms.txt
+COPY llms.txt llms-full.txt index.md /usr/share/nginx/html/
 COPY de504f6a6ae46f2e8ea864067cf2fb91.txt /usr/share/nginx/html/de504f6a6ae46f2e8ea864067cf2fb91.txt
 COPY logo.png /usr/share/nginx/html/logo.png
 COPY favicon.ico favicon-48.png favicon-96.png apple-touch-icon.png /usr/share/nginx/html/
@@ -21,6 +21,7 @@ COPY recursos/ /usr/share/nginx/html/recursos/
 COPY privacidad/ /usr/share/nginx/html/privacidad/
 COPY casos/ /usr/share/nginx/html/casos/
 COPY soluciones-para-instaladores/ /usr/share/nginx/html/soluciones-para-instaladores/
+COPY sobre-nosotros/ /usr/share/nginx/html/sobre-nosotros/
 COPY media/ /usr/share/nginx/html/media/
 COPY fonts/ /usr/share/nginx/html/fonts/
 

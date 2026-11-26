@@ -126,3 +126,10 @@ Con el protocolo estándar de notificaciones push del propio navegador (el mismo
 
 ### ¿Cuánto se tarda en tener un sistema así?
 Depende del alcance. Un agente de Telegram que registre un solo tipo de parte puede estar funcionando en pocas semanas; una app completa como esta, con roles, notificaciones y análisis de facturas, es un proyecto por fases. En el [diagnóstico gratuito](/#contacto) te decimos qué alcance tendría en tu caso.
+
+## Sigue leyendo
+
+- [Cómo automatizar presupuestos y partes de obra](/blog/automatizar-presupuestos-y-partes-de-obra/)
+- [Automatizar una empresa de construcción y obra](/blog/automatizar-una-empresa-de-construccion-y-obra/)
+- [Soluciones digitales para instaladores](/soluciones-para-instaladores/)
+- [Servicio de automatización con IA](/servicios/automatizacion-con-ia/)

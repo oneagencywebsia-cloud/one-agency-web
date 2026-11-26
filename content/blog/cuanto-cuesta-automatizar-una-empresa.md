@@ -1,6 +1,6 @@
 ---
 title: Cuánto cuesta automatizar una empresa con IA: guía de costes
-seoTitle: Cuánto cuesta automatizar una empresa con IA
+seoTitle: Cuánto cuesta automatizar una empresa con IA | O.N.E Agency
 description: De qué se compone el coste de automatizar una empresa con IA, qué lo sube o lo baja, cómo comparar presupuestos y cómo calcular en cuánto tiempo se amortiza.
 lead: No existe una tarifa única, pero sí una forma clara de entender el coste, compararlo con el ahorro y detectar presupuestos poco claros. Te la explicamos con transparencia.
 cluster: coste-roi

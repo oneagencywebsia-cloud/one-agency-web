@@ -74,3 +74,10 @@ Depende del tamaño, las funciones y las integraciones. Tras el diagnóstico te 
 ### ¿Podré actualizar los contenidos yo mismo?
 
 Se puede plantear de forma que puedas editar textos y contenidos básicos, o bien encargarnos los cambios. Lo definimos según tu preferencia.
+
+## Sigue leyendo
+
+- [Caso real: marca y web de FishZone](/casos/marca-y-web-de-pesca-fishzone/)
+- [Cómo elegir una agencia de automatización con IA](/blog/como-elegir-una-agencia-de-automatizacion-con-ia/)
+- [Web y digitalización para instaladores](/soluciones-para-instaladores/)
+- [Cuánto cuesta automatizar una empresa](/blog/cuanto-cuesta-automatizar-una-empresa/)

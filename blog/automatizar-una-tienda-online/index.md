@@ -1,0 +1,116 @@
+# Automatizar una tienda online con IA: atención y pedidos
+
+> Qué automatizar en un e-commerce: atención al cliente, seguimiento de pedidos, devoluciones, carritos abandonados, stock y facturación.
+
+Fuente: https://one-agency.es/blog/automatizar-una-tienda-online/
+
+---
+
+[Automatización por sectores](https://one-agency.es/blog/sectores/)
+
+# Cómo automatizar una tienda online con IA
+
+En una tienda online cada minuto por pedido se multiplica por cientos. Estas son las automatizaciones que más tiempo devuelven y las que más ayudan a vender.
+
+Por [Ángel Carrillo](https://one-agency.es/sobre-nosotros/)Actualizado el 21 de septiembre de 20264 min de lectura
+
+Una tienda online funciona casi sola mientras el volumen es bajo. Cuando crece, aparecen los cuellos de botella: consultas repetidas, pedidos que gestionar, incidencias de envío, devoluciones, facturas, stock desincronizado. Lo que antes eran cinco minutos al día se convierte en la mitad de la jornada.
+
+La automatización es especialmente rentable en e-commerce porque **el volumen es alto y los procesos son muy repetitivos**. Esta guía repasa dónde aplicarla. Para ver otros sectores, consulta la [guía de automatización por sectores](https://one-agency.es/blog/automatizacion-con-ia-por-sectores/).
+
+## 1. Atención al cliente automática
+
+Buena parte de los mensajes de un e-commerce son de cinco tipos: dónde está mi pedido, cómo hago una devolución, qué talla o medida elegir, cuánto tarda el envío y qué formas de pago hay. Un asistente conectado a tu tienda puede resolverlas:
+
+- **Estado del pedido:** consultando el sistema de envíos y dando el número de seguimiento.
+- **Devoluciones y cambios:** explicando el proceso y abriendo la solicitud.
+- **Preguntas de producto:** respondiendo con la información de la ficha y de tu guía de tallas.
+- **Derivación:** pasando a una persona los casos complicados o las quejas.
+
+Lo explicamos con detalle en la [guía de chatbots de WhatsApp](https://one-agency.es/blog/chatbot-whatsapp-empresas/).
+
+## 2. Seguimiento de pedidos y logística
+
+- Confirmación automática del pedido y aviso cuando sale del almacén.
+- Alertas de retrasos del transportista y aviso proactivo al cliente.
+- Detección de pedidos con incidencias (dirección incompleta, pago pendiente) para que alguien los revise antes de enviarlos.
+- Sincronización con el almacén o el proveedor de logística.
+
+## 3. Carritos abandonados
+
+Es una de las automatizaciones con retorno más medible. Cuando un cliente deja productos en el carrito, se le puede enviar un correo o mensaje recordatorio, con un tono útil y no insistente, y quizá con una ayuda para resolver dudas. Ten en cuenta:
+
+- Solo contactar a quien haya dado su consentimiento o cuyos datos puedas tratar legalmente.
+- Espaciar los mensajes y dejar de enviar cuando compra.
+- Medir cuántos carritos se recuperan de verdad antes de dar el flujo por bueno.
+
+## 4. Stock y catálogo
+
+- Avisos de stock bajo y de productos agotados.
+- Sincronización de inventario entre tu tienda, marketplaces y almacén.
+- Propuestas de reposición según ritmo de ventas, para que decidas tú.
+- Actualización masiva de precios o fichas desde una hoja.
+
+## 5. Facturación y administración
+
+Generar y enviar facturas automáticamente, registrar los pagos y conciliar con el banco ahorra horas a final de mes. Los controles están en [automatizar facturación y administración](https://one-agency.es/blog/automatizar-facturacion-y-administracion/).
+
+## 6. Reseñas, posventa y recompra
+
+- Solicitud de valoración unos días después de la entrega.
+- Mensajes de posventa con consejos de uso.
+- Recordatorios de recompra en productos con ciclo de consumo.
+- Segmentación de clientes por comportamiento para campañas relevantes.
+
+## 7. Contenido y fichas de producto
+
+La IA puede ayudar a preparar descripciones, traducciones y variantes de fichas, a partir de datos del fabricante. Conviene **revisarlas siempre**: los errores en características técnicas o compatibilidades generan devoluciones y pérdida de confianza.
+
+## 8. Informes
+
+Un informe semanal automático con ventas, productos estrella, tasa de devolución, coste de captación y stock crítico permite decidir con datos sin pasar horas en hojas de cálculo.
+
+## Qué cuidar
+
+- **Protección de datos:** los pedidos contienen datos personales. Comprueba con qué herramientas se procesan y si hay acuerdos de tratamiento.
+- **Comunicaciones comerciales:** para enviar promociones necesitas base legal y opción de baja.
+- **Coherencia de la información:** el asistente no debe prometer plazos o stock que no puedas cumplir.
+- **Errores en cadena:** una automatización defectuosa en e-commerce puede repetir un fallo en cientos de pedidos. Prueba con pocos antes de activar para todos.
+
+## Por dónde empezar
+
+1. Atención de las preguntas más frecuentes y seguimiento de pedidos.
+2. Carritos abandonados y posventa.
+3. Alertas de stock y de incidencias.
+4. Facturación y conciliación.
+5. Informes periódicos.
+
+Con la [calculadora de ahorro](https://one-agency.es/recursos/calculadora-ahorro-automatizacion/) puedes estimar el tiempo que recuperarías, y en [qué procesos automatizar primero](https://one-agency.es/blog/que-procesos-automatizar-primero/) verás cómo ordenarlos.
+
+## Preguntas frecuentes
+
+¿Funciona con Shopify, WooCommerce u otras plataformas?
+
+Las plataformas más habituales suelen ofrecer conexión con herramientas de automatización. La viabilidad concreta depende de tu configuración y de los datos que quieras conectar.
+
+¿Una automatización puede mandar mensajes a clientes sin permiso?
+
+No debería. Los envíos comerciales requieren consentimiento; los mensajes transaccionales (confirmación, envío) se rigen por otras reglas. Diseña cada flujo con esa distinción.
+
+¿Qué automatización da resultados más rápido?
+
+Habitualmente, la atención de preguntas frecuentes y el seguimiento de pedidos, porque reducen mucho tiempo de soporte desde el primer día.
+
+¿Cuánto cuesta?
+
+Depende de las integraciones y del volumen. En cuánto cuesta automatizar una empresa explicamos cómo se compone.
+
+**Ángel Carrillo** · Fundador de O.N.E Agency
+
+Desarrollador full-stack especializado en automatización con IA. Diseña e implementa flujos con n8n, OpenAI y WhatsApp para que las empresas dejen de perder horas en tareas repetitivas.
+
+[Sobre el autor](https://one-agency.es/sobre-nosotros/) · [Casos reales](https://one-agency.es/casos/) · [Contacto](https://one-agency.es/#contacto)
+
+## Sigue leyendo
+
+[Guía completaAutomatización con IA por sectores: qué automatizar en cada negocioGuía de automatización con IA por sectores: obra, comercio, clínicas, despachos, logística, agencias e inmobiliarias. Qué automatizar primero en cada uno.5 min de lectura](https://one-agency.es/blog/automatizacion-con-ia-por-sectores/)[Automatización por sectoresAutomatizar presupuestos y partes de obra paso a pasoCómo automatizar presupuestos y partes de obra en una constructora o empresa de reformas: flujo, datos necesarios, controles y errores a evitar.4 min de lectura](https://one-agency.es/blog/automatizar-presupuestos-y-partes-de-obra/)[Automatización por sectoresCómo automatizar un comercio: pedidos, stock y clientesQué automatizar en una tienda o comercio local: consultas por WhatsApp, pedidos, stock, reposición y fidelización de clientes. Ejemplos y primeros pasos.4 min de lectura](https://one-agency.es/blog/automatizar-un-comercio-pedidos-stock-y-clientes/)[Guía completaAutomatización de procesos con IA para pymes: guía completaQué es la automatización de procesos con IA, qué tareas de una pyme puedes automatizar, cómo implantarla paso a paso y qué errores evitar.9 min de lectura](https://one-agency.es/blog/automatizacion-de-procesos-con-ia-pymes/)[Guía completaCómo automatizar la facturación y la administración de tu empresaCómo automatizar facturas, cobros, conciliación bancaria e informes con IA: qué se puede hacer, qué controles poner y qué normativa tener en cuenta.5 min de lectura](https://one-agency.es/blog/automatizar-facturacion-y-administracion/)[Guía completaChatbot de WhatsApp para empresas: guía completaQué es un chatbot de WhatsApp con IA, qué puede y no puede hacer, cómo funciona por dentro, qué exige la ley y cómo implantarlo paso a paso en tu empresa.8 min de lectura](https://one-agency.es/blog/chatbot-whatsapp-empresas/)

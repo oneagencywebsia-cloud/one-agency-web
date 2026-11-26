@@ -1,7 +1,7 @@
 ---
 title: Automatización con IA en Córdoba
-seoTitle: Automatización con IA en Córdoba | O.N.E Agency
-description: Agencia de automatización con IA en Córdoba, con sede en Santaella. Automatizamos tareas, presupuestos y atención al cliente de pymes y oficios. Diagnóstico gratuito.
+seoTitle: Automatización con IA en Córdoba | O.N.E Agency (Santaella)
+description: Agencia de automatización con IA en Córdoba, con sede en Santaella. Automatizamos tareas, presupuestos y atención al cliente de pymes y oficios. Diagnóstico gratis.
 lead: Somos una agencia de Santaella y trabajamos con empresas de Córdoba y Andalucía que quieren quitarse de encima las tareas repetitivas con inteligencia artificial, sin complicarse con la tecnología.
 cluster: automatizacion-ia
 serviceType: Automatización de procesos con inteligencia artificial en Córdoba

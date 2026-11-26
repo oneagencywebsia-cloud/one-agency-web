@@ -70,3 +70,10 @@ Se tratan con las garantías del RGPD: permisos mínimos, proveedores con acuerd
 ### ¿Ofrecéis mantenimiento?
 
 Sí. Los sistemas necesitan cuidados cuando cambian las herramientas, y lo planteamos desde el principio.
+
+## Sigue leyendo
+
+- [Cuánto cuesta automatizar una empresa con IA](/blog/cuanto-cuesta-automatizar-una-empresa/)
+- [Qué procesos automatizar primero](/blog/que-procesos-automatizar-primero/)
+- [Cómo calcular el ROI de una automatización](/blog/roi-de-la-automatizacion-como-calcularlo/)
+- [Caso real: agente de IA para una empresa de electricidad](/casos/automatizacion-empresa-electricidad-ia/)

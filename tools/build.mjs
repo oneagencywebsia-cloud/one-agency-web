@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import os from 'node:os';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site.json'), 'utf8'));
@@ -174,7 +175,7 @@ for (const c of site.clusters) {
 const CSS = `
 :root{--blue:#3B82F6;--blue-d:#1D4ED8;--orange:#F97316;--violet:#8B5CF6;--ink:#0F172A;--ink2:#1E293B;--mut:#475569;--soft:#64748B;--line:#E2E8F0;--bg:#F8FAFC;--card:#fff;--r:16px;color-scheme:light only}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink2);background:var(--bg);line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink2);background:var(--bg);line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased}
 body:before{content:"";position:absolute;inset:0 0 auto 0;height:520px;z-index:-1;pointer-events:none;background:radial-gradient(60% 60% at 12% 0%,rgba(59,130,246,.16),transparent 70%),radial-gradient(50% 55% at 92% 4%,rgba(249,115,22,.13),transparent 70%),radial-gradient(45% 50% at 55% 0%,rgba(139,92,246,.10),transparent 72%)}
 a{color:var(--blue-d);text-decoration-thickness:1px;text-underline-offset:3px}a:hover{color:var(--orange)}
 img{max-width:100%;height:auto}
@@ -255,7 +256,7 @@ th{background:#F1F5F9;color:var(--ink);font-weight:800;font-size:.82rem;letter-s
 .ft{background:#0B1226;color:#CBD5E1;padding:46px 20px 26px;margin-top:20px;font-size:.9rem}
 .ft-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
 @media(max-width:820px){.ft-in{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:460px){.ft-in{grid-template-columns:minmax(0,1fr)}}.ft a{overflow-wrap:anywhere}@media(pointer:coarse){.ft a{padding:11px 0;margin:0}}
-.ft h4{color:#fff;margin:0 0 10px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}.ft a{display:block;color:#CBD5E1;text-decoration:none;margin:6px 0}.ft a:hover{color:#FDBA74}
+.ft h3{color:#fff;margin:0 0 10px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}.ft a{display:block;color:#CBD5E1;text-decoration:none;margin:6px 0}.ft a:hover{color:#FDBA74}
 .ft .brand{color:#fff}.ft p{margin:10px 0 0;color:#94A3B8;max-width:300px;line-height:1.55}
 .ft-b{max-width:1180px;margin:30px auto 0;padding-top:18px;border-top:1px solid #1E293B;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;color:#94A3B8;font-size:.82rem}.ft-b a{display:inline;margin:0}
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:none;transform:translateY(110%);transition:transform .3s ease}
@@ -347,11 +348,12 @@ const ctaUrl = (slug, sector, cluster, pos) => {
 
 function head({ title, desc, url, ogImage, jsonld = [], noindex = false, type = 'website' }) {
   const canon = SITE + url;
-  const img = SITE + (ogImage || '/og-image.jpg');
+  const img = SITE + (ogImage || '/og-image.jpg?v=4');
   return `<!DOCTYPE html>
 <html lang="es"><head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}var po=false;try{po=localStorage.getItem('priv_ok')==='1'}catch(e){}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:po?'granted':'denied'});gtag('js',new Date());gtag('config','G-H3Y3WFCTL6');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}var po=false;try{po=localStorage.getItem('priv_ok')==='1'}catch(e){}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:po?'granted':'denied'});gtag('js',new Date());gtag('config','G-H3Y3WFCTL6');(function(){var d=0;function g(){if(d)return;d=1;var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6';document.head.appendChild(s)}
+['pointerdown','keydown','scroll','touchstart'].forEach(function(e){addEventListener(e,g,{once:true,passive:true})});
+addEventListener('load',function(){setTimeout(function(){(window.requestIdleCallback||setTimeout)(g,{timeout:2000})},7000)})})();</script>
 <meta charset="UTF-8"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png"><link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>${esc(title)}</title>
@@ -364,35 +366,34 @@ function head({ title, desc, url, ogImage, jsonld = [], noindex = false, type = 
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canon}">
 <meta property="og:image" content="${img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${img}">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<style>@font-face{font-family:'Archivo';font-style:normal;font-weight:400 800;font-stretch:100% 125%;font-display:swap;src:url(/fonts/archivo-latin-v2.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}address{font-style:normal;margin:0}</style><link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin-v2.woff2">
 <style>${CSS}</style>
-${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
+${jsonld.concat(JSON.stringify(jsonld).includes('"Organization"') ? [] : [orgLd()]).map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}${/datePublished|dateModified/.test(JSON.stringify(jsonld)) ? '' : `<meta property="article:modified_time" content="${TODAY}T09:00:00+01:00">`}<link rel="alternate" type="text/markdown" href="${url}index.md">
 </head>`;
 }
 
 const header = () => `<a class="skip" href="#main">Saltar al contenido</a>
 <header class="hd"><div class="hd-in">
-<a class="brand" href="/" aria-label="O.N.E Agency, inicio"><img src="/logo.png" width="38" height="38" alt="" decoding="async"><span class="w">O.N.E <b>Agency</b></span></a>
+<a class="brand" href="/" aria-label="O.N.E Agency, inicio"><img src="/logo.png" width="38" height="38" alt="Logo de O.N.E Agency" decoding="async"><span class="w">O.N.E <b>Agency</b></span></a>
 <nav class="nav" aria-label="Principal">
 <a href="/servicios/automatizacion-con-ia/">Servicios</a><a href="/casos/">Casos de éxito</a><a href="/blog/">Blog</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora</a>
 <a class="btn btn-sm" data-cta="header" href="${ctaUrl('header', '', '', 'header')}">Diagnóstico gratuito</a>
 </nav></div></header>`;
 
 const footer = () => `<footer class="ft"><div class="ft-in">
-<div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
-<div><h4 role="heading" aria-level="2">Guías</h4>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
-<div><h4 role="heading" aria-level="2">Servicios</h4><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/soluciones-para-instaladores/">Para instaladores</a><a href="/servicios/automatizacion-ia-cordoba/">Automatización IA en Córdoba</a><a href="/servicios/chatbots-whatsapp-cordoba/">Chatbots WhatsApp en Córdoba</a><a href="/servicios/diseno-web-cordoba/">Diseño web en Córdoba</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a></div>
-<div><h4 role="heading" aria-level="2">Empresa</h4><a href="/">Inicio</a><a href="/#nosotros">Nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></div>
+<div><a class="brand" href="/"><img src="/logo.png" width="38" height="38" alt="Logo de O.N.E Agency" loading="lazy"><span>O.N.E <b>Agency</b></span></a><p>Automatización con IA para empresas de toda España. Menos tareas repetitivas, más tiempo para lo que importa.</p></div>
+<div><h3>Guías</h3>${site.clusters.map((c) => `<a href="/blog/${c.id}/">${esc(c.name)}</a>`).join('')}</div>
+<div><h3>Servicios</h3><a href="/servicios/automatizacion-con-ia/">Automatización con IA</a><a href="/servicios/chatbots-whatsapp/">Chatbots y WhatsApp</a><a href="/servicios/webs-para-empresas/">Webs para empresas</a><a href="/soluciones-para-instaladores/">Para instaladores</a><a href="/servicios/automatizacion-ia-cordoba/">Automatización IA en Córdoba</a><a href="/servicios/chatbots-whatsapp-cordoba/">Chatbots WhatsApp en Córdoba</a><a href="/servicios/diseno-web-cordoba/">Diseño web en Córdoba</a><a href="/recursos/calculadora-ahorro-automatizacion/">Calculadora de ahorro</a>
+        <a href="https://coverlyst.com/" target="_blank" rel="noopener">Coverlyst: guías de precios de IA</a></div>
+<div><h3>Empresa</h3><a href="/">Inicio</a><a href="/sobre-nosotros/">Sobre nosotros</a><a href="/casos/">Casos de éxito</a><a href="${ctaUrl('footer', '', '', 'footer')}">Diagnóstico gratuito</a><address><a href="mailto:oneagencywebsia@gmail.com">oneagencywebsia@gmail.com</a></address></div>
 </div><div class="ft-b"><span>© ${new Date().getFullYear()} O.N.E Agency. Todos los derechos reservados.</span><span><a href="/privacidad/">Política de privacidad y cookies</a> · <a href="/blog/feed.xml">RSS</a></span></div></footer>
-<div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies analíticas</b><br>Usamos Google Analytics para saber qué contenido te resulta útil. Solo se activa si lo aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
+<div id="ck" role="dialog" aria-label="Aviso de cookies"><b>Cookies</b><br>Usamos cookies para mejorar la web, solo si las aceptas. <a href="/privacidad/">Política de privacidad y cookies</a>
 <div class="r"><button class="ok" id="ck-ok" type="button">Aceptar</button><button class="no" id="ck-no" type="button">Rechazar</button></div></div>
 <script>${SCRIPT}</script></body></html>`;
 
 const orgRef = { '@id': SITE + '/#organization' };
-const personLd = () => ({ '@type': 'Person', name: site.author.name, url: site.author.url, jobTitle: site.author.role, sameAs: site.author.sameAs, worksFor: orgRef });
+const orgLd = () => ({ '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#organization', name: site.name, url: SITE + '/', logo: SITE + '/logo.png', email: 'oneagencywebsia@gmail.com', telephone: '+34684787701', address: { '@type': 'PostalAddress', addressLocality: 'Santaella', addressRegion: 'Córdoba', postalCode: '14546', addressCountry: 'ES' }, founder: { '@type': 'Person', name: site.author.name, url: site.author.url }, sameAs: site.author.sameAs.filter((u) => u.includes('linkedin') || u.includes('instagram')) });
+const personLd = () => ({ '@type': 'Person', '@id': SITE + '/sobre-nosotros/#angel', name: site.author.name, url: site.author.url, jobTitle: site.author.role, sameAs: site.author.sameAs, worksFor: orgRef });
 const breadcrumbLd = (items) => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it[0], item: SITE + it[1] })),
@@ -496,7 +497,7 @@ ${crumbsHtml(crumbItems)}
 <div class="meta"><span class="av" aria-hidden="true">AC</span><span>Por <a href="${site.author.url}" rel="author">${esc(site.author.name)}</a></span><span>Actualizado el ${fmtDate(a.modified)}</span><span>${mins} min de lectura</span></div>
 ${body}
 ${ctaBox(a.fm.cluster, a.slug, a.fm.sector, 'final')}
-<div class="author"><span class="av" aria-hidden="true">AC</span><div><b>${esc(site.author.name)}</b> · ${esc(site.author.role)}<p>${esc(site.author.bio)}</p></div></div>
+<div class="author"><span class="av" aria-hidden="true">AC</span><div><b>${esc(site.author.name)}</b> · ${esc(site.author.role)}<p>${esc(site.author.bio)}</p><p><a href="/sobre-nosotros/">Sobre el autor</a> · <a href="/casos/">Casos reales</a> · <a href="/#contacto">Contacto</a></p></div></div>
 ${moreHtml}
 </article><aside class="side">${toc}${sideCta}</aside></div>
 <div class="sticky" id="sticky"><a class="btn" data-cta="sticky" href="${ctaUrl(a.slug, a.fm.sector, a.fm.cluster, 'sticky')}">⚡ Reservar diagnóstico gratuito</a></div>
@@ -562,9 +563,9 @@ function clusterPage(c) {
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: c.name, description: c.desc, url: SITE + url, inLanguage: 'es-ES', isPartOf: { '@type': 'Blog', '@id': SITE + '/blog/' } },
     breadcrumbLd([['Inicio', '/'], ['Blog', '/blog/'], [c.name, url]]),
   ];
-  return `${head({ title: `${c.name}: guías y artículos | O.N.E Agency`, desc: c.desc, url, jsonld: ld })}<body>${header()}
+  return `${head({ title: c.seoTitle || `${c.name}: guías y artículos | O.N.E Agency`, desc: c.seoDesc || c.desc, url, jsonld: ld })}<body>${header()}
 ${crumbsHtml([['Inicio', '/'], ['Blog', '/blog/'], [c.name, url]])}
-<main class="hub" id="main"><span class="kick">${esc(c.name)}</span><h1>${esc(c.name)}</h1><p class="lead" style="max-width:760px">${esc(c.desc)}</p>
+<main class="hub" id="main"><span class="kick">${esc(c.name)}</span><h1>${esc(c.name)}</h1><p class="lead" style="max-width:760px">${esc(c.desc)}</p>${c.intro ? `<p style="max-width:760px">${esc(c.intro)}</p>` : ''}
 <div class="grid">${list.map(cardHtml).join('')}</div>
 ${relatedCases.length ? `<h2>Casos de éxito de este tema</h2><p class="sub">Empresas reales a las que ya se lo hemos construido.</p><div class="grid">${relatedCases.map(caseCardHtml).join('')}</div>` : ''}
 ${ctaBox(c.id, 'cluster-' + c.id, '', 'cluster')}
@@ -667,7 +668,14 @@ function privacyPage(p) {
 }
 
 // ───────────────────────── generación ─────────────────────────
+// Páginas escritas a mano que viven dentro de carpetas generadas: el rmrf de abajo las borraría.
+// Se copian a una carpeta temporal y se restauran tras generar. Añade aquí cualquier página nueva hecha a mano.
+const KEEP = ['recursos/calculadora-coste-herramientas-ia'];
+const keepDir = fs.mkdtempSync(path.join(os.tmpdir(), 'one-keep-'));
+for (const k of KEEP) { const src = path.join(ROOT, k); if (fs.existsSync(src)) fs.cpSync(src, path.join(keepDir, k), { recursive: true }); }
 for (const d of OUT_DIRS) rmrf(path.join(ROOT, d));
+for (const k of KEEP) { const src = path.join(keepDir, k); if (fs.existsSync(src)) fs.cpSync(src, path.join(ROOT, k), { recursive: true }); }
+rmrf(keepDir);
 const sitemap = [{ url: '/', lastmod: TODAY, cf: 'weekly', pr: '1.0' }];
 
 for (const a of articles) {
@@ -690,6 +698,8 @@ for (const s of services) {
   sitemap.push({ url: s.url, lastmod: s.modified, cf: 'monthly', pr: '0.9' });
 }
 sitemap.push({ url: '/soluciones-para-instaladores/', lastmod: TODAY, cf: 'monthly', pr: '0.9' });
+sitemap.push({ url: '/sobre-nosotros/', lastmod: TODAY, cf: 'monthly', pr: '0.8' });
+sitemap.push({ url: '/recursos/calculadora-coste-herramientas-ia/', lastmod: TODAY, cf: 'monthly', pr: '0.8' });
 for (const r of resources) {
   writeOut(`recursos/${r.slug}/index.html`, simplePage(r));
   sitemap.push({ url: r.url, lastmod: r.modified, cf: 'monthly', pr: '0.8' });
@@ -774,5 +784,14 @@ for (const py of ['python3', 'python', 'py']) {
 if (!og) {
   console.error('\nERROR: no se pudieron generar las imágenes OG (tools/og.py). No despliegues: las páginas apuntan a og.jpg que no existen.');
   process.exit(1);
+}
+// Versiones Markdown para agentes de IA (index.md por página y llms-full.txt). Necesita: pip install beautifulsoup4 markdownify
+{
+  let md = null;
+  for (const py of ['python3', 'python', 'py']) {
+    const r = spawnSync(py, [path.join(ROOT, 'tools/build_md.py')], { stdio: 'inherit' });
+    if (!r.error && r.status === 0) { md = r; break; }
+  }
+  if (!md) console.warn('\nAVISO: no se generaron las versiones Markdown (tools/build_md.py). Instala: pip install beautifulsoup4 markdownify');
 }
 console.log('\nBuild OK');

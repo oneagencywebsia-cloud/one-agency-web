@@ -1,7 +1,7 @@
 ---
 title: Chatbots de WhatsApp con IA en Córdoba
 seoTitle: Chatbots de WhatsApp con IA en Córdoba | O.N.E Agency
-description: Creamos chatbots de WhatsApp con IA para empresas de Córdoba y Andalucía: atienden clientes, recogen datos y agendan citas. Diagnóstico gratuito, sede en Santaella.
+description: Chatbots de WhatsApp con IA para empresas de Córdoba y Andalucía: atienden clientes, recogen datos y agendan citas. Diagnóstico gratuito, sede en Santaella.
 lead: Un asistente que responde por WhatsApp a tus clientes de Córdoba a cualquier hora, recoge lo que necesitas saber y avisa a tu equipo cuando hace falta una persona.
 cluster: chatbots-whatsapp
 serviceType: Chatbots de WhatsApp con inteligencia artificial en Córdoba
