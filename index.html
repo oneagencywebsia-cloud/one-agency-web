@@ -2176,7 +2176,7 @@ ul {
 .mnav-wa{color:#7DF0A8;border:1.5px solid rgba(37,211,102,.55);background:rgba(37,211,102,.08)}
 .mnav-foot{margin:18px 0 0;text-align:center;color:#8FA2CC;font-size:.82rem}
 .mnav.instant,.mnav.instant *{transition:none!important}
-@media (min-width:901px){.mnav{display:none}}
+@media (min-width:1181px){.mnav{display:none}}
 @media (prefers-reduced-motion:reduce){.mnav,.mnav *{transition:none!important}}
 /* ── TRANSICION ENTRE SECCIONES: tarjeta de presentacion de la idea ── */
 #nt{position:fixed;inset:0;z-index:100020;pointer-events:none;display:flex;align-items:center;justify-content:center;
@@ -4171,6 +4171,13 @@ html body #wa-direct.wa-hide{opacity:1!important;transform:none;pointer-events:a
 @keyframes wa-ring{0%{transform:scale(1);opacity:.75}55%,100%{transform:scale(1.4);opacity:0}}
 @media(max-width:600px){html body #wa-direct{width:52px;height:52px;min-height:52px}#wa-direct svg{width:26px!important;height:26px!important}}
 @media(prefers-reduced-motion:reduce){#wa-direct::after{animation:none;opacity:0}}
+
+/* ── BOTON DEL MENU: estilos restaurados (se borraron por error al rehacer el menu) ── */
+.mobile-menu-toggle{display:none;flex-direction:column;gap:5px;background:rgba(255,255,255,.85);border:1px solid rgba(59,130,246,.22);border-radius:12px;padding:8px;cursor:pointer;position:relative;z-index:1001;-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-width:44px;min-height:44px;align-items:center;justify-content:center;box-shadow:0 6px 16px -8px rgba(59,130,246,.35)}
+.mobile-menu-toggle span{display:block;width:22px;height:2px;background:var(--text2,#334155);border-radius:2px}
+.mobile-menu-toggle:active{transform:scale(.95)}
+.mobile-menu-toggle:focus-visible{outline:2px solid #3B82F6;outline-offset:3px}
+@media(max-width:1180px){.mobile-menu-toggle{display:flex}}
 </style>
 
   <meta name="mobile-web-app-capable" content="yes" />
