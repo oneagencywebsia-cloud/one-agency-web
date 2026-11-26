@@ -1,6 +1,6 @@
 ---
 title: Cómo automatizar una agencia de marketing y publicidad
-seoTitle: Automatizar una agencia de marketing con IA
+seoTitle: Automatizar una agencia de marketing con IA | O.N.E Agency
 description: Qué automatizar en una agencia de marketing: informes para clientes, onboarding, aprobaciones, gestión de leads y facturación, y los límites de la IA creativa.
 lead: Las agencias venden creatividad y estrategia, pero gastan horas en informes, seguimiento y coordinación. Ahí es donde la automatización se paga sola.
 cluster: sectores

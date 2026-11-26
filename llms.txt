@@ -13,7 +13,7 @@
 
 ## Casos reales
 - [Le construimos una app instalable con IA a una empresa de electricidad](https://one-agency.es/casos/automatizacion-empresa-electricidad-ia/): App instalable, agente de IA en Telegram, notificaciones push reales e IA que lee facturas y calcula ganancias, para una empresa de electricidad real.
-- [Creamos la marca y la web de FishZone, la guía de pesca de Córdoba y Andalucía](https://one-agency.es/casos/marca-y-web-de-pesca-fishzone/): Cómo creamos la marca, la web y 22 guías de FishZone, un proyecto de pesca de Córdoba hecho por 3 aficionados: SEO 100, rápida en móvil y con herramientas propias.
+- [Creamos la marca y la web de FishZone, la guía de pesca de Córdoba y Andalucía](https://one-agency.es/casos/marca-y-web-de-pesca-fishzone/): Cómo creamos la marca, la web y 22 guías de FishZone, un proyecto de pesca de Córdoba hecho por tres aficionados: SEO técnico y buscador a medida.
 
 ## Guías (blog)
 - [Blog](https://one-agency.es/blog/): guías sobre costes, plazos, ROI, chatbots, n8n y automatización por sectores.

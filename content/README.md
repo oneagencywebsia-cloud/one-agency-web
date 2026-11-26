@@ -14,3 +14,11 @@ Fuente en `content/`; el HTML generado (`blog/`, `servicios/`, `recursos/`, `pri
 - Sin cifras inventadas: los ejemplos con números se marcan como ilustrativos.
 - Datos legales cambiantes (Verifactu, ayudas, Reglamento de IA): redactar con "verifica el calendario vigente".
 - Los CTAs enlazan a `/?sector=…&fuente=<slug>#contacto`; la home preselecciona el sector y envía `attribution` en el payload del formulario.
+
+## Notas de mantenimiento (generador)
+
+- `node tools/build.mjs` **borra y regenera** `blog/`, `servicios/`, `recursos/`, `privacidad/` y `casos/`. Las páginas escritas a mano dentro de esas carpetas deben estar en la lista `KEEP` de `tools/build.mjs` (hoy: `recursos/calculadora-coste-herramientas-ia`). Si no, se pierden.
+- Los cambios de plantilla (tipografía, pie, cookies, favicons, schema, carga de analítica...) se hacen en `tools/build.mjs`, no en el HTML generado: el siguiente build los pisaría.
+- Títulos y descripciones SEO: `seoTitle` y `description` en el frontmatter de cada `.md`; en los hubs del blog, `seoTitle`, `seoDesc` e `intro` en `content/site.json`.
+- Tras generar, `tools/build_md.py` crea `index.md` en cada página (versión Markdown para agentes de IA) y `llms-full.txt`. Requiere `pip install beautifulsoup4 markdownify`.
+- Páginas estáticas fuera del generador: `index.html`, `soluciones-para-instaladores/` y `sobre-nosotros/`.

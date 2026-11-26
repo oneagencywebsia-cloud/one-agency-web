@@ -1,6 +1,6 @@
 ---
 title: Política de privacidad y cookies
-seoTitle: Política de privacidad y cookies | O.N.E Agency
+seoTitle: Política de privacidad y cookies de O.N.E Agency
 description: Política de privacidad y cookies de O.N.E Agency: responsable, finalidad, base legal, destinatarios, derechos, conservación y uso de cookies analíticas.
 lead: Última actualización: septiembre de 2026.
 slug: privacidad

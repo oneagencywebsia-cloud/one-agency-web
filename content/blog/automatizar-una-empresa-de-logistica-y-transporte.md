@@ -1,6 +1,6 @@
 ---
 title: Cómo automatizar una empresa de logística y transporte
-seoTitle: Automatizar una empresa de logística y transporte
+seoTitle: Automatizar una empresa de logística y transporte con IA
 description: Qué automatizar en logística y transporte: avisos de estado de envío, lectura de albaranes, gestión de incidencias, planificación y facturación.
 lead: En logística el cliente llama para saber dónde está su mercancía y el equipo pasa el día cruzando documentos. Son dos problemas que la automatización resuelve bien.
 cluster: sectores

@@ -1,6 +1,6 @@
 ---
 title: Qué debe incluir un presupuesto de automatización
-seoTitle: Qué debe incluir un presupuesto de automatización
+seoTitle: Qué debe incluir un presupuesto de automatización con IA
 description: Lista de control para revisar un presupuesto de automatización con IA: alcance, costes recurrentes, plazos, propiedad, soporte y protección de datos.
 lead: Dos presupuestos con el mismo precio pueden ser proyectos muy distintos. Esta lista te permite comparar propuestas por lo que incluyen y no solo por lo que cuestan.
 cluster: coste-roi

@@ -1,7 +1,7 @@
 ---
 title: Creamos la marca y la web de FishZone, la guía de pesca de Córdoba y Andalucía
 seoTitle: Diseño web y marca para pesca: caso FishZone | O.N.E Agency
-description: Cómo creamos la marca, la web y 22 guías de FishZone, un proyecto de pesca de Córdoba hecho por 3 aficionados: SEO 100, rápida en móvil y con herramientas propias.
+description: Cómo creamos la marca, la web y 22 guías de FishZone, un proyecto de pesca de Córdoba hecho por tres aficionados: SEO técnico y buscador a medida.
 lead: FishZone nació de tres aficionados a la pesca de Córdoba que querían una marca y una web profesional para pescadores. Este es el proyecto completo que les construimos: identidad, web, herramientas y SEO.
 cluster: sectores
 sector: Otro
@@ -130,3 +130,9 @@ Sí, sea de pesca o de cualquier otro sector. Empezamos con el [diagnóstico gra
 
 ### ¿Cuánto cuesta una web así?
 Depende del alcance: no es lo mismo una web de presentación que una guía con 22 páginas, herramientas interactivas y SEO técnico. En el diagnóstico gratuito te explicamos qué necesitas y el presupuesto se acuerda después, según el proyecto.
+
+## Sigue leyendo
+
+- [Diseño de webs profesionales para empresas](/servicios/webs-para-empresas/)
+- [Cómo elegir una agencia de automatización con IA](/blog/como-elegir-una-agencia-de-automatizacion-con-ia/)
+- [Otro caso: automatización para una empresa de electricidad](/casos/automatizacion-empresa-electricidad-ia/)

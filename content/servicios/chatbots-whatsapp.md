@@ -66,3 +66,10 @@ Sí, si tu sistema de agenda permite integración. Si no, buscamos una alternati
 ### ¿Cuánto tarda en estar listo?
 
 Un primer caso de uso acotado suele plantearse en semanas. Depende de tu información y de las integraciones. Lo explicamos en [cuánto tarda en implantarse una automatización](/blog/cuanto-tarda-en-implantarse-una-automatizacion/).
+
+## Sigue leyendo
+
+- [Cuánto cuesta un chatbot de WhatsApp para empresas](/blog/cuanto-cuesta-un-chatbot-de-whatsapp-para-empresas/)
+- [Chatbot de WhatsApp para empresas: guía completa](/blog/chatbot-whatsapp-empresas/)
+- [Cuánto tarda en implantarse una automatización](/blog/cuanto-tarda-en-implantarse-una-automatizacion/)
+- [Caso real: agente de IA en Telegram para una empresa de electricidad](/casos/automatizacion-empresa-electricidad-ia/)
