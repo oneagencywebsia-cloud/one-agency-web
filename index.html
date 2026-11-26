@@ -651,88 +651,13 @@ ul {
   font-size: 0.875rem;
 }
 
-.mobile-menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: rgba(255,255,255,.75);
-  border: 1px solid rgba(59,130,246,.18);
-  border-radius: 12px;
-  padding: 8px;
-  cursor: pointer;
-  position: relative;
-  z-index: 1001;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  min-width: 44px;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 16px -8px rgba(59,130,246,.35);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
 
-.mobile-menu-toggle span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--text2);
-  border-radius: 2px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
 
-.mobile-menu {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.98);
-  z-index: 10002;
-  padding: 100px 32px 40px;
-  flex-direction: column;
-  gap: 8px;
-  backdrop-filter: blur(20px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-20px);
-  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
-}
 
-.mobile-menu.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
 
-.mobile-menu .mobile-link {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
 
-.mobile-menu.open .mobile-link {
-  opacity: 1;
-  transform: translateX(0);
-}
-/* El retraso escalonado de cada .mobile-link se fija por JS (ver "MOBILE MENU"),
-   no por nth-child: contar posiciones fijas se desincroniza cada vez que se
-   añade o quita un enlace del menú (pasó con "Casos de éxito"). */
 
-.mobile-link {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text2);
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.12);
-  font-family: 'Archivo', sans-serif;
-  transition: color 0.2s;
-}
 
-.mobile-link:hover {
-  color: var(--blue);
-}
 
 /* --- HERO --------------------------------------------- */
 .hero {
@@ -2223,8 +2148,41 @@ ul {
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 0 rgba(34,197,94,.6);margin-right:8px;animation:live-dot 2s infinite}
 @keyframes live-dot{70%{box-shadow:0 0 0 7px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 #nt .nt-svg{width:1em;height:1em;color:#fff}
+/* ── MENU MOVIL ── */
+.mnav{position:fixed;inset:0;z-index:100010;visibility:hidden;pointer-events:none;transition:visibility 0s linear .5s}
+.mnav.open{visibility:visible;pointer-events:auto;transition-delay:0s}
+.mnav-bg{position:absolute;inset:0;background:radial-gradient(60% 40% at 15% 6%,rgba(59,130,246,.5),transparent 70%),radial-gradient(55% 40% at 95% 100%,rgba(249,115,22,.42),transparent 70%),#0B1224;
+  clip-path:circle(0 at calc(100% - 38px) 38px);transition:clip-path .5s cubic-bezier(.7,0,.2,1)}
+.mnav-bg::after{content:"";position:absolute;inset:0;opacity:.06;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px}
+.mnav.open .mnav-bg{clip-path:circle(150% at calc(100% - 38px) 38px)}
+.mnav-in{position:relative;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) 24px calc(env(safe-area-inset-bottom,0px) + 22px)}
+.mnav-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mnav-brand{display:flex;align-items:center;gap:10px;color:#EAF0FF;text-decoration:none;font-weight:800;font-stretch:118%;font-size:1rem}
+.mnav-brand img{width:38px;height:38px;border-radius:50%}
+.mnav-x{width:46px;height:46px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mnav-x:focus-visible,.mnav-links a:focus-visible,.mnav-btn:focus-visible,.mnav-wa:focus-visible{outline:2px solid #6AA3FF;outline-offset:3px}
+.mnav-links{list-style:none;margin:0;padding:0}
+.mnav-links a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12);color:#EAF0FF;text-decoration:none;
+  font-weight:800;font-stretch:112%;letter-spacing:-.02em;font-size:clamp(1.5rem,7vw,2.1rem);line-height:1.1;-webkit-tap-highlight-color:transparent}
+.mnav-links a:active{color:#6AA3FF}
+.mnav-ar{color:#FF8A3D;flex-shrink:0;transition:transform .25s ease}
+.mnav-links a:active .mnav-ar{transform:translateX(6px)}
+.mnav-links li,.mnav-cta,.mnav-foot{opacity:0;transform:translateY(26px);transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+.mnav.open .mnav-links li,.mnav.open .mnav-cta,.mnav.open .mnav-foot{opacity:1;transform:none;transition-delay:calc(.14s + var(--i,0)*.04s)}
+.mnav-links li{--i:0}
+.mnav-links li:nth-child(n){transition-delay:0s}
+.mnav.open .mnav-links li:nth-child(n){transition-delay:calc(.14s + var(--n,0)*.04s)}
+.mnav-cta{display:flex;flex-direction:column;gap:12px;margin-top:22px}
+.mnav-btn,.mnav-wa{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:800;font-stretch:108%;font-size:1rem;padding:16px 20px;border-radius:14px;min-height:52px}
+.mnav-btn{color:#fff;background:linear-gradient(135deg,#2563EB,#7C4DFF 55%,#F97316)}
+.mnav-wa{color:#7DF0A8;border:1.5px solid rgba(37,211,102,.55);background:rgba(37,211,102,.08)}
+.mnav-foot{margin:18px 0 0;text-align:center;color:#8FA2CC;font-size:.82rem}
+.mnav.instant,.mnav.instant *{transition:none!important}
+@media (min-width:901px){.mnav{display:none}}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav *{transition:none!important}}
 /* ── TRANSICION ENTRE SECCIONES: tarjeta de presentacion de la idea ── */
-#nt{position:fixed;inset:0;z-index:10050;pointer-events:none;display:flex;align-items:center;justify-content:center;
+#nt{position:fixed;inset:0;z-index:100020;pointer-events:none;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(60% 55% at 22% 18%,rgba(59,130,246,.55),transparent 70%),radial-gradient(55% 55% at 80% 85%,rgba(249,115,22,.5),transparent 70%),#0B1224;
   transform:translateY(102%);border-radius:50% 50% 0 0/9% 9% 0 0;will-change:transform}
 #nt::before{content:"";position:absolute;inset:0;opacity:.07;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:56px 56px}
@@ -2426,7 +2384,6 @@ ul {
 @media(max-width:900px) {
   /* --- NAV --- */
   .nav-links, .btn-nav { display: none; }
-  .mobile-menu-toggle { display: flex; }
 
   /* --- DISABLE 3D FLIP ON MOBILE — use fade instead --- */
   .service-card-flip:hover .service-card-inner { transform: none; }
@@ -2698,11 +2655,7 @@ ul {
   /* --- PRIVACY MODAL --- */
   #priv-content { padding: 1.5rem 1.25rem; }
 
-  /* --- MOBILE MENU above everything including privacy modal --- */
-  .mobile-menu {
-    z-index: 100010 !important;
-  }
-
+  
   /* --- iOS ZOOM PREVENTION (inputs must be >=16px) --- */
   .form-group input,
   .form-group select,
@@ -2725,11 +2678,6 @@ ul {
     width: 36px;
     height: 36px;
     font-size: 0.85rem;
-  }
-  .mobile-link {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
   }
   .privacy-check-label {
     min-height: 44px;
@@ -2971,10 +2919,6 @@ ul {
   }
   #diag-float {
     bottom: calc(1.5rem + env(safe-area-inset-bottom));
-  }
-  .mobile-menu {
-    padding-top: calc(100px + env(safe-area-inset-top));
-    padding-bottom: env(safe-area-inset-bottom);
   }
   .footer-bottom {
     padding-bottom: calc(24px + env(safe-area-inset-bottom));
@@ -3562,11 +3506,6 @@ ul {
   border-bottom: 1px solid rgba(255,255,255,.6);
   box-shadow: 0 8px 30px -14px rgba(15,23,42,.20), inset 0 1px 0 rgba(255,255,255,.9);
 }
-.mobile-menu{
-  background: rgba(255,255,255,0.82) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  backdrop-filter: blur(30px) saturate(180%);
-}
 
 /* --- botón primario: barrido de luz (shine) --- */
 .btn-primary{ position:relative; overflow:hidden; }
@@ -3926,7 +3865,7 @@ input:focus, select:focus, textarea:focus{
   /* CERO backdrop-filter (es lo que atasca el scroll en movil) */
   .glass-card, .ia-card, .tools-panel, .float-card, .tool-chip,
   .service-card-front, .service-card-back, .navbar, .navbar.scrolled,
-  .mobile-menu, .contact-form, .ia-bottom-banner, .faq-item, .result-card,
+  .contact-form, .ia-bottom-banner, .faq-item, .result-card,
   .step-card, .tools-extra, #priv-banner-inner, #priv-content{
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
@@ -3944,7 +3883,6 @@ input:focus, select:focus, textarea:focus{
     box-shadow: 0 8px 22px -14px rgba(15,23,42,.18) !important;
   }
   .navbar.scrolled{ background: #ffffff !important; box-shadow: 0 6px 18px -12px rgba(15,23,42,.18) !important; }
-  .mobile-menu{ background: #ffffff !important; }
   .tool-chip{ background: #ffffff !important; }
 
   /* sin will-change en ningun sitio (memoria GPU) */
@@ -4145,6 +4083,56 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
 }
 @media (max-width: 980px){ .guias-grid{ grid-template-columns:1fr 1fr; } .guias-section{ padding:64px 0; } }
 @media (max-width: 620px){ .guias-grid{ grid-template-columns:1fr; gap:14px; } }
+
+/* ── HERO: orbita con sentido + cifras limpias ── */
+.orbit-system{--r:150px}
+.orbit-system .orbit-ring-1,.orbit-system .orbit-ring-3{display:none!important}
+.orbit-system .orbit-ring-2{width:calc(var(--r)*2)!important;height:calc(var(--r)*2)!important}
+.oring{position:absolute;inset:0;animation:o-spin 34s linear infinite;will-change:transform}
+.ochip{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateY(calc(var(--r)*-1)) rotate(calc(var(--a)*-1))}
+.ob{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+.oc{display:flex;flex-direction:column;align-items:center;gap:6px;animation:o-spin 34s linear infinite reverse;will-change:transform}
+.oi{width:46px;height:46px;border-radius:15px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid rgba(59,130,246,.18);box-shadow:0 12px 26px -10px rgba(37,99,235,.45)}
+.oi.b{color:#2563EB}.oi.o{color:#EA580C;border-color:rgba(249,115,22,.22);box-shadow:0 12px 26px -10px rgba(249,115,22,.45)}
+.ol{font-size:.74rem;font-weight:700;color:#0F172A;background:rgba(255,255,255,.94);padding:2px 9px;border-radius:99px;white-space:nowrap;box-shadow:0 4px 12px -6px rgba(15,23,42,.25)}
+@keyframes o-spin{to{transform:rotate(360deg)}}
+body.hero-paused .oring,body.hero-paused .oc{animation-play-state:paused!important}
+@media(max-width:900px){.orbit-system{width:300px!important;height:300px!important;--r:108px}}
+@media(max-width:600px){.orbit-system{width:290px!important;height:290px!important;--r:104px}.oi{width:40px;height:40px;border-radius:13px}.oi svg{width:20px;height:20px}.ol{font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){.oring,.oc{animation:none!important}}
+.hero-stat{display:block!important}
+.hero-stat .stat-num,.hero-stat .stat-unit{display:inline;text-shadow:none!important}
+.hero-stat .stat-unit{margin-left:1px}
+.hero-stat .stat-label{display:block;margin-top:4px}
+.hero-note{margin:12px 0 0;font-size:.72rem;color:#7A869F;line-height:1.4}
+@media(max-width:600px){
+  .hero-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px!important;align-items:start}
+  .hero-stats .stat-divider{display:none!important}
+  .hero-stat .stat-num{font-size:1.75rem!important}
+  .hero-stat .stat-unit{font-size:1.1rem!important}
+  .hero-stat .stat-label{font-size:.72rem!important;max-width:none!important;line-height:1.25}
+}
+
+/* ── MAS VIDA: iconos de color, relieve al pasar, subrayado en titulares ── */
+.step-icon,.fv-icon{width:62px;height:62px;border-radius:20px;display:flex!important;align-items:center;justify-content:center;font-size:1.7rem!important;
+  background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(139,92,246,.10) 55%,rgba(249,115,22,.16))!important;color:#2563EB;
+  border:1px solid rgba(59,130,246,.2);box-shadow:0 14px 30px -14px rgba(37,99,235,.45)!important;filter:none!important;margin-left:auto;margin-right:auto}
+.step-card:nth-of-type(even) .step-icon{color:#EA580C;border-color:rgba(249,115,22,.25)}
+.fv-icon{width:46px;height:46px;border-radius:15px;font-size:1.3rem!important;margin:0}
+.step-icon svg,.fv-icon svg{width:1em;height:1em}
+.glass-card,.result-card,.step-card,.case-content{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .35s ease}
+@media (hover:hover){
+  .step-card:hover,.result-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -24px rgba(37,99,235,.45),0 12px 26px -14px rgba(249,115,22,.3)!important;border-color:rgba(59,130,246,.35)}
+}
+.section-title .gradient-text{text-decoration:underline;text-decoration-color:rgba(249,115,22,.38);text-decoration-thickness:.1em;text-underline-offset:.16em;text-decoration-skip-ink:none}
+/* WhatsApp en escritorio: circulo discreto sobre el boton de diagnostico; la etiqueta aparece al inicio y al pasar el cursor */
+@media(min-width:601px){
+  #wa-direct{left:auto!important;right:1.5rem!important;bottom:5.4rem!important;padding:0 14px!important;height:52px;gap:0!important;border-radius:50px}
+  body.banner-visible #wa-direct{bottom:calc(var(--banner-h,100px) + 5.4rem)!important}
+  #wa-direct .wa-direct-txt{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .35s ease,opacity .25s ease,margin .35s ease}
+  #wa-direct:hover .wa-direct-txt,#wa-direct:focus-visible .wa-direct-txt,#wa-direct.wa-intro .wa-direct-txt{max-width:220px;opacity:1;margin-left:10px}
+}
+.section-title .gradient-text{text-decoration-thickness:.07em!important;text-decoration-color:rgba(249,115,22,.3)!important}
 </style>
 
   <meta name="mobile-web-app-capable" content="yes" />
@@ -4184,20 +4172,21 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
     </div>
   </nav>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobile-menu">
-    <button id="menu-close" aria-label="Cerrar menú" style="position:fixed;top:24px;right:24px;background:none;border:none;color:#0F172A;font-size:2.2rem;cursor:pointer;z-index:100000;line-height:1;padding:12px;display:none;">✕</button>
-    <a href="#servicios" class="mobile-link">Servicios</a>
-    <a href="#herramientas" class="mobile-link">Herramientas</a>
-    <a href="#resultados" class="mobile-link">Resultados</a>
-    <a href="#proceso" class="mobile-link">Proceso</a>
-    <a href="#nosotros" class="mobile-link">Nosotros</a>
-    <a href="#faq" class="mobile-link">FAQ</a>
-    <a href="#casos" class="mobile-link">Casos de éxito</a>
-    <a href="/blog/" class="mobile-link">Blog</a>
-    <a href="#contacto" class="mobile-link">Contacto</a>
-    <a href="#contacto" class="btn-primary btn-glow" style="margin-top:24px;width:100%;text-align:center;justify-content:center;font-size:1rem;padding:16px 24px;">Diagnóstico gratuito</a>
-    <a href="#contacto" class="btn-primary" style="text-align:center;margin-top:1rem;">Hablar con un experto</a>
+  <!-- MENU MOVIL -->
+  <div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">
+    <div class="mnav-bg"></div>
+    <div class="mnav-in">
+      <div class="mnav-top">
+        <a class="mnav-brand" href="#hero"><img src="/logo.png" width="38" height="38" alt="" decoding="async"><span>O.N.E Agency</span></a>
+        <button class="mnav-x" id="mnav-close" type="button" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <ul class="mnav-links"><li><a href="#servicios" style="--i:0"><span>Servicios</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#herramientas" style="--i:1"><span>Herramientas</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#resultados" style="--i:2"><span>Resultados</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#proceso" style="--i:3"><span>Proceso</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#nosotros" style="--i:4"><span>Nosotros</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#faq" style="--i:5"><span>FAQ</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#casos" style="--i:6"><span>Casos de éxito</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="/blog/" style="--i:7"><span>Blog</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><a href="#contacto" style="--i:8"><span>Contacto</span><svg class="mnav-ar" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li></ul>
+      <div class="mnav-cta" style="--i:9">
+        <a class="mnav-btn" href="#contacto">Diagnóstico gratuito</a>
+        <a class="mnav-wa" href="https://wa.me/34684787701?text=Hola%20%C3%81ngel%2C%20vengo%20de%20one-agency.es%20y%20quiero%20hablar%20contigo.&amp;utm_source=web&amp;utm_medium=whatsapp&amp;utm_campaign=menu" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+      </div>
+      <p class="mnav-foot" style="--i:10">Santaella, Córdoba · one-agency.es</p>
+    </div>
   </div>
 
   <main>
@@ -4227,63 +4216,30 @@ body.hero-paused .orbit-ring{ animation-play-state: paused !important; }
         <div class="hero-stats reveal reveal-delay-4">
           <div class="hero-stat">
             <span class="stat-num" data-target="80">0</span><span class="stat-unit">%</span>
-            <span class="stat-label">Reducción de tareas manuales (estimación sectorial)</span>
+            <span class="stat-label">Menos tareas manuales*</span>
           </div>
           <div class="stat-divider"></div>
           <div class="hero-stat">
             <span class="stat-num" data-target="60">0</span><span class="stat-unit">h</span>
-            <span class="stat-label">Ahorro semanal potencial por empresa</span>
+            <span class="stat-label">Ahorro semanal potencial*</span>
           </div>
           <div class="stat-divider"></div>
           <div class="hero-stat">
             <span class="stat-num" data-target="3">0</span><span class="stat-unit">x</span>
-            <span class="stat-label">Más productividad en 30 días</span>
+            <span class="stat-label">Más productividad en 30 días*</span>
           </div>
         </div>
+        <p class="hero-note reveal reveal-delay-4">*Estimaciones del sector. El resultado real depende de cada empresa.</p>
       </div>
       <div class="hero-visual reveal reveal-delay-2" aria-hidden="true">
         <div class="orbit-system">
           <div class="orbit-core">
             <img width="100" height="100" loading="eager" decoding="async" src="/logo.png" alt="O.N.E Agency" class="orbit-logo-img" />
           </div>
-          <div class="orbit orbit-1">
-            <div class="orbit-node node-blue" data-label="automatización"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          </div>
-          <div class="orbit orbit-2">
-            <div class="orbit-node node-orange" data-label="IA"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01M16 16h.01"/></svg></div>
-          </div>
-          <div class="orbit orbit-3">
-            <div class="orbit-node node-blue" data-label="CRM"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
-          </div>
-          <div class="orbit orbit-4">
-            <div class="orbit-node node-orange" data-label="API"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-          </div>
+          <div class="oring"><div class="ochip" style="--a:0deg"><div class="ob"><div class="oc"><span class="oi b"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span class="ol">Tu web</span></div></div></div><div class="ochip" style="--a:60deg"><div class="ob"><div class="oc"><span class="oi o"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="ol">WhatsApp</span></div></div></div><div class="ochip" style="--a:120deg"><div class="ob"><div class="oc"><span class="oi b"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="ol">Citas</span></div></div></div><div class="ochip" style="--a:180deg"><div class="ob"><div class="oc"><span class="oi o"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span class="ol">Facturas</span></div></div></div><div class="ochip" style="--a:240deg"><div class="ob"><div class="oc"><span class="oi b"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01M16 16h.01"/></svg></span><span class="ol">Agente IA</span></div></div></div><div class="ochip" style="--a:300deg"><div class="ob"><div class="oc"><span class="oi o"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span><span class="ol">Informes</span></div></div></div></div>
           <div class="orbit-ring orbit-ring-1"></div>
           <div class="orbit-ring orbit-ring-2"></div>
           <div class="orbit-ring orbit-ring-3"></div>
-        </div>
-        <div class="floating-cards">
-          <div class="float-card fc-1">
-            <span class="fc-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-            <div>
-              <strong>-60h</strong>
-              <small>trabajo/semana</small>
-            </div>
-          </div>
-          <div class="float-card fc-2">
-            <span class="fc-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></span>
-            <div>
-              <strong>-40%</strong>
-              <small>costes operativos</small>
-            </div>
-          </div>
-          <div class="float-card fc-3">
-            <span class="fc-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
-            <div>
-              <strong>3x</strong>
-              <small>productividad</small>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -5345,7 +5301,7 @@ window.unlockPageScroll = function () {
    quedo bloqueado (bfcache, error en algun handler...), se libera solo */
 (function () {
   function safetyUnlock() {
-    var menuOpen = document.getElementById('mobile-menu');
+    var menuOpen = document.getElementById('mnav');
     menuOpen = menuOpen && menuOpen.classList.contains('open');
     var modalOpen = document.getElementById('priv-modal');
     modalOpen = modalOpen && modalOpen.classList.contains('priv-modal-visible');
@@ -5438,85 +5394,43 @@ if (navbar) {
   window.__sb.kick();
 }
 
-/* ── MOBILE MENU ── */
+/* ── MENU MOVIL ── */
 (function() {
-  var closeBtn = document.getElementById('menu-close');
-  function showCloseBtn() { if (closeBtn) closeBtn.style.display = 'block'; }
-  function hideCloseBtn() { if (closeBtn) closeBtn.style.display = 'none'; }
-  function toggleMenu(btn, menu) {
-    var isOpen = menu.classList.toggle('open');
-    if (isOpen) window.lockPageScroll(); else window.unlockPageScroll();
-    var spans = btn.querySelectorAll('span');
-    if (isOpen) {
-      spans[0].style.cssText = 'transform:translateY(7px) rotate(45deg)';
-      spans[1].style.cssText = 'opacity:0';
-      spans[2].style.cssText = 'transform:translateY(-7px) rotate(-45deg)';
-      showCloseBtn();
-    } else {
-      for (var i = 0; i < spans.length; i++) spans[i].style.cssText = '';
-      hideCloseBtn();
-    }
+  var toggle = document.getElementById('menu-toggle');
+  var menu = document.getElementById('mnav');
+  var closeBtn = document.getElementById('mnav-close');
+  if (!toggle || !menu) return;
+  var items = menu.querySelectorAll('.mnav-links li');
+  for (var k = 0; k < items.length; k++) items[k].style.setProperty('--n', k);
+  var cta = menu.querySelector('.mnav-cta'), foot = menu.querySelector('.mnav-foot');
+  if (cta) cta.style.setProperty('--n', items.length);
+  if (foot) foot.style.setProperty('--n', items.length + 1);
+  var CSS_N = '.mnav.open .mnav-cta,.mnav.open .mnav-foot{transition-delay:calc(.14s + var(--n,0)*.04s)}';
+  var st = document.createElement('style'); st.textContent = CSS_N; document.head.appendChild(st);
+  function setOpen(open, instant) {
+    if (instant) { menu.classList.add('instant'); }
+    var was = menu.classList.contains('open');
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open && !was) { window.lockPageScroll(); setTimeout(function () { closeBtn.focus({preventScroll: true}); }, 60); }
+    if (!open && was) { window.unlockPageScroll(); if (!instant) toggle.focus({preventScroll: true}); }
+    if (instant) setTimeout(function () { menu.classList.remove('instant'); }, 80);
   }
-  function closeMenu(btn, menu) {
-    var wasOpen = menu.classList.contains('open');
-    menu.classList.remove('open');
-    if (wasOpen) window.unlockPageScroll();
-    var spans = btn.querySelectorAll('span');
-    for (var i = 0; i < spans.length; i++) spans[i].style.cssText = '';
-    hideCloseBtn();
-  }
-  var menuToggle = document.getElementById('menu-toggle');
-  var mobileMenu = document.getElementById('mobile-menu');
-  if (!menuToggle || !mobileMenu) return;
-  var touchFired = false;
-  menuToggle.addEventListener('touchend', function(e) {
-    e.preventDefault();
-    touchFired = true;
-    toggleMenu(menuToggle, mobileMenu);
-  }, { passive: false });
-  menuToggle.addEventListener('click', function() {
-    if (touchFired) { touchFired = false; return; }
-    toggleMenu(menuToggle, mobileMenu);
+  window.__closeMenu = function (instant) { setOpen(false, instant); };
+  toggle.setAttribute('aria-controls', 'mnav'); toggle.setAttribute('aria-expanded', 'false');
+  toggle.addEventListener('click', function () { setOpen(true); });
+  closeBtn.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('open')) setOpen(false); });
+  /* enlaces que no son ancla de esta pagina (p. ej. /blog/) o que no existen: se cierra y se deja navegar */
+  menu.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a') : null; if (!a) return;
+    var h = a.getAttribute('href') || '', isAnchor = false;
+    if (h.charAt(0) === '#' && h.length > 1) { try { isAnchor = !!document.querySelector(h); } catch (err) {} }
+    if (!isAnchor) setOpen(false, true);
   });
-  /* Retraso escalonado por JS (no por nth-child, que se desincroniza si se
-     añade o quita un enlace): cada .mobile-link recibe su propio delay según
-     su posición real entre los enlaces, sin importar cuántos haya. */
-  var staggerLinks = mobileMenu.querySelectorAll('a.mobile-link');
-  for (var s = 0; s < staggerLinks.length; s++) {
-    staggerLinks[s].style.transitionDelay = (0.05 + s * 0.05).toFixed(2) + 's';
-  }
-  var links = mobileMenu.querySelectorAll('a');
-  for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function(e) {
-      var href = this.getAttribute('href') || '';
-      /* Los enlaces con ancla (#servicios, #casos...) los cierra el handler
-         global de "SMOOTH SCROLL + WAVE": el necesita ver el menu todavia
-         abierto para esperar a que termine de cerrarse antes de hacer scroll.
-         Si lo cerramos aqui primero, ese handler cree que ya estaba cerrado
-         y hace scroll de inmediato, debajo del menu que aun se esta
-         desvaneciendo -> el scroll parece no hacer nada. */
-      var handledByScroll = false;
-      if (href.charAt(0) === '#' && href.length > 1) {
-        try { handledByScroll = !!document.querySelector(href); } catch (err) {}
-      }
-      /* si el destino no existe, el handler global no hace nada: cerramos aquí para no dejar el menú abierto con el scroll bloqueado */
-      if (handledByScroll) return;
-      closeMenu(menuToggle, mobileMenu);
-    });
-  }
-  var menuClose = document.getElementById('menu-close');
-  if (menuClose) {
-    var closeTouchFired = false;
-    menuClose.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      closeTouchFired = true;
-      closeMenu(menuToggle, mobileMenu);
-    }, { passive: false });
-    menuClose.addEventListener('click', function() {
-      if (closeTouchFired) { closeTouchFired = false; return; }
-      closeMenu(menuToggle, mobileMenu);
-    });
-  }
+  /* al ensanchar la ventana, el menu movil deja de existir: se cierra solo */
+  window.addEventListener('resize', function () { if (window.innerWidth > 900 && menu.classList.contains('open')) setOpen(false, true); });
 })();
 
 /* ── SMOOTH SCROLL + WAVE ── */
@@ -5541,14 +5455,9 @@ if (navbar) {
     var t; try { t = document.querySelector(href); } catch(err) { return; }
     if (!t) return;
     e.preventDefault();
-    var mm = document.getElementById('mobile-menu');
-    var wasOpen = mm && mm.classList.contains('open');
-    if (wasOpen) {
-      mm.classList.remove('open');
-      window.unlockPageScroll();  /* idempotente: si el propio link ya la cerro, esto no hace nada de mas */
-      var spans = document.querySelectorAll('#menu-toggle span');
-      for(var s=0;s<spans.length;s++) spans[s].style.cssText = '';
-    }
+    var mm = document.getElementById('mnav');
+    var wasOpen = !!(mm && mm.classList.contains('open'));
+    if (wasOpen && window.__closeMenu) window.__closeMenu(true);
     kill();
     var NT = {
       servicios:   ['<svg class="nt-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', 'Qu\u00E9 automatizamos por ti', 'Tareas que dejan de ocuparte'],
@@ -5595,7 +5504,7 @@ if (navbar) {
         setTimeout(function () { ov.remove(); show(t); t.classList.remove('anchor-enter'); }, 560);
       }, 900);
     }
-    if (wasOpen) setTimeout(doScroll, 100); else doScroll();
+    doScroll();
   });
 })();
 
@@ -6163,7 +6072,7 @@ html body #wa-direct.wa-hide{opacity:0!important;transform:translateY(10px) scal
 function show(){w.classList.remove('wa-hide')}
 window.addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;var y=window.scrollY;
  if(Math.abs(y-last)>24){w.classList.add('wa-hide');clearTimeout(tm);tm=setTimeout(show,700);last=y}});},{passive:true});
-w.addEventListener('focus',show);})();
+w.addEventListener('focus',show);setTimeout(function(){w.classList.add('wa-intro');setTimeout(function(){w.classList.remove('wa-intro')},6500)},3000);})();
 </script>
 <script>
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-wa]');if(a&&typeof gtag==='function')gtag('event','whatsapp_click',{cta_position:a.getAttribute('data-wa')})});
