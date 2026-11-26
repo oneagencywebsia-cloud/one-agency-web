@@ -21,21 +21,18 @@
     /* gtag.js pesa ~300 ms de CPU al ejecutarse (tarea larga en el hilo principal). Se carga cuando la página
        ya está pintada, el navegador está libre Y el usuario NO está haciendo scroll (si lo hace, se espera):
        así nunca compite con el desplazamiento. Los eventos quedan en dataLayer y se envían igual. */
+    /* gtag.js (~180 KB, ~250 ms de CPU) se carga en la primera interaccion del usuario o, si no la hay, a los 7 s
+       en reposo. Los eventos quedan en dataLayer y se envian igual al cargar. */
     (function () {
-      var done = false, t0 = Date.now();
+      var done = false;
       function loadGA() {
         if (done) return; done = true;
         var g = document.createElement('script'); g.async = true;
         g.src = 'https://www.googletagmanager.com/gtag/js?id=G-H3Y3WFCTL6';
         document.head.appendChild(g);
       }
-      function attempt() {
-        var busy = document.documentElement.classList.contains('is-scrolling');
-        if (busy && Date.now() - t0 < 20000) { setTimeout(attempt, 900); return; }
-        if (window.requestIdleCallback) requestIdleCallback(loadGA, { timeout: 3000 }); else loadGA();
-      }
-      function start() { setTimeout(attempt, 1500); }
-      if (document.readyState === 'complete') start(); else window.addEventListener('load', start);
+      ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (ev) { addEventListener(ev, loadGA, { once: true, passive: true }); });
+      addEventListener('load', function () { setTimeout(function () { (window.requestIdleCallback || setTimeout)(loadGA, { timeout: 2000 }); }, 7000); });
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -253,7 +250,7 @@
   }
   </script>
 
-<style>@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}h1,h2,h3,.hero-title,.section-title,.cta-title,.stat-num,.result-num{font-stretch:118%;font-weight:800}@media(max-width:600px){h1,h2,h3,.hero-title,.section-title,.cta-title,.stat-num,.result-num{font-stretch:104%}}</style><link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin.woff2"><style>/* ====================================================
+<style>@font-face{font-family:'Archivo';font-style:normal;font-weight:400 800;font-stretch:100% 125%;font-display:swap;src:url(/fonts/archivo-latin-v2.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}h1,h2,h3,.hero-title,.section-title,.cta-title,.stat-num,.result-num{font-stretch:118%;font-weight:800}@media(max-width:600px){h1,h2,h3,.hero-title,.section-title,.cta-title,.stat-num,.result-num{font-stretch:104%}}</style><link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/archivo-latin-v2.woff2"><style>/* ====================================================
    O.N.E Agency — styles.css
    Colores: Azul Eléctrico #3B82F6 + Naranja Fuego #F97316
    ==================================================== */
@@ -4133,6 +4130,20 @@ body.hero-paused .oring,body.hero-paused .oc{animation-play-state:paused!importa
   #wa-direct:hover .wa-direct-txt,#wa-direct:focus-visible .wa-direct-txt,#wa-direct.wa-intro .wa-direct-txt{max-width:220px;opacity:1;margin-left:10px}
 }
 .section-title .gradient-text{text-decoration-thickness:.07em!important;text-decoration-color:rgba(249,115,22,.3)!important}
+
+/* ── RENDIMIENTO: el navegador no calcula estilo/diseño/pintado de lo que esta lejos de la pantalla ── */
+main > section:not(#hero){content-visibility:auto;contain-intrinsic-size:auto 1000px}
+#casos{contain-intrinsic-size:auto 1970px}#social-proof{contain-intrinsic-size:auto 300px}#servicios{contain-intrinsic-size:auto 1020px}
+#resultados{contain-intrinsic-size:auto 700px}#ia{contain-intrinsic-size:auto 810px}#herramientas{contain-intrinsic-size:auto 1130px}
+#comparacion{contain-intrinsic-size:auto 980px}#proceso{contain-intrinsic-size:auto 820px}#nosotros{contain-intrinsic-size:auto 910px}
+#contacto{contain-intrinsic-size:auto 1110px}#guias{contain-intrinsic-size:auto 1160px}#faq{contain-intrinsic-size:auto 900px}
+.footer{content-visibility:auto;contain-intrinsic-size:auto 520px}
+/* el titular del hero (LCP) se pinta sin esperar al JS de revelado */
+.js-loaded .hero .hero-title.reveal{opacity:1;transform:none;transition:none}
+/* punto de disponibilidad: animacion compuesta (opacity/transform), no box-shadow */
+.live-dot{position:relative;box-shadow:none!important;animation:none!important}
+.live-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#22C55E;opacity:.55;animation:live-ping 2s ease-out infinite}
+@keyframes live-ping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.6);opacity:0}}
 </style>
 
   <meta name="mobile-web-app-capable" content="yes" />
@@ -5474,7 +5485,7 @@ if (navbar) {
     };
     function doScroll() {
       var topPos = Math.max(0, t.getBoundingClientRect().top + window.scrollY - 80);
-      function jump() { window.scrollTo({top: topPos, behavior: 'instant'}); }
+      function jump() { window.scrollTo({top: topPos, behavior: 'instant'}); [90, 320, 650].forEach(function (ms) { setTimeout(function () { var d = t.getBoundingClientRect().top - 80; if (Math.abs(d) > 3) window.scrollBy({top: d, behavior: 'instant'}); }, ms); }); }
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) { jump(); return; }
       var old = document.getElementById('nt'); if (old) old.remove();
